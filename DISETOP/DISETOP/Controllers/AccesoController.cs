@@ -16,9 +16,9 @@ namespace DISETOP.Controllers
     public class AccesoController : Controller
     {
 
-        //static string cadena = "Data Source=DESKTOP-L0GVN2O\\SQLEXPRESS;Initial Catalog=EJEMPLO;Integrated Security=true";
-        static string cadena = "Data Source=DESKTOP-F5BQ241\\SQLEXPRESS;Initial Catalog=DISETOP;Integrated Security=true";
-
+        static string cadena = "Data Source=DESKTOP-L0GVN2O\\SQLEXPRESS;Initial Catalog=EJEMPLO;Integrated Security=true";
+        //static string cadena = "Data Source=DESKTOP-F5BQ241\\SQLEXPRESS;Initial Catalog=DISETOP;Integrated Security=true";
+        //static string cadena = "Data Source=DESKTOP-1AAQPH5;Initial Catalog=DISETOP;Integrated Security=true";
 
 
         // GET: Acceso

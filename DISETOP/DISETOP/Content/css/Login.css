@@ -8,7 +8,7 @@ html {
 }
 
 .user_card {
-    height: 400px;
+    height: 440px;
     width: 350px;
     margin-top: auto;
     margin-bottom: auto;
@@ -24,26 +24,22 @@ html {
     border-radius: 5px;
 }
 
+
 .brand_logo_container {
-    position: absolute;
-    height: 170px;
-    width: 170px;
-    top: -75px;
-    border-radius: 50%;
-    background: #60a3bc;
-    padding: 10px;
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 6px;
 }
 
 .brand_logo {
-    height: 150px;
-    width: 150px;
-    border-radius: 50%;
-    border: 2px solid white;
+    max-width: 92%; /* Ajusta el tamaño máximo al tamaño del contenedor */
+    max-height: 100%; /* Ajusta el tamaño máximo al tamaño del contenedor */
+    border-radius: 16px;
 }
 
 .form_container {
-    margin-top: 100px;
+    margin-top: 30px;
 }
 
 .login_btn {
@@ -78,8 +74,6 @@ html {
     background-color: #c0392b !important;
 }
 
-
-
 .btn login_btn2 {
     background-color: gray;
     border-radius: 0.5em;
@@ -89,11 +83,17 @@ html {
     font-weight: 600;
 }
 
-btn login_btn2:hover {
-    background-color: black;
-}
+    btn login_btn2:hover {
+        background-color: white !important;
+    }
 
 btn login_btn2:active {
     background-color: black;
     scale: 1.05;
 }
+
+#btn-pin {
+    background-color: rgb(192,57,43) !important;
+    color: white !important;
+}
+

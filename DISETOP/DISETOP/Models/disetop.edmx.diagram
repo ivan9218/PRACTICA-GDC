@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="45248153f3914a36ac457787dd018fa3" Name="Diagram1">
+        <EntityTypeShape EntityType="DISETOPModel.ACTIVO" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DISETOPModel.CATEGORIA_PROYECTOS" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DISETOPModel.COSTO_PROYECTOS" Width="1.5" PointX="5.375" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DISETOPModel.EMPLEADO" Width="1.5" PointX="2.75" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="DISETOPModel.PAGO" Width="1.5" PointX="5" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="DISETOPModel.PROYECTO" Width="1.5" PointX="3" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DISETOPModel.USUARIO" Width="1.5" PointX="7.75" PointY="4.75" IsExpanded="true" />
+        <AssociationConnector Association="DISETOPModel.FK_COSTO_PROYECTOS_CATEGORIA" ManuallyRouted="false" />
+        <AssociationConnector Association="DISETOPModel.FK_PROYECTOS_CATEGORIA" ManuallyRouted="false" />
+        <AssociationConnector Association="DISETOPModel.FK_COSTO_PROYECTOS_PROYECTOS" ManuallyRouted="false" />
+        <AssociationConnector Association="DISETOPModel.FK_PAGOS_EMPLEADOS" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

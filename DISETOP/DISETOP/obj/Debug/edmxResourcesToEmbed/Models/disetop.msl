@@ -1,0 +1,125 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="DISETOPModelStoreContainer" CdmEntityContainer="DISETOPEntities">
+    <EntitySetMapping Name="ACTIVOS">
+      <EntityTypeMapping TypeName="DISETOPModel.ACTIVO">
+        <MappingFragment StoreEntitySet="ACTIVOS">
+          <ScalarProperty Name="CODIGO_ACTIVO" ColumnName="CODIGO_ACTIVO" />
+          <ScalarProperty Name="NOMBRE_DE_ACTIVO" ColumnName="NOMBRE_DE_ACTIVO" />
+          <ScalarProperty Name="NUMERO_DE_SERIE" ColumnName="NUMERO_DE_SERIE" />
+          <ScalarProperty Name="FECHA_DE_COMPRA" ColumnName="FECHA_DE_COMPRA" />
+          <ScalarProperty Name="PROVEEDOR" ColumnName="PROVEEDOR" />
+          <ScalarProperty Name="VALOR_DE_COMPRA" ColumnName="VALOR_DE_COMPRA" />
+          <ScalarProperty Name="VALOR_ACTUAL" ColumnName="VALOR_ACTUAL" />
+          <ScalarProperty Name="COMENTARIO" ColumnName="COMENTARIO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CATEGORIA_PROYECTOS">
+      <EntityTypeMapping TypeName="DISETOPModel.CATEGORIA_PROYECTOS">
+        <MappingFragment StoreEntitySet="CATEGORIA_PROYECTOS">
+          <ScalarProperty Name="CODIGO_CATEGORIA" ColumnName="CODIGO_CATEGORIA" />
+          <ScalarProperty Name="NOMBRE_CATEGORIA" ColumnName="NOMBRE_CATEGORIA" />
+          <ScalarProperty Name="COMENTARIO" ColumnName="COMENTARIO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="COSTO_PROYECTOS">
+      <EntityTypeMapping TypeName="DISETOPModel.COSTO_PROYECTOS">
+        <MappingFragment StoreEntitySet="COSTO_PROYECTOS">
+          <ScalarProperty Name="CODIGO_COSTO_PROYECTO" ColumnName="CODIGO_COSTO_PROYECTO" />
+          <ScalarProperty Name="FK_CODIGO_PROYECTO" ColumnName="FK_CODIGO_PROYECTO" />
+          <ScalarProperty Name="FK_CODIGO_CATEGORIA" ColumnName="FK_CODIGO_CATEGORIA" />
+          <ScalarProperty Name="DIA_TRABAJADOR" ColumnName="DIA_TRABAJADOR" />
+          <ScalarProperty Name="COMBUSTIBLE" ColumnName="COMBUSTIBLE" />
+          <ScalarProperty Name="VIATICOS" ColumnName="VIATICOS" />
+          <ScalarProperty Name="HOSPEDAJE" ColumnName="HOSPEDAJE" />
+          <ScalarProperty Name="TIMBRES_CERTIFICACIONES" ColumnName="TIMBRES_CERTIFICACIONES" />
+          <ScalarProperty Name="MATERIALES" ColumnName="MATERIALES" />
+          <ScalarProperty Name="TOTAL" ColumnName="TOTAL" />
+          <ScalarProperty Name="COMENTARIO" ColumnName="COMENTARIO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="EMPLEADOS">
+      <EntityTypeMapping TypeName="DISETOPModel.EMPLEADO">
+        <MappingFragment StoreEntitySet="EMPLEADOS">
+          <ScalarProperty Name="CODIGO_EMPLEADO" ColumnName="CODIGO_EMPLEADO" />
+          <ScalarProperty Name="CEDULA" ColumnName="CEDULA" />
+          <ScalarProperty Name="NOMBRE_EMPLEADO" ColumnName="NOMBRE_EMPLEADO" />
+          <ScalarProperty Name="TELEFONO" ColumnName="TELEFONO" />
+          <ScalarProperty Name="CORREO" ColumnName="CORREO" />
+          <ScalarProperty Name="DIRECCION" ColumnName="DIRECCION" />
+          <ScalarProperty Name="COMENTARIO" ColumnName="COMENTARIO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PAGOS">
+      <EntityTypeMapping TypeName="DISETOPModel.PAGO">
+        <MappingFragment StoreEntitySet="PAGOS">
+          <ScalarProperty Name="CODIGO_PAGO" ColumnName="CODIGO_PAGO" />
+          <ScalarProperty Name="FK_CODIGO_EMPLEADO" ColumnName="FK_CODIGO_EMPLEADO" />
+          <ScalarProperty Name="CUENTA_BANCARIA" ColumnName="CUENTA_BANCARIA" />
+          <ScalarProperty Name="DIAS_A_PAGAR" ColumnName="DIAS_A_PAGAR" />
+          <ScalarProperty Name="MONTO" ColumnName="MONTO" />
+          <ScalarProperty Name="FECHA_DE_PAGO" ColumnName="FECHA_DE_PAGO" />
+          <ScalarProperty Name="COMENTARIO" ColumnName="COMENTARIO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PROYECTOS">
+      <EntityTypeMapping TypeName="DISETOPModel.PROYECTO">
+        <MappingFragment StoreEntitySet="PROYECTOS">
+          <ScalarProperty Name="CODIGO_PROYECTO" ColumnName="CODIGO_PROYECTO" />
+          <ScalarProperty Name="NOMBRE_PROYECTO" ColumnName="NOMBRE_PROYECTO" />
+          <ScalarProperty Name="FK_CODIGO_CATEGORIA" ColumnName="FK_CODIGO_CATEGORIA" />
+          <ScalarProperty Name="FECHA_INICIO" ColumnName="FECHA_INICIO" />
+          <ScalarProperty Name="ESTADO" ColumnName="ESTADO" />
+          <ScalarProperty Name="FECHA_FIN" ColumnName="FECHA_FIN" />
+          <ScalarProperty Name="PRECIO" ColumnName="PRECIO" />
+          <ScalarProperty Name="COMENTARIO" ColumnName="COMENTARIO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="USUARIOS">
+      <EntityTypeMapping TypeName="DISETOPModel.USUARIO">
+        <MappingFragment StoreEntitySet="USUARIOS">
+          <ScalarProperty Name="ID_USUARIO" ColumnName="ID_USUARIO" />
+          <ScalarProperty Name="NOMBRE_USUARIO" ColumnName="NOMBRE_USUARIO" />
+          <ScalarProperty Name="CLAVE" ColumnName="CLAVE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="sp_ActualizaEmpleados" FunctionName="DISETOPModel.Store.sp_ActualizaEmpleados" />
+    <FunctionImportMapping FunctionImportName="sp_EliminaEmpleados" FunctionName="DISETOPModel.Store.sp_EliminaEmpleados" />
+    <FunctionImportMapping FunctionImportName="sp_InsertaEmpleados" FunctionName="DISETOPModel.Store.sp_InsertaEmpleados" />
+    <FunctionImportMapping FunctionImportName="sp_RetornaEmpleados" FunctionName="DISETOPModel.Store.sp_RetornaEmpleados">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DISETOPModel.sp_RetornaEmpleados_Result">
+          <ScalarProperty Name="CODIGO_EMPLEADO" ColumnName="CODIGO_EMPLEADO" />
+          <ScalarProperty Name="CEDULA" ColumnName="CEDULA" />
+          <ScalarProperty Name="NOMBRE_EMPLEADO" ColumnName="NOMBRE_EMPLEADO" />
+          <ScalarProperty Name="TELEFONO" ColumnName="TELEFONO" />
+          <ScalarProperty Name="CORREO" ColumnName="CORREO" />
+          <ScalarProperty Name="DIRECCION" ColumnName="DIRECCION" />
+          <ScalarProperty Name="COMENTARIO" ColumnName="COMENTARIO" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_RetornaEmpleadosPorID" FunctionName="DISETOPModel.Store.sp_RetornaEmpleadosPorID">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DISETOPModel.sp_RetornaEmpleadosPorID_Result">
+          <ScalarProperty Name="CODIGO_EMPLEADO" ColumnName="CODIGO_EMPLEADO" />
+          <ScalarProperty Name="CEDULA" ColumnName="CEDULA" />
+          <ScalarProperty Name="NOMBRE_EMPLEADO" ColumnName="NOMBRE_EMPLEADO" />
+          <ScalarProperty Name="TELEFONO" ColumnName="TELEFONO" />
+          <ScalarProperty Name="CORREO" ColumnName="CORREO" />
+          <ScalarProperty Name="DIRECCION" ColumnName="DIRECCION" />
+          <ScalarProperty Name="COMENTARIO" ColumnName="COMENTARIO" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_RegistrarUsuario" FunctionName="DISETOPModel.Store.sp_RegistrarUsuario" />
+    <FunctionImportMapping FunctionImportName="sp_ValidarUsuario" FunctionName="DISETOPModel.Store.sp_ValidarUsuario" />
+  </EntityContainerMapping>
+</Mapping>

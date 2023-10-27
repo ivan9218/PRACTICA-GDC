@@ -50,6 +50,7 @@
     position: relative;
     text-align: center;
     cursor: pointer;
+
 }
 
 
@@ -123,8 +124,7 @@ a {
 .dealy1, .dealy2, .dealy3, .dealy4, .dealy5, .dealy6 {
     animation-name: scale-up-center;
     animation-duration: 0.4s;
-    #animation-timing-function: linear;
-    #animation-fill-mode: both;
+  
 }
 
 .dealy1 {

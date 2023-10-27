@@ -35,7 +35,11 @@ namespace DISETOP.Controllers
             return RedirectToAction("Login", "Acceso");
         }
 
-
+        public ActionResult VistaEmpleados()
+        {
+            // Lógica adicional si es necesaria
+            return View("VistaEmpleados","Empleados");
+        }
 
     }
 }
