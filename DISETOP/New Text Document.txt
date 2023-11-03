@@ -1,0 +1,28 @@
+
+function ObtenerNombreEmpleado(codigoEmpleado) {
+    $.ajax({
+        url: '/Pagos/ObtenerNombreEmpleado', // Ruta de la acción en el controlador
+        type: 'GET', // Puedes ajustar el tipo de solicitud según tu configuración.
+        data: { codigoEmpleado: codigoEmpleado },
+        success: function (nombreEmpleado) {
+            // Actualiza la celda en la tabla con el nombre del empleado.
+            $('#miTabla').each(function () {
+                var codigoEmpleadoEnFila = $(this).find('td:eq(1)').text(); // Suponemos que la columna de código de empleado es la segunda columna (índice 1).
+                if (codigoEmpleadoEnFila === codigoEmpleado) {
+                    $(this).find('td:eq(1)').text(nombreEmpleado);
+                }
+            });
+        },
+        error: function () {
+            // Maneja errores si es necesario.
+        }
+    });
+}
+
+$(document).ready(function () {
+    // Llama a ObtenerNombreEmpleado para cada fila de la tabla
+    $('#miTabla').each(function () {
+        var codigoEmpleado = $(this).find('td:eq(1)').text(); // Suponemos que la columna de código de empleado es la segunda columna (índice 1).
+        ObtenerNombreEmpleado(codigoEmpleado);
+    });
+});

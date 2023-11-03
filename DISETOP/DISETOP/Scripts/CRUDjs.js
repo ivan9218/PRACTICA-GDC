@@ -1,9 +1,11 @@
 ﻿$(document).ready(function () {
+   
 
     //ESTE ES EL JS QUE SE USA PARA LOS CRUD, EJECUTA LOS METODOS DE LOS CONTROLADORES
 
     //URL DE LOS CONTROLADORES PRIMERO VA EL CONTROLADOR Y DESPUES EL METODO 
     const tabla = $('#miTabla').DataTable();
+
     const url_empleado = '/Empleados/InsertarEmpleado'; // Define la URL para insertar empleados
     const url_actualizar_empleado = '/Empleados/EditarEmpleado'; // Define la URL para actualizar empleados
     const url_eliminar_empleado = '/Empleados/EliminarEmpleado'; // Define la URL para actualizar empleados
@@ -123,13 +125,13 @@
         const codigoEmpleado = row.find('td:first').text(); // Obtiene el código del empleado
 
         // Muestra un cuadro de diálogo de confirmación
-        if (confirm('¿Está seguro de que desea eliminar el empleado?')) {
+        if (confirm('¿Está seguro de que desea eliminar el empleado? Esto también eliminará los registros de pago de este empleado.')) {
             // Si el usuario hace clic en "Aceptar" en el cuadro de diálogo
             // Realiza una solicitud AJAX para eliminar el registro en la base de datos
             $.ajax({
-                type: 'POST',
-                url: url_eliminar_empleado, 
-                data: { codigoEmpleado: codigoEmpleado },
+                type: 'POST', // Método HTTP POST
+                url: url_eliminar_empleado, // URL de la acción del controlador para eliminar empleado
+                data: { codigoEmpleado: codigoEmpleado }, // Parámetro para enviar el código del empleado
                 success: function (data) {
                     // Elimina la fila de la tabla
                     tabla.row(row).remove().draw();
@@ -147,12 +149,15 @@
         }
     });
 
+
     //FIN ELIMINAR EN GRID
 
 
 
 
 });
+
+
 
 
 

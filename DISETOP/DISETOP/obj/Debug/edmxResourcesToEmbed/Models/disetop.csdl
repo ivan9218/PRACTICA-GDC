@@ -9,8 +9,8 @@
     <Property Name="NUMERO_DE_SERIE" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="FECHA_DE_COMPRA" Type="DateTime" Precision="0" />
     <Property Name="PROVEEDOR" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-    <Property Name="VALOR_DE_COMPRA" Type="Decimal" Precision="18" Scale="0" />
-    <Property Name="VALOR_ACTUAL" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="VALOR_DE_COMPRA" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="VALOR_ACTUAL" Type="Decimal" Precision="18" Scale="2" />
     <Property Name="COMENTARIO" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="CATEGORIA_PROYECTOS">
@@ -206,6 +206,31 @@
       <Parameter Name="Usuario" Mode="In" Type="String" />
       <Parameter Name="Contrasena" Mode="In" Type="String" />
     </FunctionImport>
+    <FunctionImport Name="sp_EditarPagos">
+      <Parameter Name="CodigoPago" Mode="In" Type="String" />
+      <Parameter Name="CodigoEmpleado" Mode="In" Type="String" />
+      <Parameter Name="CuentaBancaria" Mode="In" Type="String" />
+      <Parameter Name="DiasAPagar" Mode="In" Type="String" />
+      <Parameter Name="Monto" Mode="In" Type="Decimal" />
+      <Parameter Name="FechaDePago" Mode="In" Type="DateTime" />
+      <Parameter Name="Comentario" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_EliminaPagos">
+      <Parameter Name="CodigoPago" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_InsertarPagoEmpleado">
+      <Parameter Name="CodigoPago" Mode="In" Type="String" />
+      <Parameter Name="FK_CodigoEmpleado" Mode="In" Type="String" />
+      <Parameter Name="CuentaBancaria" Mode="In" Type="String" />
+      <Parameter Name="DiasAPagar" Mode="In" Type="String" />
+      <Parameter Name="Monto" Mode="In" Type="Decimal" />
+      <Parameter Name="FechaDePago" Mode="In" Type="DateTime" />
+      <Parameter Name="Comentario" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_RetornaPagos" ReturnType="Collection(DISETOPModel.sp_RetornaPagos_Result)" />
+    <FunctionImport Name="sp_RetornaPagosPorID" ReturnType="Collection(DISETOPModel.sp_RetornaPagosPorID_Result)">
+      <Parameter Name="CodigoPago" Mode="In" Type="String" />
+    </FunctionImport>
   </EntityContainer>
   <ComplexType Name="sp_RetornaEmpleados_Result">
     <Property Type="String" Name="CODIGO_EMPLEADO" Nullable="false" MaxLength="25" />
@@ -223,6 +248,24 @@
     <Property Type="Int32" Name="TELEFONO" Nullable="true" />
     <Property Type="String" Name="CORREO" Nullable="true" MaxLength="400" />
     <Property Type="String" Name="DIRECCION" Nullable="true" MaxLength="400" />
+    <Property Type="String" Name="COMENTARIO" Nullable="true" MaxLength="500" />
+  </ComplexType>
+  <ComplexType Name="sp_RetornaPagos_Result">
+    <Property Type="String" Name="CODIGO_PAGO" Nullable="false" MaxLength="25" />
+    <Property Type="String" Name="FK_CODIGO_EMPLEADO" Nullable="false" MaxLength="25" />
+    <Property Type="String" Name="CUENTA_BANCARIA" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="DIAS_A_PAGAR" Nullable="true" MaxLength="100" />
+    <Property Type="Decimal" Name="MONTO" Nullable="true" Precision="10" Scale="2" />
+    <Property Type="DateTime" Name="FECHA_DE_PAGO" Nullable="true" />
+    <Property Type="String" Name="COMENTARIO" Nullable="true" MaxLength="500" />
+  </ComplexType>
+  <ComplexType Name="sp_RetornaPagosPorID_Result">
+    <Property Type="String" Name="CODIGO_PAGO" Nullable="false" MaxLength="25" />
+    <Property Type="String" Name="FK_CODIGO_EMPLEADO" Nullable="false" MaxLength="25" />
+    <Property Type="String" Name="CUENTA_BANCARIA" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="DIAS_A_PAGAR" Nullable="true" MaxLength="100" />
+    <Property Type="Decimal" Name="MONTO" Nullable="true" Precision="10" Scale="2" />
+    <Property Type="DateTime" Name="FECHA_DE_PAGO" Nullable="true" />
     <Property Type="String" Name="COMENTARIO" Nullable="true" MaxLength="500" />
   </ComplexType>
 </Schema>

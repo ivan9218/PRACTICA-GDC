@@ -121,5 +121,34 @@
     </FunctionImportMapping>
     <FunctionImportMapping FunctionImportName="sp_RegistrarUsuario" FunctionName="DISETOPModel.Store.sp_RegistrarUsuario" />
     <FunctionImportMapping FunctionImportName="sp_ValidarUsuario" FunctionName="DISETOPModel.Store.sp_ValidarUsuario" />
+    <FunctionImportMapping FunctionImportName="sp_EditarPagos" FunctionName="DISETOPModel.Store.sp_EditarPagos" />
+    <FunctionImportMapping FunctionImportName="sp_EliminaPagos" FunctionName="DISETOPModel.Store.sp_EliminaPagos" />
+    <FunctionImportMapping FunctionImportName="sp_InsertarPagoEmpleado" FunctionName="DISETOPModel.Store.sp_InsertarPagoEmpleado" />
+    <FunctionImportMapping FunctionImportName="sp_RetornaPagos" FunctionName="DISETOPModel.Store.sp_RetornaPagos">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DISETOPModel.sp_RetornaPagos_Result">
+          <ScalarProperty Name="CODIGO_PAGO" ColumnName="CODIGO_PAGO" />
+          <ScalarProperty Name="FK_CODIGO_EMPLEADO" ColumnName="FK_CODIGO_EMPLEADO" />
+          <ScalarProperty Name="CUENTA_BANCARIA" ColumnName="CUENTA_BANCARIA" />
+          <ScalarProperty Name="DIAS_A_PAGAR" ColumnName="DIAS_A_PAGAR" />
+          <ScalarProperty Name="MONTO" ColumnName="MONTO" />
+          <ScalarProperty Name="FECHA_DE_PAGO" ColumnName="FECHA_DE_PAGO" />
+          <ScalarProperty Name="COMENTARIO" ColumnName="COMENTARIO" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_RetornaPagosPorID" FunctionName="DISETOPModel.Store.sp_RetornaPagosPorID">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DISETOPModel.sp_RetornaPagosPorID_Result">
+          <ScalarProperty Name="CODIGO_PAGO" ColumnName="CODIGO_PAGO" />
+          <ScalarProperty Name="FK_CODIGO_EMPLEADO" ColumnName="FK_CODIGO_EMPLEADO" />
+          <ScalarProperty Name="CUENTA_BANCARIA" ColumnName="CUENTA_BANCARIA" />
+          <ScalarProperty Name="DIAS_A_PAGAR" ColumnName="DIAS_A_PAGAR" />
+          <ScalarProperty Name="MONTO" ColumnName="MONTO" />
+          <ScalarProperty Name="FECHA_DE_PAGO" ColumnName="FECHA_DE_PAGO" />
+          <ScalarProperty Name="COMENTARIO" ColumnName="COMENTARIO" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
   </EntityContainerMapping>
 </Mapping>

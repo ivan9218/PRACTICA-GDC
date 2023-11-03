@@ -9,8 +9,8 @@
     <Property Name="NUMERO_DE_SERIE" Type="varchar" MaxLength="100" Nullable="false" />
     <Property Name="FECHA_DE_COMPRA" Type="date" />
     <Property Name="PROVEEDOR" Type="varchar" MaxLength="100" />
-    <Property Name="VALOR_DE_COMPRA" Type="decimal" Precision="18" Scale="0" />
-    <Property Name="VALOR_ACTUAL" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="VALOR_DE_COMPRA" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="VALOR_ACTUAL" Type="decimal" Precision="18" Scale="2" />
     <Property Name="COMENTARIO" Type="varchar" MaxLength="500" />
   </EntityType>
   <EntityType Name="CATEGORIA_PROYECTOS">
@@ -74,8 +74,8 @@
     <Property Name="PRECIO" Type="decimal" Precision="10" Scale="2" />
     <Property Name="COMENTARIO" Type="varchar" MaxLength="500" />
   </EntityType>
-  <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DISETOP.dbo.USUARIOS' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'DISETOP.dbo.USUARIOS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="USUARIOS">
     <Key>
       <PropertyRef Name="ID_USUARIO" />
@@ -141,8 +141,20 @@ advertencia 6002: La tabla o vista 'DISETOP.dbo.USUARIOS' no tiene definida ning
     <Parameter Name="direccion" Type="varchar" Mode="In" />
     <Parameter Name="comentario" Type="varchar" Mode="In" />
   </Function>
+  <Function Name="sp_EditarPagos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="CodigoPago" Type="varchar" Mode="In" />
+    <Parameter Name="CodigoEmpleado" Type="varchar" Mode="In" />
+    <Parameter Name="CuentaBancaria" Type="varchar" Mode="In" />
+    <Parameter Name="DiasAPagar" Type="varchar" Mode="In" />
+    <Parameter Name="Monto" Type="decimal" Mode="In" />
+    <Parameter Name="FechaDePago" Type="date" Mode="In" />
+    <Parameter Name="Comentario" Type="varchar" Mode="In" />
+  </Function>
   <Function Name="sp_EliminaEmpleados" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="codigo_empleado" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="sp_EliminaPagos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="CodigoPago" Type="varchar" Mode="In" />
   </Function>
   <Function Name="sp_InsertaEmpleados" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="codigo_empleado" Type="varchar" Mode="In" />
@@ -153,6 +165,15 @@ advertencia 6002: La tabla o vista 'DISETOP.dbo.USUARIOS' no tiene definida ning
     <Parameter Name="direccion" Type="varchar" Mode="In" />
     <Parameter Name="comentario" Type="varchar" Mode="In" />
   </Function>
+  <Function Name="sp_InsertarPagoEmpleado" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="CodigoPago" Type="varchar" Mode="In" />
+    <Parameter Name="FK_CodigoEmpleado" Type="varchar" Mode="In" />
+    <Parameter Name="CuentaBancaria" Type="varchar" Mode="In" />
+    <Parameter Name="DiasAPagar" Type="varchar" Mode="In" />
+    <Parameter Name="Monto" Type="decimal" Mode="In" />
+    <Parameter Name="FechaDePago" Type="date" Mode="In" />
+    <Parameter Name="Comentario" Type="varchar" Mode="In" />
+  </Function>
   <Function Name="sp_RegistrarUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="Usuario" Type="varchar" Mode="In" />
     <Parameter Name="Contrasena" Type="varchar" Mode="In" />
@@ -162,6 +183,10 @@ advertencia 6002: La tabla o vista 'DISETOP.dbo.USUARIOS' no tiene definida ning
   <Function Name="sp_RetornaEmpleados" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <Function Name="sp_RetornaEmpleadosPorID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="codigo_empleado" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="sp_RetornaPagos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="sp_RetornaPagosPorID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="CodigoPago" Type="varchar" Mode="In" />
   </Function>
   <Function Name="sp_ValidarUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="Usuario" Type="varchar" Mode="In" />

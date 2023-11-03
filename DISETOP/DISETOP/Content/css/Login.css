@@ -35,7 +35,7 @@ html {
 .brand_logo {
     max-width: 92%; /* Ajusta el tamaño máximo al tamaño del contenedor */
     max-height: 100%; /* Ajusta el tamaño máximo al tamaño del contenedor */
-    border-radius: 16px;
+
 }
 
 .form_container {
@@ -89,7 +89,7 @@ html {
 
 btn login_btn2:active {
     background-color: black;
-    scale: 1.05;
+    
 }
 
 #btn-pin {
