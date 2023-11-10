@@ -46,7 +46,7 @@
       <PropertyRef Name="CODIGO_EMPLEADO" />
     </Key>
     <Property Name="CODIGO_EMPLEADO" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="CEDULA" Type="Int32" Nullable="false" />
+    <Property Name="CEDULA" Type="Int32" />
     <Property Name="NOMBRE_EMPLEADO" Type="String" MaxLength="400" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="TELEFONO" Type="Int32" />
     <Property Name="CORREO" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
@@ -171,8 +171,43 @@
       <Parameter Name="direccion" Mode="In" Type="String" />
       <Parameter Name="comentario" Mode="In" Type="String" />
     </FunctionImport>
+    <FunctionImport Name="sp_EditarActivos">
+      <Parameter Name="CodigoActivo" Mode="In" Type="String" />
+      <Parameter Name="Nombre_de_activo" Mode="In" Type="String" />
+      <Parameter Name="Numero_de_serie" Mode="In" Type="String" />
+      <Parameter Name="Fecha_de_compra" Mode="In" Type="DateTime" />
+      <Parameter Name="Proveedor" Mode="In" Type="String" />
+      <Parameter Name="Valor_de_compra" Mode="In" Type="Decimal" />
+      <Parameter Name="Valor_actual" Mode="In" Type="Decimal" />
+      <Parameter Name="Comentario" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_EditarPagos">
+      <Parameter Name="CodigoPago" Mode="In" Type="String" />
+      <Parameter Name="FK_CodigoEmpleado" Mode="In" Type="String" />
+      <Parameter Name="CuentaBancaria" Mode="In" Type="String" />
+      <Parameter Name="DiasAPagar" Mode="In" Type="String" />
+      <Parameter Name="Monto" Mode="In" Type="Decimal" />
+      <Parameter Name="FechaDePago" Mode="In" Type="DateTime" />
+      <Parameter Name="Comentario" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_EliminaActivos">
+      <Parameter Name="codigo_activo" Mode="In" Type="String" />
+    </FunctionImport>
     <FunctionImport Name="sp_EliminaEmpleados">
       <Parameter Name="codigo_empleado" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_EliminaPagos">
+      <Parameter Name="CodigoPago" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_InsertaActivos">
+      <Parameter Name="codigo_activo" Mode="In" Type="String" />
+      <Parameter Name="nombre_de_activo" Mode="In" Type="String" />
+      <Parameter Name="numero_de_serie" Mode="In" Type="String" />
+      <Parameter Name="FechaDeCompra" Mode="In" Type="DateTime" />
+      <Parameter Name="Proveedor" Mode="In" Type="String" />
+      <Parameter Name="Valor_de_compra" Mode="In" Type="Decimal" />
+      <Parameter Name="Valor_actual" Mode="In" Type="Decimal" />
+      <Parameter Name="comentario" Mode="In" Type="String" />
     </FunctionImport>
     <FunctionImport Name="sp_InsertaEmpleados">
       <Parameter Name="codigo_empleado" Mode="In" Type="String" />
@@ -183,41 +218,6 @@
       <Parameter Name="direccion" Mode="In" Type="String" />
       <Parameter Name="comentario" Mode="In" Type="String" />
     </FunctionImport>
-    <FunctionImport Name="sp_RetornaEmpleados" ReturnType="Collection(DISETOPModel.sp_RetornaEmpleados_Result)" />
-    <FunctionImport Name="sp_RetornaEmpleadosPorID" ReturnType="Collection(DISETOPModel.sp_RetornaEmpleadosPorID_Result)">
-      <Parameter Name="codigo_empleado" Mode="In" Type="String" />
-    </FunctionImport>
-    <FunctionImport Name="sp_InsertaOactualizaEmpleado">
-      <Parameter Name="codigo_empleado" Mode="In" Type="String" />
-      <Parameter Name="cedula" Mode="In" Type="Int32" />
-      <Parameter Name="nombre_empleado" Mode="In" Type="String" />
-      <Parameter Name="telefono" Mode="In" Type="Int32" />
-      <Parameter Name="correo" Mode="In" Type="String" />
-      <Parameter Name="direccion" Mode="In" Type="String" />
-      <Parameter Name="comentario" Mode="In" Type="String" />
-    </FunctionImport>
-    <FunctionImport Name="sp_RegistrarUsuario">
-      <Parameter Name="Usuario" Mode="In" Type="String" />
-      <Parameter Name="Contrasena" Mode="In" Type="String" />
-      <Parameter Name="Registrado" Mode="InOut" Type="Boolean" />
-      <Parameter Name="Mensaje" Mode="InOut" Type="String" />
-    </FunctionImport>
-    <FunctionImport Name="sp_ValidarUsuario" ReturnType="Collection(Int32)">
-      <Parameter Name="Usuario" Mode="In" Type="String" />
-      <Parameter Name="Contrasena" Mode="In" Type="String" />
-    </FunctionImport>
-    <FunctionImport Name="sp_EditarPagos">
-      <Parameter Name="CodigoPago" Mode="In" Type="String" />
-      <Parameter Name="CodigoEmpleado" Mode="In" Type="String" />
-      <Parameter Name="CuentaBancaria" Mode="In" Type="String" />
-      <Parameter Name="DiasAPagar" Mode="In" Type="String" />
-      <Parameter Name="Monto" Mode="In" Type="Decimal" />
-      <Parameter Name="FechaDePago" Mode="In" Type="DateTime" />
-      <Parameter Name="Comentario" Mode="In" Type="String" />
-    </FunctionImport>
-    <FunctionImport Name="sp_EliminaPagos">
-      <Parameter Name="CodigoPago" Mode="In" Type="String" />
-    </FunctionImport>
     <FunctionImport Name="sp_InsertarPagoEmpleado">
       <Parameter Name="CodigoPago" Mode="In" Type="String" />
       <Parameter Name="FK_CodigoEmpleado" Mode="In" Type="String" />
@@ -227,14 +227,52 @@
       <Parameter Name="FechaDePago" Mode="In" Type="DateTime" />
       <Parameter Name="Comentario" Mode="In" Type="String" />
     </FunctionImport>
+    <FunctionImport Name="sp_RegistrarUsuario">
+      <Parameter Name="Usuario" Mode="In" Type="String" />
+      <Parameter Name="Contrasena" Mode="In" Type="String" />
+      <Parameter Name="Registrado" Mode="InOut" Type="Boolean" />
+      <Parameter Name="Mensaje" Mode="InOut" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_RetornaActivos" ReturnType="Collection(DISETOPModel.sp_RetornaActivos_Result)" />
+    <FunctionImport Name="sp_RetornaActivosPorID" ReturnType="Collection(DISETOPModel.sp_RetornaActivosPorID_Result)">
+      <Parameter Name="codigo_activo" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_RetornaEmpleados" ReturnType="Collection(DISETOPModel.sp_RetornaEmpleados_Result)" />
+    <FunctionImport Name="sp_RetornaEmpleadosPorID" ReturnType="Collection(DISETOPModel.sp_RetornaEmpleadosPorID_Result)">
+      <Parameter Name="codigo_empleado" Mode="In" Type="String" />
+    </FunctionImport>
     <FunctionImport Name="sp_RetornaPagos" ReturnType="Collection(DISETOPModel.sp_RetornaPagos_Result)" />
     <FunctionImport Name="sp_RetornaPagosPorID" ReturnType="Collection(DISETOPModel.sp_RetornaPagosPorID_Result)">
       <Parameter Name="CodigoPago" Mode="In" Type="String" />
     </FunctionImport>
+    <FunctionImport Name="sp_ValidarUsuario" ReturnType="Collection(Int32)">
+      <Parameter Name="Usuario" Mode="In" Type="String" />
+      <Parameter Name="Contrasena" Mode="In" Type="String" />
+    </FunctionImport>
   </EntityContainer>
+  <ComplexType Name="sp_RetornaActivos_Result">
+    <Property Type="String" Name="CODIGO_ACTIVO" Nullable="false" MaxLength="25" />
+    <Property Type="String" Name="NOMBRE_DE_ACTIVO" Nullable="false" MaxLength="400" />
+    <Property Type="String" Name="NUMERO_DE_SERIE" Nullable="false" MaxLength="100" />
+    <Property Type="DateTime" Name="FECHA_DE_COMPRA" Nullable="true" />
+    <Property Type="String" Name="PROVEEDOR" Nullable="true" MaxLength="100" />
+    <Property Type="Decimal" Name="VALOR_DE_COMPRA" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="VALOR_ACTUAL" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="String" Name="COMENTARIO" Nullable="true" MaxLength="500" />
+  </ComplexType>
+  <ComplexType Name="sp_RetornaActivosPorID_Result">
+    <Property Type="String" Name="CODIGO_ACTIVO" Nullable="false" MaxLength="25" />
+    <Property Type="String" Name="NOMBRE_DE_ACTIVO" Nullable="false" MaxLength="400" />
+    <Property Type="String" Name="NUMERO_DE_SERIE" Nullable="false" MaxLength="100" />
+    <Property Type="DateTime" Name="FECHA_DE_COMPRA" Nullable="true" />
+    <Property Type="String" Name="PROVEEDOR" Nullable="true" MaxLength="100" />
+    <Property Type="Decimal" Name="VALOR_DE_COMPRA" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="VALOR_ACTUAL" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="String" Name="COMENTARIO" Nullable="true" MaxLength="500" />
+  </ComplexType>
   <ComplexType Name="sp_RetornaEmpleados_Result">
     <Property Type="String" Name="CODIGO_EMPLEADO" Nullable="false" MaxLength="25" />
-    <Property Type="Int32" Name="CEDULA" Nullable="false" />
+    <Property Type="Int32" Name="CEDULA" Nullable="true" />
     <Property Type="String" Name="NOMBRE_EMPLEADO" Nullable="false" MaxLength="400" />
     <Property Type="Int32" Name="TELEFONO" Nullable="true" />
     <Property Type="String" Name="CORREO" Nullable="true" MaxLength="400" />
@@ -243,7 +281,7 @@
   </ComplexType>
   <ComplexType Name="sp_RetornaEmpleadosPorID_Result">
     <Property Type="String" Name="CODIGO_EMPLEADO" Nullable="false" MaxLength="25" />
-    <Property Type="Int32" Name="CEDULA" Nullable="false" />
+    <Property Type="Int32" Name="CEDULA" Nullable="true" />
     <Property Type="String" Name="NOMBRE_EMPLEADO" Nullable="false" MaxLength="400" />
     <Property Type="Int32" Name="TELEFONO" Nullable="true" />
     <Property Type="String" Name="CORREO" Nullable="true" MaxLength="400" />

@@ -149,7 +149,8 @@
                 </div>
                 <div class="modal-body">
                     <ul>
-                        <li><a href="@Url.Action("VistaEmpleados", "Empleados")" target="_blank">Empleados</a></li>
+                        <li><a href="@Url.Action("VistaEmpleados", "Empleados")">Empleados</a></li>
+                        <!--  usar target="_blank" dentro del <a> si requiero abir la pestana en un nuevo tab-->
                     </ul>
                 </div>
                 <div class="modal-footer">
@@ -171,7 +172,8 @@
                 </div>
                 <div class="modal-body">
                     <ul>
-                        <li><a href="@Url.Action("InsertarEmpleado", "Empleados")" target="_blank">Categoria de Proyectos</a></li>
+                        <li><a href="@Url.Action("InsertarEmpleado", "Empleados")">Categoria de Proyectos</a></li>
+                        <!--  usar target="_blank" dentro del <a> si requiero abir la pestana en un nuevo tab-->
                     </ul>
                 </div>
                 <div class="modal-footer">
@@ -193,7 +195,8 @@
                 </div>
                 <div class="modal-body">
                     <ul>
-                        <li><a href="@Url.Action("InsertarEmpleado", "Empleados")" target="_blank">Proyectos</a></li>
+                        <li><a href="@Url.Action("InsertarEmpleado", "Empleados")">Proyectos</a></li>
+                        <!--  usar target="_blank" dentro del <a> si requiero abir la pestana en un nuevo tab-->
                     </ul>
                 </div>
                 <div class="modal-footer">
@@ -215,7 +218,8 @@
                 </div>
                 <div class="modal-body">
                     <ul>
-                        <li><a href="@Url.Action("InsertarEmpleado", "Empleados")" target="_blank">Costo de Proyectos</a></li>
+                        <li><a href="@Url.Action("InsertarEmpleado", "Empleados")">Costo de Proyectos</a></li>
+                        <!--  usar target="_blank" dentro del <a> si requiero abir la pestana en un nuevo tab-->
                     </ul>
                 </div>
                 <div class="modal-footer">
@@ -237,7 +241,9 @@
                 </div>
                 <div class="modal-body">
                     <ul>
-                        <li><a href="@Url.Action("VistaPagos", "Pagos")" target="_blank">Pagos a empleados</a></li>
+                        <li><a href="@Url.Action("VistaPagos", "Pagos")">Pagos a empleados</a></li>
+                        <!--  usar target="_blank" dentro del <a> si requiero abir la pestana en un nuevo tab-->
+
                     </ul>
                 </div>
                 <div class="modal-footer">
@@ -259,7 +265,7 @@
                 </div>
                 <div class="modal-body">
                     <ul>
-                        <li><a href="@Url.Action("InsertarEmpleado", "Empleados")" target="_blank">Activos de la empresa</a></li>
+                        <li><a href="@Url.Action("VistaActivos", "Activos")"> Activos de la empresa </a></li>
                     </ul>
                 </div>
                 <div class="modal-footer">
@@ -274,7 +280,17 @@
             $('#myCarousel').carousel({
                 interval: 4000 // Cambia la imagen cada 4 segundos (3000 ms)
             });
+
+            // Espacio para el dismiss pendiente
+            //prevent default
+
         });
+
+
+
+
     </script>
+
+
 
 </main>

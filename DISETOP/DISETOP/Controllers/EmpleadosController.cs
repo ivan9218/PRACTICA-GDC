@@ -52,7 +52,7 @@ namespace DISETOP.Controllers
                                 empleado.CEDULA = Convert.ToInt32(reader["CEDULA"]);
                                 empleado.TELEFONO = Convert.ToInt32(reader["TELEFONO"]);
                             }
-                            catch (Exception ex)
+                            catch (Exception)
                             {
 
                             }
@@ -80,14 +80,22 @@ namespace DISETOP.Controllers
         [HttpPost]
         public ActionResult InsertarEmpleado(EMPLEADO empleado)
         {
+            // INICIO VALIDACIONES
             if (ModelState.IsValid)
             {
-
+                if (string.IsNullOrWhiteSpace(empleado.CODIGO_EMPLEADO))
+                {
+                    return Json(new { success = false, message = "El campo 'Codigo de Empleado' es obligatorio." });
+                }
                 if (string.IsNullOrWhiteSpace(empleado.NOMBRE_EMPLEADO))
                 {
                     return Json(new { success = false, message = "El campo 'Nombre de Empleado' es obligatorio." });
                 }
-
+                if (empleado.CEDULA == null)
+                {
+                    return Json(new { success = false, message = "El campo 'Cedula' es obligatorio." });
+                    ////empleado.CEDULA = 0; // Asigna un valor predeterminado de 0
+                }
                 // Asigna 0 a telefono si es nulo o está vacío
                 if (empleado.TELEFONO == null || empleado.TELEFONO == 0)
                 {
@@ -126,7 +134,7 @@ namespace DISETOP.Controllers
                     {
                         return Json(new { success = false, message = "El empleado con la cédula " + empleado.CEDULA + " ya existe." });
                     }
-
+                    // FIN VALIDACIONES
 
                     context.Database.ExecuteSqlCommand("sp_InsertaEmpleados @codigo_empleado, @cedula, @nombre_empleado, @telefono, @correo, @direccion, @comentario",
                         new SqlParameter("@codigo_empleado", empleado.CODIGO_EMPLEADO),
@@ -179,6 +187,7 @@ namespace DISETOP.Controllers
             {
                 using (var context = new DISETOP.Models.DISETOPEntities())
                 {
+                    // INICIO VALIDACIONES
                     // Verifica si la cédula actual ya existe en otro empleado (excluyendo al empleado actual)
                     var empleadoExistente = context.EMPLEADOS.FirstOrDefault(e => e.CEDULA == empleado.CEDULA && e.CODIGO_EMPLEADO != empleado.CODIGO_EMPLEADO);
 
@@ -186,11 +195,19 @@ namespace DISETOP.Controllers
                     {
                         return Json(new { success = false, message = "Ya existe otro empleado con la misma cédula." });
                     }
-
-
+                   
                     if (string.IsNullOrWhiteSpace(empleado.NOMBRE_EMPLEADO))
                     {
                         return Json(new { success = false, message = "El campo 'Nombre de Empleado' es obligatorio." });
+                    }
+                    if (string.IsNullOrWhiteSpace(empleado.CODIGO_EMPLEADO))
+                    {
+                        return Json(new { success = false, message = "El campo 'Codigo de Empleado' es obligatorio." });
+                    }
+                    if (empleado.CEDULA == null)
+                    {
+                        return Json(new { success = false, message = "El campo 'Cedula' es obligatorio." });
+                        ////empleado.CEDULA = 0; // Asigna un valor predeterminado de 0
                     }
 
                     // Asigna 0 a telefono si es nulo o está vacío
@@ -198,7 +215,7 @@ namespace DISETOP.Controllers
                     {
                         empleado.TELEFONO = 0;
                     }
-
+                   
                     // Asigna cadena vacía a comentario si está nulo
                     if (string.IsNullOrWhiteSpace(empleado.COMENTARIO))
                     {
@@ -216,7 +233,7 @@ namespace DISETOP.Controllers
                     {
                         empleado.CORREO = string.Empty;
                     }
-
+                    // FIN VALIDACIONES
                     // Actualiza el empleado en la base de datos utilizando el procedimiento almacenado
                     context.Database.ExecuteSqlCommand("sp_ActualizaEmpleados @codigo_empleado, @cedula, @nombre_empleado, @telefono, @correo, @direccion, @comentario",
                         new SqlParameter("@codigo_empleado", empleado.CODIGO_EMPLEADO),
@@ -237,7 +254,6 @@ namespace DISETOP.Controllers
 
 
         //FIN DE EDITAR EN GRID
-
 
         //INICIO ELIMINAR EN GRID
         public ActionResult EliminarEmpleado(string codigoEmpleado)

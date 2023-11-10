@@ -42,7 +42,7 @@
       <PropertyRef Name="CODIGO_EMPLEADO" />
     </Key>
     <Property Name="CODIGO_EMPLEADO" Type="varchar" MaxLength="25" Nullable="false" />
-    <Property Name="CEDULA" Type="int" Nullable="false" />
+    <Property Name="CEDULA" Type="int" />
     <Property Name="NOMBRE_EMPLEADO" Type="varchar" MaxLength="400" Nullable="false" />
     <Property Name="TELEFONO" Type="int" />
     <Property Name="CORREO" Type="varchar" MaxLength="400" />
@@ -74,8 +74,8 @@
     <Property Name="PRECIO" Type="decimal" Precision="10" Scale="2" />
     <Property Name="COMENTARIO" Type="varchar" MaxLength="500" />
   </EntityType>
-  <!--Errors Found During Generation:
-warning 6002: The table/view 'DISETOP.dbo.USUARIOS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DISETOP.dbo.USUARIOS' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
   <EntityType Name="USUARIOS">
     <Key>
       <PropertyRef Name="ID_USUARIO" />
@@ -141,20 +141,43 @@ warning 6002: The table/view 'DISETOP.dbo.USUARIOS' does not have a primary key 
     <Parameter Name="direccion" Type="varchar" Mode="In" />
     <Parameter Name="comentario" Type="varchar" Mode="In" />
   </Function>
+  <Function Name="sp_EditarActivos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="CodigoActivo" Type="varchar" Mode="In" />
+    <Parameter Name="Nombre_de_activo" Type="varchar" Mode="In" />
+    <Parameter Name="Numero_de_serie" Type="varchar" Mode="In" />
+    <Parameter Name="Fecha_de_compra" Type="date" Mode="In" />
+    <Parameter Name="Proveedor" Type="varchar" Mode="In" />
+    <Parameter Name="Valor_de_compra" Type="decimal" Mode="In" />
+    <Parameter Name="Valor_actual" Type="decimal" Mode="In" />
+    <Parameter Name="Comentario" Type="varchar" Mode="In" />
+  </Function>
   <Function Name="sp_EditarPagos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="CodigoPago" Type="varchar" Mode="In" />
-    <Parameter Name="CodigoEmpleado" Type="varchar" Mode="In" />
+    <Parameter Name="FK_CodigoEmpleado" Type="varchar" Mode="In" />
     <Parameter Name="CuentaBancaria" Type="varchar" Mode="In" />
     <Parameter Name="DiasAPagar" Type="varchar" Mode="In" />
     <Parameter Name="Monto" Type="decimal" Mode="In" />
     <Parameter Name="FechaDePago" Type="date" Mode="In" />
     <Parameter Name="Comentario" Type="varchar" Mode="In" />
   </Function>
+  <Function Name="sp_EliminaActivos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="codigo_activo" Type="varchar" Mode="In" />
+  </Function>
   <Function Name="sp_EliminaEmpleados" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="codigo_empleado" Type="varchar" Mode="In" />
   </Function>
   <Function Name="sp_EliminaPagos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="CodigoPago" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="sp_InsertaActivos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="codigo_activo" Type="varchar" Mode="In" />
+    <Parameter Name="nombre_de_activo" Type="varchar" Mode="In" />
+    <Parameter Name="numero_de_serie" Type="varchar" Mode="In" />
+    <Parameter Name="FechaDeCompra" Type="date" Mode="In" />
+    <Parameter Name="Proveedor" Type="varchar" Mode="In" />
+    <Parameter Name="Valor_de_compra" Type="decimal" Mode="In" />
+    <Parameter Name="Valor_actual" Type="decimal" Mode="In" />
+    <Parameter Name="comentario" Type="varchar" Mode="In" />
   </Function>
   <Function Name="sp_InsertaEmpleados" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="codigo_empleado" Type="varchar" Mode="In" />
@@ -179,6 +202,10 @@ warning 6002: The table/view 'DISETOP.dbo.USUARIOS' does not have a primary key 
     <Parameter Name="Contrasena" Type="varchar" Mode="In" />
     <Parameter Name="Registrado" Type="bit" Mode="InOut" />
     <Parameter Name="Mensaje" Type="varchar" Mode="InOut" />
+  </Function>
+  <Function Name="sp_RetornaActivos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="sp_RetornaActivosPorID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="codigo_activo" Type="varchar" Mode="In" />
   </Function>
   <Function Name="sp_RetornaEmpleados" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <Function Name="sp_RetornaEmpleadosPorID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">

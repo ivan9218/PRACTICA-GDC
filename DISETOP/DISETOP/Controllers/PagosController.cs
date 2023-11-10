@@ -50,7 +50,7 @@ namespace DISETOP.Controllers
                                 pago.MONTO = Convert.ToDecimal(reader["MONTO"]);
                                 pago.FECHA_DE_PAGO = Convert.ToDateTime(reader["FECHA_DE_PAGO"]);
                             }
-                            catch (Exception ex)
+                            catch (Exception)
                             {
                                 // Manejar excepciones
                             }
@@ -61,7 +61,7 @@ namespace DISETOP.Controllers
 
                             if (empleado != null)
                             {
-                                pago.FK_CODIGO_EMPLEADO = empleado.NOMBRE_EMPLEADO;
+                                pago.NOMBRE_EMPLEADO = empleado.NOMBRE_EMPLEADO;
                             }
 
 
@@ -104,7 +104,7 @@ namespace DISETOP.Controllers
                                 empleado.CEDULA = Convert.ToInt32(reader["CEDULA"]);
                                 empleado.TELEFONO = Convert.ToInt32(reader["TELEFONO"]);
                             }
-                            catch (Exception ex)
+                            catch (Exception)
                             {
 
                             }
@@ -120,7 +120,7 @@ namespace DISETOP.Controllers
         }
 
         
-        //INICIO LISTAR 
+        //INICIO LISTAR EN EL MODAL
         public ActionResult VistaPagos()
         {
             List<PAGO> pagos = getPagos();
@@ -134,7 +134,7 @@ namespace DISETOP.Controllers
 
             return View(model);
         }
-
+        // FIN DE LISTAR EN EL MODAL 
         // Método para obtener el nombre del empleado ESTE ES PARA LISTAR EN EL GRID LO QUE YO OCUPE BASADO EN EL ID DE LA LLAVE FORANEA
         [HttpGet] // Puedes usar [HttpGet] si corresponde
         public ActionResult ObtenerNombreEmpleado(string codigoEmpleado)
@@ -169,7 +169,7 @@ namespace DISETOP.Controllers
             if (ModelState.IsValid)
             {
                 
-
+                //INICIO VALIDACIONES
                 // Asigna 0 a MONTO si es nulo o está vacío
                 if (pago.MONTO == null)
                 {
@@ -197,7 +197,7 @@ namespace DISETOP.Controllers
                 }
                 if (string.IsNullOrWhiteSpace(pago.FK_CODIGO_EMPLEADO))
                 {
-                    return Json(new { success = false, message = "El campo 'Código de Empleado' es obligatorio." });
+                    return Json(new { success = false, message = "El campo 'Codigo de Empleado' es obligatorio." });
                 }
                 if (pago.FECHA_DE_PAGO != null)
                 {
@@ -208,11 +208,6 @@ namespace DISETOP.Controllers
                     pago.FECHA_DE_PAGO = new DateTime(1753, 1, 1);
                 }
 
-
-                //// Asegúrate de que la fecha esté en el formato deseado
-                //string fechaFormateada = pago.FECHA_DE_PAGO.Value.ToString("dd/MM/yyyy");
-
-                // Inserta el nuevo pago en la base de datos utilizando el procedimiento almacenado
                 using (var context = new DISETOP.Models.DISETOPEntities())
                 {
                     var pagoExistente = context.PAGOS.FirstOrDefault(p => p.CODIGO_PAGO == pago.CODIGO_PAGO);
@@ -222,6 +217,9 @@ namespace DISETOP.Controllers
                         return Json(new { success = false, message = "El pago con el código " + pago.CODIGO_PAGO + " ya existe." });
                     }
 
+                    //var formattedFechaDePago = pago.FECHA_DE_PAGO.ToString("yyyy-MM-dd"); // Formatea la fecha a 'yyyy-MM-dd'
+
+                    //FIN VALIDACIONES
                     context.Database.ExecuteSqlCommand("sp_InsertarPagoEmpleado @Codigo_pago, @FK_CodigoEmpleado, @CuentaBancaria, @DiasAPagar, @Monto, @FechaDePago, @Comentario",
                         new SqlParameter("@Codigo_pago", pago.CODIGO_PAGO),
                         new SqlParameter("@FK_CodigoEmpleado", pago.FK_CODIGO_EMPLEADO),
@@ -240,10 +238,115 @@ namespace DISETOP.Controllers
         }
         //FIN DE INSERTAR EN GRID
 
-
-
-
         //FIN INSERTAR PAGOS
+
+        //INICIO EDITAR PAGOS
+        [HttpGet]
+        public ActionResult EditarPago(string codigo_pago)
+        {
+            // Recuperar el pago de la base de datos usando el codigo_pago proporcionado
+            using (var context = new DISETOP.Models.DISETOPEntities())
+            {
+                PAGO pago = context.PAGOS.FirstOrDefault(e => e.CODIGO_PAGO == codigo_pago);
+
+                if (pago != null)
+                {
+                    return View(pago); // Mostrar la vista de edición con los datos del pago
+                }
+                else
+                {
+                    return HttpNotFound(); // Devolver un error 404 si no se encuentra el empleado
+                }
+            }
+        }
+
+        [HttpPost]
+        public ActionResult EditarPago(PAGO pago)
+        {
+            if (ModelState.IsValid)
+            {
+                using (var context = new DISETOP.Models.DISETOPEntities())
+                {
+                    //INICIO VALIDACIONES
+
+
+                    // Asigna 0 a MONTO si es nulo o está vacío
+                    if (pago.MONTO == null)
+                    {
+                        pago.MONTO = 0;
+                    }
+
+                    // Asigna cadena vacía a COMENTARIO si está nulo
+                    if (string.IsNullOrWhiteSpace(pago.COMENTARIO))
+                    {
+                        pago.COMENTARIO = string.Empty;
+                    }
+                    // Asigna cadena vacía a CUENTA BANCARIA si está nulo
+                    if (string.IsNullOrWhiteSpace(pago.CUENTA_BANCARIA))
+                    {
+                        pago.CUENTA_BANCARIA = string.Empty;
+                    }
+                    // Asigna cadena vacía a DIAS A PAGAR si está nulo
+                    if (string.IsNullOrWhiteSpace(pago.DIAS_A_PAGAR))
+                    {
+                        pago.DIAS_A_PAGAR = string.Empty;
+                    }
+                    if (string.IsNullOrWhiteSpace(pago.CODIGO_PAGO))
+                    {
+                        return Json(new { success = false, message = "El campo 'Código de Pago' es obligatorio." });
+                    }
+                    if (string.IsNullOrWhiteSpace(pago.FK_CODIGO_EMPLEADO))
+                    {
+                        return Json(new { success = false, message = "El campo 'Nombre de Empleado' es obligatorio." });
+                    }
+                    if (pago.FECHA_DE_PAGO != null)
+                    {
+                        pago.FECHA_DE_PAGO = pago.FECHA_DE_PAGO.Value.Date; // Elimina la parte de la hora y los minutos
+                    }
+                    if (pago.FECHA_DE_PAGO == null)
+                    {
+                        //pago.FECHA_DE_PAGO = new DateTime(1753, 1, 1);
+                        pago.FECHA_DE_PAGO = pago.FECHA_DE_PAGO != null ? pago.FECHA_DE_PAGO.Value.Date : new DateTime(1753, 1, 1); // Aplica el formato deseado o la fecha predeterminada
+
+                    }
+                    
+                    context.Database.ExecuteSqlCommand("sp_EditarPagos @CodigoPago, @FK_CodigoEmpleado, @CuentaBancaria, @DiasAPagar, @Monto, @FechaDePago, @Comentario",
+                            new SqlParameter("@CodigoPago", pago.CODIGO_PAGO),
+                            new SqlParameter("@FK_CodigoEmpleado", pago.FK_CODIGO_EMPLEADO),
+                            new SqlParameter("@CuentaBancaria", pago.CUENTA_BANCARIA), 
+                            new SqlParameter("@DiasAPagar", pago.DIAS_A_PAGAR),
+                            new SqlParameter("@Monto", pago.MONTO),
+                            new SqlParameter("@FechaDePago", pago.FECHA_DE_PAGO), // Utiliza la fecha formateada
+                            new SqlParameter("@Comentario", pago.COMENTARIO)
+                        );
+                    
+
+                    return Json(new { success = true });
+                }
+                  
+            }
+
+            return Json(new { success = false, message = "Error al actualizar el pago." });
+        }
+
+        //FIN EDITAR PAGOS
+
+
+        //INICIO ELIMINAR EN GRID
+        public ActionResult EliminarPago(string CodigoPago)
+        {
+            // Llama al procedimiento almacenado para eliminar el empleado
+            using (var context = new DISETOP.Models.DISETOPEntities()) 
+            {
+                context.Database.ExecuteSqlCommand("exec sp_EliminaPagos @CodigoPago", new SqlParameter("@CodigoPago", CodigoPago));
+            }
+
+            // Redirige o retorna algún resultado, por ejemplo, la vista nuevamente.
+            return RedirectToAction("VistaPagos");
+        }
+
+
+        //FIN ELIMINAR EN GRID
 
 
 

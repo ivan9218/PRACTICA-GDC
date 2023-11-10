@@ -91,8 +91,43 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <FunctionImportMapping FunctionImportName="sp_ActualizaEmpleados" FunctionName="DISETOPModel.Store.sp_ActualizaEmpleados" />
+    <FunctionImportMapping FunctionImportName="sp_EditarActivos" FunctionName="DISETOPModel.Store.sp_EditarActivos" />
+    <FunctionImportMapping FunctionImportName="sp_EditarPagos" FunctionName="DISETOPModel.Store.sp_EditarPagos" />
+    <FunctionImportMapping FunctionImportName="sp_EliminaActivos" FunctionName="DISETOPModel.Store.sp_EliminaActivos" />
     <FunctionImportMapping FunctionImportName="sp_EliminaEmpleados" FunctionName="DISETOPModel.Store.sp_EliminaEmpleados" />
+    <FunctionImportMapping FunctionImportName="sp_EliminaPagos" FunctionName="DISETOPModel.Store.sp_EliminaPagos" />
+    <FunctionImportMapping FunctionImportName="sp_InsertaActivos" FunctionName="DISETOPModel.Store.sp_InsertaActivos" />
     <FunctionImportMapping FunctionImportName="sp_InsertaEmpleados" FunctionName="DISETOPModel.Store.sp_InsertaEmpleados" />
+    <FunctionImportMapping FunctionImportName="sp_InsertarPagoEmpleado" FunctionName="DISETOPModel.Store.sp_InsertarPagoEmpleado" />
+    <FunctionImportMapping FunctionImportName="sp_RegistrarUsuario" FunctionName="DISETOPModel.Store.sp_RegistrarUsuario" />
+    <FunctionImportMapping FunctionImportName="sp_RetornaActivos" FunctionName="DISETOPModel.Store.sp_RetornaActivos">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DISETOPModel.sp_RetornaActivos_Result">
+          <ScalarProperty Name="CODIGO_ACTIVO" ColumnName="CODIGO_ACTIVO" />
+          <ScalarProperty Name="NOMBRE_DE_ACTIVO" ColumnName="NOMBRE_DE_ACTIVO" />
+          <ScalarProperty Name="NUMERO_DE_SERIE" ColumnName="NUMERO_DE_SERIE" />
+          <ScalarProperty Name="FECHA_DE_COMPRA" ColumnName="FECHA_DE_COMPRA" />
+          <ScalarProperty Name="PROVEEDOR" ColumnName="PROVEEDOR" />
+          <ScalarProperty Name="VALOR_DE_COMPRA" ColumnName="VALOR_DE_COMPRA" />
+          <ScalarProperty Name="VALOR_ACTUAL" ColumnName="VALOR_ACTUAL" />
+          <ScalarProperty Name="COMENTARIO" ColumnName="COMENTARIO" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_RetornaActivosPorID" FunctionName="DISETOPModel.Store.sp_RetornaActivosPorID">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DISETOPModel.sp_RetornaActivosPorID_Result">
+          <ScalarProperty Name="CODIGO_ACTIVO" ColumnName="CODIGO_ACTIVO" />
+          <ScalarProperty Name="NOMBRE_DE_ACTIVO" ColumnName="NOMBRE_DE_ACTIVO" />
+          <ScalarProperty Name="NUMERO_DE_SERIE" ColumnName="NUMERO_DE_SERIE" />
+          <ScalarProperty Name="FECHA_DE_COMPRA" ColumnName="FECHA_DE_COMPRA" />
+          <ScalarProperty Name="PROVEEDOR" ColumnName="PROVEEDOR" />
+          <ScalarProperty Name="VALOR_DE_COMPRA" ColumnName="VALOR_DE_COMPRA" />
+          <ScalarProperty Name="VALOR_ACTUAL" ColumnName="VALOR_ACTUAL" />
+          <ScalarProperty Name="COMENTARIO" ColumnName="COMENTARIO" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
     <FunctionImportMapping FunctionImportName="sp_RetornaEmpleados" FunctionName="DISETOPModel.Store.sp_RetornaEmpleados">
       <ResultMapping>
         <ComplexTypeMapping TypeName="DISETOPModel.sp_RetornaEmpleados_Result">
@@ -119,11 +154,6 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="sp_RegistrarUsuario" FunctionName="DISETOPModel.Store.sp_RegistrarUsuario" />
-    <FunctionImportMapping FunctionImportName="sp_ValidarUsuario" FunctionName="DISETOPModel.Store.sp_ValidarUsuario" />
-    <FunctionImportMapping FunctionImportName="sp_EditarPagos" FunctionName="DISETOPModel.Store.sp_EditarPagos" />
-    <FunctionImportMapping FunctionImportName="sp_EliminaPagos" FunctionName="DISETOPModel.Store.sp_EliminaPagos" />
-    <FunctionImportMapping FunctionImportName="sp_InsertarPagoEmpleado" FunctionName="DISETOPModel.Store.sp_InsertarPagoEmpleado" />
     <FunctionImportMapping FunctionImportName="sp_RetornaPagos" FunctionName="DISETOPModel.Store.sp_RetornaPagos">
       <ResultMapping>
         <ComplexTypeMapping TypeName="DISETOPModel.sp_RetornaPagos_Result">
@@ -150,5 +180,6 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_ValidarUsuario" FunctionName="DISETOPModel.Store.sp_ValidarUsuario" />
   </EntityContainerMapping>
 </Mapping>

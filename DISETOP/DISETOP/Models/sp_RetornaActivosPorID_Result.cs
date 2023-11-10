@@ -11,14 +11,15 @@ namespace DISETOP.Models
 {
     using System;
     
-    public partial class sp_RetornaPagosPorID_Result
+    public partial class sp_RetornaActivosPorID_Result
     {
-        public string CODIGO_PAGO { get; set; }
-        public string FK_CODIGO_EMPLEADO { get; set; }
-        public string CUENTA_BANCARIA { get; set; }
-        public string DIAS_A_PAGAR { get; set; }
-        public Nullable<decimal> MONTO { get; set; }
-        public Nullable<System.DateTime> FECHA_DE_PAGO { get; set; }
+        public string CODIGO_ACTIVO { get; set; }
+        public string NOMBRE_DE_ACTIVO { get; set; }
+        public string NUMERO_DE_SERIE { get; set; }
+        public Nullable<System.DateTime> FECHA_DE_COMPRA { get; set; }
+        public string PROVEEDOR { get; set; }
+        public Nullable<decimal> VALOR_DE_COMPRA { get; set; }
+        public Nullable<decimal> VALOR_ACTUAL { get; set; }
         public string COMENTARIO { get; set; }
     }
 }
