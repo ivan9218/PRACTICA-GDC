@@ -14,22 +14,12 @@ namespace DISETOP.Models
 
 using System;
     
-public partial class sp_RetornaActivos_Result
+public partial class sp_RetornaCategoria_Proyectos_Result
 {
 
-    public string CODIGO_ACTIVO { get; set; }
+    public string CODIGO_CATEGORIA { get; set; }
 
-    public string NOMBRE_DE_ACTIVO { get; set; }
-
-    public string NUMERO_DE_SERIE { get; set; }
-
-    public Nullable<System.DateTime> FECHA_DE_COMPRA { get; set; }
-
-    public string PROVEEDOR { get; set; }
-
-    public Nullable<decimal> VALOR_DE_COMPRA { get; set; }
-
-    public Nullable<decimal> VALOR_ACTUAL { get; set; }
+    public string NOMBRE_CATEGORIA { get; set; }
 
     public string COMENTARIO { get; set; }
 

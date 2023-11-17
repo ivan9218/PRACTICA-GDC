@@ -247,15 +247,17 @@ namespace DISETOP.Controllers
                     //    return Json(new { success = false, message = "El Activo con el código " + activo.CODIGO_ACTIVO + " ya existe." });
                     //}
 
-                    var activoExistentePorSerie = context.ACTIVOS.FirstOrDefault(e => e.NUMERO_DE_SERIE == activo.NUMERO_DE_SERIE && e.CODIGO_ACTIVO != activo.CODIGO_ACTIVO);
+                    // Inserta el nuevo activo en la base de datos utilizando el procedimiento almacenado
+                        // Verifica si existe otro activo con el mismo número de serie (ignorando el actual que se está editando)
+                        var activoExistentePorSerie = context.ACTIVOS.FirstOrDefault(e => e.NUMERO_DE_SERIE == activo.NUMERO_DE_SERIE && e.CODIGO_ACTIVO != activo.CODIGO_ACTIVO);
 
-                    if (activoExistentePorSerie != null)
-                    {
-                        return Json(new { success = false, message = "El activo con el número de serie " + activo.NUMERO_DE_SERIE + " ya existe." });
-                    }
-                    // FIN VALIDACIONES
+                        if (activoExistentePorSerie != null)
+                        {
+                            return Json(new { success = false, message = "El activo con el número de serie " + activo.NUMERO_DE_SERIE + " ya existe." });
+                        }
+                        // FIN VALIDACIONES
 
-                    context.Database.ExecuteSqlCommand("sp_EditarActivos @CodigoActivo, @Nombre_de_activo, @Numero_de_serie, @Fecha_de_compra, @Proveedor, @Valor_de_compra, @Valor_actual, @Comentario",
+                        context.Database.ExecuteSqlCommand("sp_EditarActivos @CodigoActivo, @Nombre_de_activo, @Numero_de_serie, @Fecha_de_compra, @Proveedor, @Valor_de_compra, @Valor_actual, @Comentario",
                         new SqlParameter("@CodigoActivo", activo.CODIGO_ACTIVO),
                         new SqlParameter("@Nombre_de_activo", activo.NOMBRE_DE_ACTIVO),
                         new SqlParameter("@Numero_de_serie", activo.NUMERO_DE_SERIE),
@@ -276,6 +278,21 @@ namespace DISETOP.Controllers
 
         //FIN DE EDITAR EN GRID
 
+        //INICIO ELIMINAR EN GRID
+        public ActionResult EliminarActivo(string codigoActivo)
+        {
+            // Llama al procedimiento almacenado para eliminar el activo
+            using (var context = new DISETOP.Models.DISETOPEntities()) 
+            {
+                context.Database.ExecuteSqlCommand("exec sp_EliminaActivos @codigo_activo", new SqlParameter("@codigo_activo", codigoActivo));
+            }
+
+      
+            return RedirectToAction("VistaActivos");
+        }
+
+
+        //FIN ELIMINAR EN GRID
 
 
 

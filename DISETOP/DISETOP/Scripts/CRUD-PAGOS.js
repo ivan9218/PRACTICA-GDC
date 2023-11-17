@@ -43,7 +43,7 @@ $(document).ready(function () {
             COMENTARIO: comentario
             // Agrega otros campos del pago aquí, si es necesario.
         };
-     
+        debugger
         // Realiza una solicitud AJAX al controlador para insertar el pago
         $.ajax({
             url: '/Pagos/InsertarPago', // Asegúrate de que esta ruta sea la correcta

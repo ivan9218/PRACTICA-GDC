@@ -335,13 +335,13 @@ namespace DISETOP.Controllers
         //INICIO ELIMINAR EN GRID
         public ActionResult EliminarPago(string CodigoPago)
         {
-            // Llama al procedimiento almacenado para eliminar el empleado
+            // Llama al procedimiento almacenado para eliminar el pago
             using (var context = new DISETOP.Models.DISETOPEntities()) 
             {
                 context.Database.ExecuteSqlCommand("exec sp_EliminaPagos @CodigoPago", new SqlParameter("@CodigoPago", CodigoPago));
             }
 
-            // Redirige o retorna algún resultado, por ejemplo, la vista nuevamente.
+       
             return RedirectToAction("VistaPagos");
         }
 

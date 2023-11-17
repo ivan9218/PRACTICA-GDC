@@ -259,12 +259,12 @@ namespace DISETOP.Controllers
         public ActionResult EliminarEmpleado(string codigoEmpleado)
         {
             // Llama al procedimiento almacenado para eliminar el empleado
-            using (var context = new DISETOP.Models.DISETOPEntities()) // Reemplaza "TuContexto" con el nombre de tu contexto de Entity Framework
+            using (var context = new DISETOP.Models.DISETOPEntities()) 
             {
                 context.Database.ExecuteSqlCommand("exec sp_EliminaEmpleados @codigo_empleado", new SqlParameter("@codigo_empleado", codigoEmpleado));
             }
 
-            // Redirige o retorna algún resultado, por ejemplo, la vista nuevamente.
+           
             return RedirectToAction("VistaEmpleados");
         }
 

@@ -130,6 +130,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccesoController.cs" />
     <Compile Include="Controllers\ActivosController.cs" />
+    <Compile Include="Controllers\Categoria_ProyectosController.cs" />
     <Compile Include="Controllers\EmpleadosController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PagosController.cs" />
@@ -137,59 +138,65 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\ACTIVO.cs">
-      <DependentUpon>Disetop.tt</DependentUpon>
+      <DependentUpon>disetop.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CATEGORIA_PROYECTOS.cs">
-      <DependentUpon>Disetop.tt</DependentUpon>
+      <DependentUpon>disetop.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\COSTO_PROYECTOS.cs">
-      <DependentUpon>Disetop.tt</DependentUpon>
+      <DependentUpon>disetop.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Disetop.Context.cs">
+    <Compile Include="Models\disetop.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Disetop.Context.tt</DependentUpon>
+      <DependentUpon>disetop.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Disetop.cs">
+    <Compile Include="Models\disetop.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Disetop.tt</DependentUpon>
+      <DependentUpon>disetop.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Disetop.Designer.cs">
+    <Compile Include="Models\disetop.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Disetop.edmx</DependentUpon>
+      <DependentUpon>disetop.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\EMPLEADO.cs">
-      <DependentUpon>Disetop.tt</DependentUpon>
+      <DependentUpon>disetop.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\PAGO.cs">
-      <DependentUpon>Disetop.tt</DependentUpon>
+      <DependentUpon>disetop.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\PAGOPartial.cs" />
     <Compile Include="Models\PROYECTO.cs">
-      <DependentUpon>Disetop.tt</DependentUpon>
+      <DependentUpon>disetop.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\sp_RetornaActivosPorID_Result.cs">
-      <DependentUpon>Disetop.tt</DependentUpon>
+      <DependentUpon>disetop.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\sp_RetornaActivos_Result.cs">
-      <DependentUpon>Disetop.tt</DependentUpon>
+      <DependentUpon>disetop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sp_RetornaCategoria_ProyectosPorID_Result.cs">
+      <DependentUpon>disetop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sp_RetornaCategoria_Proyectos_Result.cs">
+      <DependentUpon>disetop.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\sp_RetornaEmpleadosPorID_Result.cs">
-      <DependentUpon>Disetop.tt</DependentUpon>
+      <DependentUpon>disetop.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\sp_RetornaEmpleados_Result.cs">
-      <DependentUpon>Disetop.tt</DependentUpon>
+      <DependentUpon>disetop.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\sp_RetornaPagosPorID_Result.cs">
-      <DependentUpon>Disetop.tt</DependentUpon>
+      <DependentUpon>disetop.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\sp_RetornaPagos_Result.cs">
-      <DependentUpon>Disetop.tt</DependentUpon>
+      <DependentUpon>disetop.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\USUARIO.cs">
-      <DependentUpon>Disetop.tt</DependentUpon>
+      <DependentUpon>disetop.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Usuarios.cs" />
     <Compile Include="Permisos\ValidarSesionAttribute.cs" />
@@ -224,15 +231,15 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Models\Disetop.Context.tt">
+    <Content Include="Models\disetop.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Disetop.edmx</DependentUpon>
-      <LastGenOutput>Disetop.Context.cs</LastGenOutput>
+      <LastGenOutput>disetop.Context.cs</LastGenOutput>
+      <DependentUpon>disetop.edmx</DependentUpon>
     </Content>
-    <Content Include="Models\Disetop.tt">
+    <Content Include="Models\disetop.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Disetop.edmx</DependentUpon>
-      <LastGenOutput>Disetop.cs</LastGenOutput>
+      <DependentUpon>disetop.edmx</DependentUpon>
+      <LastGenOutput>disetop.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\animation.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
@@ -242,18 +249,19 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Content\css\bootstrap.min.css.map" />
+    <EntityDeploy Include="Models\disetop.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>disetop.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\disetop.edmx.diagram">
+      <DependentUpon>disetop.edmx</DependentUpon>
+    </Content>
     <Content Include="..\.editorconfig">
       <Link>.editorconfig</Link>
     </Content>
-    <EntityDeploy Include="Models\Disetop.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Disetop.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\Disetop.edmx.diagram">
-      <DependentUpon>Disetop.edmx</DependentUpon>
-    </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\CRUD-ACTIVOS.js" />
+    <Content Include="Scripts\CRUD-CATEGORIA_PROYECTOS.js" />
     <Content Include="Scripts\CRUD-PAGOS.js" />
     <Content Include="Scripts\CRUDjs.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
@@ -290,6 +298,7 @@
     <Content Include="Views\Empleados\InsertarEmpleado.cshtml" />
     <Content Include="Views\Pagos\VistaPagos.cshtml" />
     <Content Include="Views\Activos\VistaActivos.cshtml" />
+    <Content Include="Views\Categoria_Proyectos\VistaCategoria_Proyectos.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

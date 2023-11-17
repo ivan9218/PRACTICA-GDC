@@ -74,8 +74,8 @@
     <Property Name="PRECIO" Type="decimal" Precision="10" Scale="2" />
     <Property Name="COMENTARIO" Type="varchar" MaxLength="500" />
   </EntityType>
-  <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DISETOP.dbo.USUARIOS' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'DISETOP.dbo.USUARIOS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="USUARIOS">
     <Key>
       <PropertyRef Name="ID_USUARIO" />
@@ -105,18 +105,6 @@ advertencia 6002: La tabla o vista 'DISETOP.dbo.USUARIOS' no tiene definida ning
       </Principal>
       <Dependent Role="COSTO_PROYECTOS">
         <PropertyRef Name="FK_CODIGO_PROYECTO" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_PAGOS_EMPLEADOS">
-    <End Role="EMPLEADOS" Type="Self.EMPLEADOS" Multiplicity="1" />
-    <End Role="PAGOS" Type="Self.PAGOS" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="EMPLEADOS">
-        <PropertyRef Name="CODIGO_EMPLEADO" />
-      </Principal>
-      <Dependent Role="PAGOS">
-        <PropertyRef Name="FK_CODIGO_EMPLEADO" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -151,6 +139,11 @@ advertencia 6002: La tabla o vista 'DISETOP.dbo.USUARIOS' no tiene definida ning
     <Parameter Name="Valor_actual" Type="decimal" Mode="In" />
     <Parameter Name="Comentario" Type="varchar" Mode="In" />
   </Function>
+  <Function Name="sp_EditarCategoria_Proyectos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="codigo_categoria" Type="varchar" Mode="In" />
+    <Parameter Name="nombre_categoria" Type="varchar" Mode="In" />
+    <Parameter Name="comentario" Type="varchar" Mode="In" />
+  </Function>
   <Function Name="sp_EditarPagos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="CodigoPago" Type="varchar" Mode="In" />
     <Parameter Name="FK_CodigoEmpleado" Type="varchar" Mode="In" />
@@ -163,8 +156,8 @@ advertencia 6002: La tabla o vista 'DISETOP.dbo.USUARIOS' no tiene definida ning
   <Function Name="sp_EliminaActivos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="codigo_activo" Type="varchar" Mode="In" />
   </Function>
-  <Function Name="sp_EliminaEmpleados" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="codigo_empleado" Type="varchar" Mode="In" />
+  <Function Name="sp_EliminaCategoria_Proyectos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="codigo_categoria" Type="varchar" Mode="In" />
   </Function>
   <Function Name="sp_EliminaPagos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="CodigoPago" Type="varchar" Mode="In" />
@@ -177,6 +170,11 @@ advertencia 6002: La tabla o vista 'DISETOP.dbo.USUARIOS' no tiene definida ning
     <Parameter Name="Proveedor" Type="varchar" Mode="In" />
     <Parameter Name="Valor_de_compra" Type="decimal" Mode="In" />
     <Parameter Name="Valor_actual" Type="decimal" Mode="In" />
+    <Parameter Name="comentario" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="sp_InsertaCategoria_Proyectos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="codigo_categoria" Type="varchar" Mode="In" />
+    <Parameter Name="nombre_categoria" Type="varchar" Mode="In" />
     <Parameter Name="comentario" Type="varchar" Mode="In" />
   </Function>
   <Function Name="sp_InsertaEmpleados" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -206,6 +204,10 @@ advertencia 6002: La tabla o vista 'DISETOP.dbo.USUARIOS' no tiene definida ning
   <Function Name="sp_RetornaActivos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <Function Name="sp_RetornaActivosPorID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="codigo_activo" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="sp_RetornaCategoria_Proyectos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="sp_RetornaCategoria_ProyectosPorID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="codigo_categoria" Type="varchar" Mode="In" />
   </Function>
   <Function Name="sp_RetornaEmpleados" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <Function Name="sp_RetornaEmpleadosPorID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -240,10 +242,6 @@ advertencia 6002: La tabla o vista 'DISETOP.dbo.USUARIOS' no tiene definida ning
     <AssociationSet Name="FK_COSTO_PROYECTOS_PROYECTOS" Association="Self.FK_COSTO_PROYECTOS_PROYECTOS">
       <End Role="PROYECTOS" EntitySet="PROYECTOS" />
       <End Role="COSTO_PROYECTOS" EntitySet="COSTO_PROYECTOS" />
-    </AssociationSet>
-    <AssociationSet Name="FK_PAGOS_EMPLEADOS" Association="Self.FK_PAGOS_EMPLEADOS">
-      <End Role="EMPLEADOS" EntitySet="EMPLEADOS" />
-      <End Role="PAGOS" EntitySet="PAGOS" />
     </AssociationSet>
     <AssociationSet Name="FK_PROYECTOS_CATEGORIA" Association="Self.FK_PROYECTOS_CATEGORIA">
       <End Role="CATEGORIA_PROYECTOS" EntitySet="CATEGORIA_PROYECTOS" />
