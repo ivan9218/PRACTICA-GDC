@@ -47,6 +47,7 @@ namespace DISETOP.Controllers
                             // Añadir manejo de excepciones para CEDULA y TELEFONO
                             try
                             {
+<<<<<<< HEAD
                                 //VALIDA SI LA FECHA NO ES NULA ENTONCES LA CONVIERTE Y LA CARGA
                                 // Y SI ES NULA ENTONCES SE QUEDA ASI NULA Y SE ESCRIBE EL MENSAJE QUE ESTA EN LA VALIDACION DLE HTMMT OSEA EN LA VISTA. 
                                 if (reader["FECHA_DE_COMPRA"] != DBNull.Value)
@@ -54,13 +55,20 @@ namespace DISETOP.Controllers
                                     activo.FECHA_DE_COMPRA = Convert.ToDateTime(reader["FECHA_DE_COMPRA"]);
                                 }
                                
+=======
+                                activo.FECHA_DE_COMPRA = Convert.ToDateTime(reader["FECHA_DE_COMPRA"]);
+>>>>>>> cc5db32696f0857021b9e5e5f9e6118a93561365
                                 activo.VALOR_DE_COMPRA = Convert.ToDecimal(reader["VALOR_DE_COMPRA"]);
                                 activo.VALOR_ACTUAL = Convert.ToDecimal(reader["VALOR_ACTUAL"]);
 
                             }
                             catch (Exception)
                             {
+<<<<<<< HEAD
                                 return Json(new { success = false, message = "Error al cargar datos de la tabla" });
+=======
+
+>>>>>>> cc5db32696f0857021b9e5e5f9e6118a93561365
                             }
 
                             activos.Add(activo);
@@ -87,7 +95,11 @@ namespace DISETOP.Controllers
         public ActionResult InsertarActivo(ACTIVO activo)
         {
             // INICIO VALIDACIONES
+<<<<<<< HEAD
             try
+=======
+            if (ModelState.IsValid)
+>>>>>>> cc5db32696f0857021b9e5e5f9e6118a93561365
             {
                 if (string.IsNullOrWhiteSpace(activo.CODIGO_ACTIVO))
                 {
@@ -105,18 +117,28 @@ namespace DISETOP.Controllers
                 {
                     activo.FECHA_DE_COMPRA = activo.FECHA_DE_COMPRA.Value.Date; // Elimina la parte de la hora y los minutos
                 }
+<<<<<<< HEAD
                 //if (activo.FECHA_DE_COMPRA == null)
                 //{
                 //    activo.FECHA_DE_COMPRA = new DateTime(1753, 1, 1);
 
                 //}
 
+=======
+                if (activo.FECHA_DE_COMPRA == null)
+                {
+                    activo.FECHA_DE_COMPRA = new DateTime(1753, 1, 1);
+
+                }
+ 
+>>>>>>> cc5db32696f0857021b9e5e5f9e6118a93561365
                 // Asigna cadena vacía a proveedor si está nulo
                 if (string.IsNullOrWhiteSpace(activo.PROVEEDOR))
                 {
                     activo.PROVEEDOR = string.Empty;
                 }
 
+<<<<<<< HEAD
                 // Verifica si el MONTO no es nulo y está fuera del rango permitido
                 if (activo.VALOR_DE_COMPRA != null)
                 {
@@ -141,6 +163,16 @@ namespace DISETOP.Controllers
                 else
                 {
                     // Asigna 0 a MONTO si es nulo
+=======
+                // Asigna 0 a MONTO si es nulo o está vacío
+                if (activo.VALOR_DE_COMPRA == null)
+                {
+                    activo.VALOR_DE_COMPRA = 0;
+                }
+                // Asigna 0 a MONTO si es nulo o está vacío
+                if (activo.VALOR_ACTUAL == null)
+                {
+>>>>>>> cc5db32696f0857021b9e5e5f9e6118a93561365
                     activo.VALOR_ACTUAL = 0;
                 }
                 // Asigna cadena vacía a proveedor si está nulo
@@ -171,8 +203,12 @@ namespace DISETOP.Controllers
                         new SqlParameter("@codigo_activo", activo.CODIGO_ACTIVO),
                         new SqlParameter("@nombre_de_activo", activo.NOMBRE_DE_ACTIVO),
                         new SqlParameter("@numero_de_serie", activo.NUMERO_DE_SERIE),
+<<<<<<< HEAD
                         new SqlParameter("@FechaDeCompra", activo.FECHA_DE_COMPRA.HasValue ? (object)activo.FECHA_DE_COMPRA.Value : DBNull.Value),
                         //new SqlParameter("@FechaDeCompra", activo.FECHA_DE_COMPRA),
+=======
+                        new SqlParameter("@FechaDeCompra", activo.FECHA_DE_COMPRA),
+>>>>>>> cc5db32696f0857021b9e5e5f9e6118a93561365
                         new SqlParameter("@Proveedor", activo.PROVEEDOR),
                         new SqlParameter("@Valor_de_compra", activo.VALOR_DE_COMPRA),
                         new SqlParameter("@Valor_actual", activo.VALOR_ACTUAL),
@@ -181,6 +217,7 @@ namespace DISETOP.Controllers
                 }
 
                 return Json(new { success = true });
+<<<<<<< HEAD
                
             }
             catch (Exception ex)
@@ -188,6 +225,11 @@ namespace DISETOP.Controllers
                 // Maneja la excepción y devuelve un mensaje de error
                 return Json(new { success = false, message = "Error al actualizar el activo. Detalles: " + ex.Message });
             }
+=======
+            }
+
+            return View(activo);
+>>>>>>> cc5db32696f0857021b9e5e5f9e6118a93561365
         }
 
 
@@ -217,6 +259,7 @@ namespace DISETOP.Controllers
         [HttpPost]
         public ActionResult EditarActivo(ACTIVO activo)
         {
+<<<<<<< HEAD
             //if (ModelState.IsValid)
             //{try
 
@@ -317,6 +360,91 @@ namespace DISETOP.Controllers
                 return Json(new { success = false, message = "Error al actualizar el activo. Detalles: " + ex.Message });
             }
 
+=======
+            // INICIO VALIDACIONES
+            if (ModelState.IsValid)
+            {
+                if (string.IsNullOrWhiteSpace(activo.CODIGO_ACTIVO))
+                {
+                    return Json(new { success = false, message = "El campo 'Codigo de Activo' es obligatorio." });
+                }
+                if (string.IsNullOrWhiteSpace(activo.NOMBRE_DE_ACTIVO))
+                {
+                    return Json(new { success = false, message = "El campo 'Nombre de Activo' es obligatorio." });
+                }
+                if (string.IsNullOrWhiteSpace(activo.NUMERO_DE_SERIE))
+                {
+                    return Json(new { success = false, message = "El campo 'Número de Serie' es obligatorio." });
+                }
+                if (activo.FECHA_DE_COMPRA != null)
+                {
+                    activo.FECHA_DE_COMPRA = activo.FECHA_DE_COMPRA.Value.Date; // Elimina la parte de la hora y los minutos
+                }
+                if (activo.FECHA_DE_COMPRA == null)
+                {
+                    activo.FECHA_DE_COMPRA = new DateTime(1753, 1, 1);
+
+                }
+
+                // Asigna cadena vacía a proveedor si está nulo
+                if (string.IsNullOrWhiteSpace(activo.PROVEEDOR))
+                {
+                    activo.PROVEEDOR = string.Empty;
+                }
+
+                // Asigna 0 a MONTO si es nulo o está vacío
+                if (activo.VALOR_DE_COMPRA == null)
+                {
+                    activo.VALOR_DE_COMPRA = 0;
+                }
+                // Asigna 0 a MONTO si es nulo o está vacío
+                if (activo.VALOR_ACTUAL == null)
+                {
+                    activo.VALOR_ACTUAL = 0;
+                }
+                // Asigna cadena vacía a proveedor si está nulo
+                if (string.IsNullOrWhiteSpace(activo.COMENTARIO))
+                {
+                    activo.COMENTARIO = string.Empty;
+                }
+
+                // Inserta el nuevo activo en la base de datos utilizando el procedimiento almacenado
+                using (var context = new DISETOP.Models.DISETOPEntities())
+                {
+                    //var activoExistente = context.ACTIVOS.FirstOrDefault(e => e.CODIGO_ACTIVO == activo.CODIGO_ACTIVO);
+
+                    //if (activoExistente != null)
+                    //{
+                    //    return Json(new { success = false, message = "El Activo con el código " + activo.CODIGO_ACTIVO + " ya existe." });
+                    //}
+
+                    // Inserta el nuevo activo en la base de datos utilizando el procedimiento almacenado
+                        // Verifica si existe otro activo con el mismo número de serie (ignorando el actual que se está editando)
+                        var activoExistentePorSerie = context.ACTIVOS.FirstOrDefault(e => e.NUMERO_DE_SERIE == activo.NUMERO_DE_SERIE && e.CODIGO_ACTIVO != activo.CODIGO_ACTIVO);
+
+                        if (activoExistentePorSerie != null)
+                        {
+                            return Json(new { success = false, message = "El activo con el número de serie " + activo.NUMERO_DE_SERIE + " ya existe." });
+                        }
+                        // FIN VALIDACIONES
+
+                        context.Database.ExecuteSqlCommand("sp_EditarActivos @CodigoActivo, @Nombre_de_activo, @Numero_de_serie, @Fecha_de_compra, @Proveedor, @Valor_de_compra, @Valor_actual, @Comentario",
+                        new SqlParameter("@CodigoActivo", activo.CODIGO_ACTIVO),
+                        new SqlParameter("@Nombre_de_activo", activo.NOMBRE_DE_ACTIVO),
+                        new SqlParameter("@Numero_de_serie", activo.NUMERO_DE_SERIE),
+                        new SqlParameter("@Fecha_de_compra", activo.FECHA_DE_COMPRA),
+                        new SqlParameter("@Proveedor", activo.PROVEEDOR),
+                        new SqlParameter("@Valor_de_compra", activo.VALOR_DE_COMPRA),
+                        new SqlParameter("@Valor_actual", activo.VALOR_ACTUAL),
+                        new SqlParameter("@Comentario", activo.COMENTARIO)
+                    );
+                }
+
+                return Json(new { success = true });
+            }
+
+            return View(activo);
+>>>>>>> cc5db32696f0857021b9e5e5f9e6118a93561365
         }
 
 
@@ -326,12 +454,20 @@ namespace DISETOP.Controllers
         public ActionResult EliminarActivo(string codigoActivo)
         {
             // Llama al procedimiento almacenado para eliminar el activo
+<<<<<<< HEAD
             using (var context = new DISETOP.Models.DISETOPEntities())
+=======
+            using (var context = new DISETOP.Models.DISETOPEntities()) 
+>>>>>>> cc5db32696f0857021b9e5e5f9e6118a93561365
             {
                 context.Database.ExecuteSqlCommand("exec sp_EliminaActivos @codigo_activo", new SqlParameter("@codigo_activo", codigoActivo));
             }
 
+<<<<<<< HEAD
 
+=======
+      
+>>>>>>> cc5db32696f0857021b9e5e5f9e6118a93561365
             return RedirectToAction("VistaActivos");
         }
 

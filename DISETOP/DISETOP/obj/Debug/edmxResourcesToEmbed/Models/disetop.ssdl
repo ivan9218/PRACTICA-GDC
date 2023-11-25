@@ -57,7 +57,11 @@
     <Property Name="FK_CODIGO_EMPLEADO" Type="varchar" MaxLength="25" Nullable="false" />
     <Property Name="CUENTA_BANCARIA" Type="varchar" MaxLength="100" />
     <Property Name="DIAS_A_PAGAR" Type="varchar" MaxLength="100" />
+<<<<<<< HEAD
     <Property Name="MONTO" Type="decimal" Precision="18" Scale="2" />
+=======
+    <Property Name="MONTO" Type="decimal" Precision="10" Scale="2" />
+>>>>>>> cc5db32696f0857021b9e5e5f9e6118a93561365
     <Property Name="FECHA_DE_PAGO" Type="date" />
     <Property Name="COMENTARIO" Type="varchar" MaxLength="500" />
   </EntityType>
@@ -71,7 +75,11 @@
     <Property Name="FECHA_INICIO" Type="date" />
     <Property Name="ESTADO" Type="varchar" MaxLength="100" />
     <Property Name="FECHA_FIN" Type="date" />
+<<<<<<< HEAD
     <Property Name="PRECIO" Type="decimal" Precision="18" Scale="2" />
+=======
+    <Property Name="PRECIO" Type="decimal" Precision="10" Scale="2" />
+>>>>>>> cc5db32696f0857021b9e5e5f9e6118a93561365
     <Property Name="COMENTARIO" Type="varchar" MaxLength="500" />
   </EntityType>
   <!--Errors Found During Generation:
@@ -153,6 +161,7 @@ warning 6002: The table/view 'DISETOP.dbo.USUARIOS' does not have a primary key 
     <Parameter Name="FechaDePago" Type="date" Mode="In" />
     <Parameter Name="Comentario" Type="varchar" Mode="In" />
   </Function>
+<<<<<<< HEAD
   <Function Name="sp_EditarProyectos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="CodigoProyecto" Type="varchar" Mode="In" />
     <Parameter Name="NombreProyecto" Type="varchar" Mode="In" />
@@ -163,6 +172,8 @@ warning 6002: The table/view 'DISETOP.dbo.USUARIOS' does not have a primary key 
     <Parameter Name="Precio" Type="decimal" Mode="In" />
     <Parameter Name="Comentario" Type="varchar" Mode="In" />
   </Function>
+=======
+>>>>>>> cc5db32696f0857021b9e5e5f9e6118a93561365
   <Function Name="sp_EliminaActivos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="codigo_activo" Type="varchar" Mode="In" />
   </Function>
@@ -172,9 +183,12 @@ warning 6002: The table/view 'DISETOP.dbo.USUARIOS' does not have a primary key 
   <Function Name="sp_EliminaPagos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="CodigoPago" Type="varchar" Mode="In" />
   </Function>
+<<<<<<< HEAD
   <Function Name="sp_EliminaProyectos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="CodigoProyecto" Type="varchar" Mode="In" />
   </Function>
+=======
+>>>>>>> cc5db32696f0857021b9e5e5f9e6118a93561365
   <Function Name="sp_InsertaActivos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="codigo_activo" Type="varchar" Mode="In" />
     <Parameter Name="nombre_de_activo" Type="varchar" Mode="In" />
@@ -208,6 +222,7 @@ warning 6002: The table/view 'DISETOP.dbo.USUARIOS' does not have a primary key 
     <Parameter Name="FechaDePago" Type="date" Mode="In" />
     <Parameter Name="Comentario" Type="varchar" Mode="In" />
   </Function>
+<<<<<<< HEAD
   <Function Name="sp_InsertarProyecto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="CodigoProyecto" Type="varchar" Mode="In" />
     <Parameter Name="NombreProyecto" Type="varchar" Mode="In" />
@@ -218,6 +233,8 @@ warning 6002: The table/view 'DISETOP.dbo.USUARIOS' does not have a primary key 
     <Parameter Name="Precio" Type="decimal" Mode="In" />
     <Parameter Name="Comentario" Type="varchar" Mode="In" />
   </Function>
+=======
+>>>>>>> cc5db32696f0857021b9e5e5f9e6118a93561365
   <Function Name="sp_RegistrarUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="Usuario" Type="varchar" Mode="In" />
     <Parameter Name="Contrasena" Type="varchar" Mode="In" />
@@ -240,10 +257,13 @@ warning 6002: The table/view 'DISETOP.dbo.USUARIOS' does not have a primary key 
   <Function Name="sp_RetornaPagosPorID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="CodigoPago" Type="varchar" Mode="In" />
   </Function>
+<<<<<<< HEAD
   <Function Name="sp_RetornaProyectos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <Function Name="sp_RetornaProyectosPorID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="CodigoProyecto" Type="varchar" Mode="In" />
   </Function>
+=======
+>>>>>>> cc5db32696f0857021b9e5e5f9e6118a93561365
   <Function Name="sp_ValidarUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="Usuario" Type="varchar" Mode="In" />
     <Parameter Name="Contrasena" Type="varchar" Mode="In" />

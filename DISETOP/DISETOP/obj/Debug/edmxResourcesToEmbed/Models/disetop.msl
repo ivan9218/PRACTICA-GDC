@@ -201,6 +201,7 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
+<<<<<<< HEAD
     <FunctionImportMapping FunctionImportName="sp_EditarProyectos" FunctionName="DISETOPModel.Store.sp_EditarProyectos" />
     <FunctionImportMapping FunctionImportName="sp_EliminaProyectos" FunctionName="DISETOPModel.Store.sp_EliminaProyectos" />
     <FunctionImportMapping FunctionImportName="sp_InsertarProyecto" FunctionName="DISETOPModel.Store.sp_InsertarProyecto" />
@@ -232,5 +233,7 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
+=======
+>>>>>>> cc5db32696f0857021b9e5e5f9e6118a93561365
   </EntityContainerMapping>
 </Mapping>
