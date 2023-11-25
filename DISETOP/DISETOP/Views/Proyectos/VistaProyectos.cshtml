@@ -1,0 +1,227 @@
+﻿@model DISETOP.Models.Proyectos_Y_CategoriasModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    //Layout = null;
+}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap4.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <link href="~/Content/css/CRUD.css" rel="stylesheet" />
+    <script src="https://unpkg.com/jspdf@latest/dist/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.20/jspdf.plugin.autotable.min.js"></script>
+    <script src="~/Scripts/CRUD-PROYECTOS.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary" id="handler-project-crud">
+            Agregar Proyecto
+        </button>
+        <!-- Agrega botones de exportación con el mismo formato -->
+        <div class="container">
+            <div class="action">
+                <span>Exportar a Excel:</span>
+                <button class="btn btn-primary">Xlsx</button>
+                <button class="btn btn-primary">Xls</button>
+                <button class="btn btn-primary">CSV</button>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table id="miTabla" class="table table-striped table-bordered" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Codigo de Proyecto</th>
+                        <th>Nombre de Proyecto</th>
+                        <th>Codigo de Categoria</th>
+                        <th>Nombre de Categoria</th>
+                        <th>Fecha de inicio</th>
+                        <th>Estado</th>
+                        <th>Fecha final</th>
+                        <th>Precio</th>
+                        <th>Comentario</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var proyecto in Model.Proyectos)
+                    {
+                        <tr>
+                            <td>@proyecto.CODIGO_PROYECTO</td>
+                            <td>@proyecto.NOMBRE_PROYECTO</td>
+                            <td>@proyecto.FK_CODIGO_CATEGORIA</td>
+                            <td>@proyecto.NOMBRE_CATEGORIA</td>
+                            <td>@(proyecto.FECHA_INICIO != null ? proyecto.FECHA_INICIO.Value.ToString("dd/MM/yyyy") : "Fecha de Inicio no disponible")</td>
+                            <td>@proyecto.ESTADO</td>
+                            <td>@(proyecto.FECHA_FIN != null ? proyecto.FECHA_FIN.Value.ToString("dd/MM/yyyy") : "Fecha final no disponible")</td>
+                            <td>@proyecto.PRECIO</td>
+                            <td>@proyecto.COMENTARIO</td>
+                            <td>
+                                <div class="d-flex flex-column justify-content-center">
+                                    <button class="btn btn-info editar mb-2" id="buttonEditar" data-codigo-pago="@proyecto.CODIGO_PROYECTO">Editar</button>
+                                    <button class="btn btn-danger eliminar " id="buttonEliminar">Eliminar</button>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- Modal INSERTAR -->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Grupo Disetop Consultores S.A</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <h2>Insertar Proyecto</h2>
+                        <form method="POST" id="form-proyecto">
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="codigo_proyecto">Código de Proyecto <span class="text-danger">*</span>:</label>
+                                        <input type="text" class="form-control" id="codigo_proyecto" name="CODIGO_PROYECTO" maxlength="25" placeholder="Código de Proyecto" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="codigo_categoria">Nombre de Categoria <span class="text-danger">*</span>:</label>
+                                        <select class="form-select" id="codigo_categoria" name="FK_CODIGO_CATEGORIA" required>
+                                            @foreach (var proye in Model.Categorias)
+                                            {
+                                                <option value="@proye.CODIGO_CATEGORIA">@proye.NOMBRE_CATEGORIA</option>
+                                            }
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="nombre_proyecto">Nombre del Proyecto <span class="text-danger">*</span>:</label>
+                                        <input type="text" class="form-control" id="nombre_proyecto" name="NOMBRE_PROYECTO" maxlength="400" placeholder="Nombre del proyecto" required>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="fechaDeInicio">Fecha de Inicio:</label>
+                                        <input type="date" class="form-control datepicker" id="fechaDeInicio" name="FECHA_INICIO" maxlength="400" placeholder="Fecha de Inicio">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="estado">Estado:</label>
+                                        <input type="text" class="form-control" id="estado" name="ESTADO" maxlength="400" placeholder="Estado del proyecto">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="fechaDeFin">Fecha Final:</label>
+                                        <input type="date" class="form-control datepicker" id="fechaDeFin" name="FECHA_FIN" maxlength="400" placeholder="Fecha de Finalizacion">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="precio">Precio:</label>
+                                        <input type="number" class="form-control" id="precio" name="MONTO" maxlength="400" placeholder="Solo valores numéricos">
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="comentario">Comentario:</label>
+                                        <textarea class="form-control" id="comentario" name="COMENTARIO" maxlength="500" placeholder="Comentario" rows="4"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-primary" id="btnGuardar">Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal EDITAR -->
+    <div class="modal fade" id="editarModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Grupo Disetop Consultores S.A</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <h2>Actualizacion de Pago</h2>
+                        <form method="POST" id="form-pago">
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="codigo_pago">Código de Pago: <span class="text-danger">*</span>:</label>
+                                        <input type="text" class="form-control" id="codigo_pago_edit" name="CODIGO_PAGO" maxlength="25" placeholder="Código de Pago" readonly>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="codigo_empleado">Nombre del Empleado <span class="text-danger">*</span>:</label>
+                                        <select class="form-select" id="codigo_empleado_edit" name="FK_CODIGO_EMPLEADO" required>
+                                            @foreach (var proye in Model.Categorias)
+                                            {
+                                                <option value="@proye.CODIGO_CATEGORIA">@proye.NOMBRE_CATEGORIA</option>
+                                            }
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="cuenta_bancaria">Cuenta IBAN <span class="text-danger">*</span>:</label>
+                                        <input type="text" class="form-control" id="cuenta_bancaria_edit" name="CUENTA_BANCARIA" maxlength="400" placeholder="Cuenta IBAN" required>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="diasApagar">Dias a Pagar:</label>
+                                        <input type="text" class="form-control" id="diasApagar_edit" name="DIAS_A_PAGAR" placeholder="Dias a Pagar">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="monto">Monto:</label>
+                                        <input type="number" class="form-control" id="monto_edit" name="MONTO" maxlength="400" placeholder="Solo valores numéricos">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="fechaDePago">Fecha de Pago:</label>
+                                        <input type="date" class="form-control datepicker" id="fechaDePago_edit" name="FECHA_DE_PAGO" maxlength="400" placeholder="Fecha de Pago">
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="comentario">Comentario:</label>
+                                        <textarea class="form-control" id="comentario_edit" name="COMENTARIO" maxlength="500" placeholder="Comentario" rows="4"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-primary" id="btnEditar">Guardar cambios</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/Scripts/scriptEXCEL.js"></script>
+    <script src="~/Scripts/sheetEXCEL.js"></script>
+    @if (TempData["MensajeFechaPorDefecto"] != null)
+    {
+        <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            alert('@TempData["MensajeFechaPorDefecto"]');
+        });
+        </script>
+    }
+</body>
+</html>
+
+

@@ -7,7 +7,7 @@
 
 <html>
 <head>
-    <title>My Awesome Login Page</title>
+    <title>Disetop Login</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
@@ -19,8 +19,11 @@
         <div class="d-flex justify-content-center h-100">
             <div class="user_card">
                 <div class="d-flex justify-content-center">
-                    <div class="brand_logo_container">
+                    @*<div class="brand_logo_container">
                         <img src="~/Content/disetop-LOGO.png" class="brand_logo" alt="Logo" style="border-radius: 50%; max-width: 100%; max-height: 100%;">
+                    </div>*@
+                    <div class="brand_logo_container">
+                        <img src="~/Content/disetop-LOGO.png" class="brand_logo" alt="Logo">
                     </div>
                 </div>
                 <div class="d-flex justify-content-center form_container">
@@ -50,10 +53,9 @@
                         </div>
                     </form>
                 </div>
-
                 <div class="mt-4">
                     <div class="d-flex justify-content-center links">
-                        No tienes una cuenta <a href="@Url.Action("Registrar","Acceso")" class="ml-2"><button type="submit" name="button1" id="btn-pin" class="btn login_btn2"> Registrarse</button>
+                        <button type="submit" name="button1" id="btn-pin" class="btn login_btn2"> Registrarse</button>
 
                     </div>
                 </div>
@@ -63,34 +65,32 @@
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script>
-            document.addEventListener("DOMContentLoaded", function () {
-                const btn = document.querySelector('#btn-pin');
-                btn.addEventListener('click', async () => {
-                    let pin = prompt("Please enter your PIN");
-                    const ajaxUrl = "@Url.Action("CheckPIN", "Acceso")"
-                    // Enviar el PIN al controlador utilizando la URL
-                    $.ajax({
-                        url: ajaxUrl,
-                        method: "POST",
-                        data: { pin: pin },
-                        //   cache: false, // Evitar el almacenamiento en caché
-                        success: function (result) {
-                            if (result.success) {
-                                // El PIN es válido, redirige al formulario de registro
-                                window.location.href = "@Url.Action("Registrar", "Acceso")";
-                            } else {
-                                // El PIN no es válido, muestra un mensaje de error
-                                alert("PIN not valid.");
-                                window.location.href = "@Url.Action("Login", "Acceso")";
-                            }
-                        }
-                    });
+    document.addEventListener("DOMContentLoaded", function () {
+        const btn = document.querySelector('#btn-pin');
+        btn.addEventListener('click', async () => {
+            let pin = prompt("Please enter your PIN");
+            const ajaxUrl = "@Url.Action("CheckPIN", "Acceso")"
+            // Enviar el PIN al controlador utilizando la URL
+            $.ajax({
+                url: ajaxUrl,
+                method: "POST",
+                data: { pin: pin },
+                //   cache: false, // Evitar el almacenamiento en caché
+                success: function (result) {
+                    if (result.success) {
+                        // El PIN es válido, redirige al formulario de registro
+                        window.location.href = "@Url.Action("Registrar", "Acceso")";
+                    } else {
+                        // El PIN no es válido, muestra un mensaje de error
+                        alert("PIN not valid.");
+                    }
+                }
+            });
 
-                })
-            })
+        })
+    })
 
     </script>
-
 
 </body>
 </html>

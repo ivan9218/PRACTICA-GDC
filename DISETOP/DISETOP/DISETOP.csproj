@@ -14,7 +14,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>DISETOP</RootNamespace>
     <AssemblyName>DISETOP</AssemblyName>
-    <TargetFrameworkVersion>v4.8.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
@@ -25,6 +25,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -45,19 +46,25 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Web.Abstractions" />
     <Reference Include="System.Web.Routing" />
     <Reference Include="System.Xml" />
@@ -102,6 +109,7 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="System.Xml.Linq" />
     <Reference Include="WebGrease">
       <Private>True</Private>
       <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
@@ -121,11 +129,83 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccesoController.cs" />
+    <Compile Include="Controllers\ActivosController.cs" />
+    <Compile Include="Controllers\Categoria_ProyectosController.cs" />
+    <Compile Include="Controllers\EmpleadosController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PagosController.cs" />
+    <Compile Include="Controllers\ProyectosController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Usuario.cs" />
+    <Compile Include="Models\ACTIVO.cs">
+      <DependentUpon>disetop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CATEGORIA_PROYECTOS.cs">
+      <DependentUpon>disetop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\COSTO_PROYECTOS.cs">
+      <DependentUpon>disetop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\disetop.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>disetop.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\disetop.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>disetop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\disetop.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>disetop.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EMPLEADO.cs">
+      <DependentUpon>disetop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PAGO.cs">
+      <DependentUpon>disetop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PROYECTOPartial.cs" />
+    <Compile Include="Models\PAGOPartial.cs" />
+    <Compile Include="Models\PROYECTO.cs">
+      <DependentUpon>disetop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sp_RetornaActivosPorID_Result.cs">
+      <DependentUpon>disetop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sp_RetornaActivos_Result.cs">
+      <DependentUpon>disetop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sp_RetornaCategoria_ProyectosPorID_Result.cs">
+      <DependentUpon>disetop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sp_RetornaCategoria_Proyectos_Result.cs">
+      <DependentUpon>disetop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sp_RetornaEmpleadosPorID_Result.cs">
+      <DependentUpon>disetop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sp_RetornaEmpleados_Result.cs">
+      <DependentUpon>disetop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sp_RetornaPagosPorID_Result.cs">
+      <DependentUpon>disetop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sp_RetornaPagos_Result.cs">
+      <DependentUpon>disetop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sp_RetornaProyectosPorID_Result.cs">
+      <DependentUpon>disetop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sp_RetornaProyectos_Result.cs">
+      <DependentUpon>disetop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\USUARIO.cs">
+      <DependentUpon>disetop.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Usuarios.cs" />
     <Compile Include="Permisos\ValidarSesionAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -148,13 +228,27 @@
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="Content\css\bootstrap.min.css" />
+    <Content Include="Content\css\CRUD.css" />
     <Content Include="Content\css\Login.css" />
     <Content Include="Content\css\Mantenimientos.css" />
     <Content Include="Content\disetop-LOGO.png" />
+    <Content Include="Content\Images\CARRUSEL1.png" />
+    <Content Include="Content\Images\CARRUSEL2.png" />
+    <Content Include="Content\Images\CARRUSEL3.png" />
     <Content Include="Content\Images\disetop-LOGO.png" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Models\disetop.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>disetop.Context.cs</LastGenOutput>
+      <DependentUpon>disetop.edmx</DependentUpon>
+    </Content>
+    <Content Include="Models\disetop.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>disetop.edmx</DependentUpon>
+      <LastGenOutput>disetop.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\animation.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
@@ -163,7 +257,22 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Content\css\bootstrap.min.css.map" />
+    <EntityDeploy Include="Models\disetop.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>disetop.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\disetop.edmx.diagram">
+      <DependentUpon>disetop.edmx</DependentUpon>
+    </Content>
+    <Content Include="..\.editorconfig">
+      <Link>.editorconfig</Link>
+    </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
+    <Content Include="Scripts\CRUD-ACTIVOS.js" />
+    <Content Include="Scripts\CRUD-CATEGORIA_PROYECTOS.js" />
+    <Content Include="Scripts\CRUD-PAGOS.js" />
+    <Content Include="Scripts\CRUD-PROYECTOS.js" />
+    <Content Include="Scripts\CRUDjs.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
@@ -175,6 +284,8 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\MantenimientoMENU.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\scriptEXCEL.js" />
+    <Content Include="Scripts\sheetEXCEL.js" />
     <Content Include="Scripts\templatemo-custom.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -192,6 +303,12 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Acceso\Login.cshtml" />
     <Content Include="Views\Acceso\Registrar.cshtml" />
+    <Content Include="Views\Empleados\VistaEmpleados.cshtml" />
+    <Content Include="Views\Empleados\InsertarEmpleado.cshtml" />
+    <Content Include="Views\Pagos\VistaPagos.cshtml" />
+    <Content Include="Views\Activos\VistaActivos.cshtml" />
+    <Content Include="Views\Categoria_Proyectos\VistaCategoria_Proyectos.cshtml" />
+    <Content Include="Views\Proyectos\VistaProyectos.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -222,6 +339,9 @@
     <Content Include="Scripts\bootstrap.bundle.js.map" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

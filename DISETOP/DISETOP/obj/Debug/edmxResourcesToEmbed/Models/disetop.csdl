@@ -1,0 +1,392 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DISETOPModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="ACTIVO">
+    <Key>
+      <PropertyRef Name="CODIGO_ACTIVO" />
+    </Key>
+    <Property Name="CODIGO_ACTIVO" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="NOMBRE_DE_ACTIVO" Type="String" MaxLength="400" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="NUMERO_DE_SERIE" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="FECHA_DE_COMPRA" Type="DateTime" Precision="0" />
+    <Property Name="PROVEEDOR" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="VALOR_DE_COMPRA" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="VALOR_ACTUAL" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="COMENTARIO" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="CATEGORIA_PROYECTOS">
+    <Key>
+      <PropertyRef Name="CODIGO_CATEGORIA" />
+    </Key>
+    <Property Name="CODIGO_CATEGORIA" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="NOMBRE_CATEGORIA" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="COMENTARIO" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="COSTO_PROYECTOS" Relationship="Self.FK_COSTO_PROYECTOS_CATEGORIA" FromRole="CATEGORIA_PROYECTOS" ToRole="COSTO_PROYECTOS" />
+    <NavigationProperty Name="PROYECTOS" Relationship="Self.FK_PROYECTOS_CATEGORIA" FromRole="CATEGORIA_PROYECTOS" ToRole="PROYECTOS" />
+  </EntityType>
+  <EntityType Name="COSTO_PROYECTOS">
+    <Key>
+      <PropertyRef Name="CODIGO_COSTO_PROYECTO" />
+    </Key>
+    <Property Name="CODIGO_COSTO_PROYECTO" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="FK_CODIGO_PROYECTO" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="FK_CODIGO_CATEGORIA" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DIA_TRABAJADOR" Type="Decimal" Precision="10" Scale="2" />
+    <Property Name="COMBUSTIBLE" Type="Decimal" Precision="10" Scale="2" />
+    <Property Name="VIATICOS" Type="Decimal" Precision="10" Scale="2" />
+    <Property Name="HOSPEDAJE" Type="Decimal" Precision="10" Scale="2" />
+    <Property Name="TIMBRES_CERTIFICACIONES" Type="Decimal" Precision="10" Scale="2" />
+    <Property Name="MATERIALES" Type="Decimal" Precision="10" Scale="2" />
+    <Property Name="TOTAL" Type="Decimal" Precision="10" Scale="2" />
+    <Property Name="COMENTARIO" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="CATEGORIA_PROYECTOS" Relationship="Self.FK_COSTO_PROYECTOS_CATEGORIA" FromRole="COSTO_PROYECTOS" ToRole="CATEGORIA_PROYECTOS" />
+    <NavigationProperty Name="PROYECTO" Relationship="Self.FK_COSTO_PROYECTOS_PROYECTOS" FromRole="COSTO_PROYECTOS" ToRole="PROYECTOS" />
+  </EntityType>
+  <EntityType Name="EMPLEADO">
+    <Key>
+      <PropertyRef Name="CODIGO_EMPLEADO" />
+    </Key>
+    <Property Name="CODIGO_EMPLEADO" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CEDULA" Type="Int32" />
+    <Property Name="NOMBRE_EMPLEADO" Type="String" MaxLength="400" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="TELEFONO" Type="Int32" />
+    <Property Name="CORREO" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
+    <Property Name="DIRECCION" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
+    <Property Name="COMENTARIO" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="PAGOS" Relationship="Self.FK_PAGOS_EMPLEADOS" FromRole="EMPLEADOS" ToRole="PAGOS" />
+  </EntityType>
+  <EntityType Name="PAGO">
+    <Key>
+      <PropertyRef Name="CODIGO_PAGO" />
+    </Key>
+    <Property Name="CODIGO_PAGO" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="FK_CODIGO_EMPLEADO" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CUENTA_BANCARIA" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="DIAS_A_PAGAR" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="MONTO" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="FECHA_DE_PAGO" Type="DateTime" Precision="0" />
+    <Property Name="COMENTARIO" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="EMPLEADO" Relationship="Self.FK_PAGOS_EMPLEADOS" FromRole="PAGOS" ToRole="EMPLEADOS" />
+  </EntityType>
+  <EntityType Name="PROYECTO">
+    <Key>
+      <PropertyRef Name="CODIGO_PROYECTO" />
+    </Key>
+    <Property Name="CODIGO_PROYECTO" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="NOMBRE_PROYECTO" Type="String" MaxLength="400" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="FK_CODIGO_CATEGORIA" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="FECHA_INICIO" Type="DateTime" Precision="0" />
+    <Property Name="ESTADO" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="FECHA_FIN" Type="DateTime" Precision="0" />
+    <Property Name="PRECIO" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="COMENTARIO" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="CATEGORIA_PROYECTOS" Relationship="Self.FK_PROYECTOS_CATEGORIA" FromRole="PROYECTOS" ToRole="CATEGORIA_PROYECTOS" />
+    <NavigationProperty Name="COSTO_PROYECTOS" Relationship="Self.FK_COSTO_PROYECTOS_PROYECTOS" FromRole="PROYECTOS" ToRole="COSTO_PROYECTOS" />
+  </EntityType>
+  <EntityType Name="USUARIO">
+    <Key>
+      <PropertyRef Name="ID_USUARIO" />
+    </Key>
+    <Property Name="ID_USUARIO" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NOMBRE_USUARIO" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="CLAVE" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <Association Name="FK_COSTO_PROYECTOS_CATEGORIA">
+    <End Role="CATEGORIA_PROYECTOS" Type="Self.CATEGORIA_PROYECTOS" Multiplicity="1" />
+    <End Role="COSTO_PROYECTOS" Type="Self.COSTO_PROYECTOS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CATEGORIA_PROYECTOS">
+        <PropertyRef Name="CODIGO_CATEGORIA" />
+      </Principal>
+      <Dependent Role="COSTO_PROYECTOS">
+        <PropertyRef Name="FK_CODIGO_CATEGORIA" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PROYECTOS_CATEGORIA">
+    <End Role="CATEGORIA_PROYECTOS" Type="Self.CATEGORIA_PROYECTOS" Multiplicity="1" />
+    <End Role="PROYECTOS" Type="Self.PROYECTO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CATEGORIA_PROYECTOS">
+        <PropertyRef Name="CODIGO_CATEGORIA" />
+      </Principal>
+      <Dependent Role="PROYECTOS">
+        <PropertyRef Name="FK_CODIGO_CATEGORIA" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_COSTO_PROYECTOS_PROYECTOS">
+    <End Role="PROYECTOS" Type="Self.PROYECTO" Multiplicity="1" />
+    <End Role="COSTO_PROYECTOS" Type="Self.COSTO_PROYECTOS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PROYECTOS">
+        <PropertyRef Name="CODIGO_PROYECTO" />
+      </Principal>
+      <Dependent Role="COSTO_PROYECTOS">
+        <PropertyRef Name="FK_CODIGO_PROYECTO" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PAGOS_EMPLEADOS">
+    <End Role="EMPLEADOS" Type="Self.EMPLEADO" Multiplicity="1" />
+    <End Role="PAGOS" Type="Self.PAGO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EMPLEADOS">
+        <PropertyRef Name="CODIGO_EMPLEADO" />
+      </Principal>
+      <Dependent Role="PAGOS">
+        <PropertyRef Name="FK_CODIGO_EMPLEADO" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="DISETOPEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="ACTIVOS" EntityType="Self.ACTIVO" />
+    <EntitySet Name="CATEGORIA_PROYECTOS" EntityType="Self.CATEGORIA_PROYECTOS" />
+    <EntitySet Name="COSTO_PROYECTOS" EntityType="Self.COSTO_PROYECTOS" />
+    <EntitySet Name="EMPLEADOS" EntityType="Self.EMPLEADO" />
+    <EntitySet Name="PAGOS" EntityType="Self.PAGO" />
+    <EntitySet Name="PROYECTOS" EntityType="Self.PROYECTO" />
+    <EntitySet Name="USUARIOS" EntityType="Self.USUARIO" />
+    <AssociationSet Name="FK_COSTO_PROYECTOS_CATEGORIA" Association="Self.FK_COSTO_PROYECTOS_CATEGORIA">
+      <End Role="CATEGORIA_PROYECTOS" EntitySet="CATEGORIA_PROYECTOS" />
+      <End Role="COSTO_PROYECTOS" EntitySet="COSTO_PROYECTOS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PROYECTOS_CATEGORIA" Association="Self.FK_PROYECTOS_CATEGORIA">
+      <End Role="CATEGORIA_PROYECTOS" EntitySet="CATEGORIA_PROYECTOS" />
+      <End Role="PROYECTOS" EntitySet="PROYECTOS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_COSTO_PROYECTOS_PROYECTOS" Association="Self.FK_COSTO_PROYECTOS_PROYECTOS">
+      <End Role="PROYECTOS" EntitySet="PROYECTOS" />
+      <End Role="COSTO_PROYECTOS" EntitySet="COSTO_PROYECTOS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PAGOS_EMPLEADOS" Association="Self.FK_PAGOS_EMPLEADOS">
+      <End Role="EMPLEADOS" EntitySet="EMPLEADOS" />
+      <End Role="PAGOS" EntitySet="PAGOS" />
+    </AssociationSet>
+    <FunctionImport Name="sp_ActualizaEmpleados">
+      <Parameter Name="codigo_empleado" Mode="In" Type="String" />
+      <Parameter Name="cedula" Mode="In" Type="Int32" />
+      <Parameter Name="nombre_empleado" Mode="In" Type="String" />
+      <Parameter Name="telefono" Mode="In" Type="Int32" />
+      <Parameter Name="correo" Mode="In" Type="String" />
+      <Parameter Name="direccion" Mode="In" Type="String" />
+      <Parameter Name="comentario" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_EliminaEmpleados">
+      <Parameter Name="codigo_empleado" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_InsertaEmpleados">
+      <Parameter Name="codigo_empleado" Mode="In" Type="String" />
+      <Parameter Name="cedula" Mode="In" Type="Int32" />
+      <Parameter Name="nombre_empleado" Mode="In" Type="String" />
+      <Parameter Name="telefono" Mode="In" Type="Int32" />
+      <Parameter Name="correo" Mode="In" Type="String" />
+      <Parameter Name="direccion" Mode="In" Type="String" />
+      <Parameter Name="comentario" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_RetornaEmpleados" ReturnType="Collection(DISETOPModel.sp_RetornaEmpleados_Result)" />
+    <FunctionImport Name="sp_RetornaEmpleadosPorID" ReturnType="Collection(DISETOPModel.sp_RetornaEmpleadosPorID_Result)">
+      <Parameter Name="codigo_empleado" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_InsertaOactualizaEmpleado">
+      <Parameter Name="codigo_empleado" Mode="In" Type="String" />
+      <Parameter Name="cedula" Mode="In" Type="Int32" />
+      <Parameter Name="nombre_empleado" Mode="In" Type="String" />
+      <Parameter Name="telefono" Mode="In" Type="Int32" />
+      <Parameter Name="correo" Mode="In" Type="String" />
+      <Parameter Name="direccion" Mode="In" Type="String" />
+      <Parameter Name="comentario" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_RegistrarUsuario">
+      <Parameter Name="Usuario" Mode="In" Type="String" />
+      <Parameter Name="Contrasena" Mode="In" Type="String" />
+      <Parameter Name="Registrado" Mode="InOut" Type="Boolean" />
+      <Parameter Name="Mensaje" Mode="InOut" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_ValidarUsuario" ReturnType="Collection(Int32)">
+      <Parameter Name="Usuario" Mode="In" Type="String" />
+      <Parameter Name="Contrasena" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_EditarPagos">
+      <Parameter Name="CodigoPago" Mode="In" Type="String" />
+      <Parameter Name="FK_CodigoEmpleado" Mode="In" Type="String" />
+      <Parameter Name="CuentaBancaria" Mode="In" Type="String" />
+      <Parameter Name="DiasAPagar" Mode="In" Type="String" />
+      <Parameter Name="Monto" Mode="In" Type="Decimal" />
+      <Parameter Name="FechaDePago" Mode="In" Type="DateTime" />
+      <Parameter Name="Comentario" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_EliminaPagos">
+      <Parameter Name="CodigoPago" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_InsertarPagoEmpleado">
+      <Parameter Name="CodigoPago" Mode="In" Type="String" />
+      <Parameter Name="FK_CodigoEmpleado" Mode="In" Type="String" />
+      <Parameter Name="CuentaBancaria" Mode="In" Type="String" />
+      <Parameter Name="DiasAPagar" Mode="In" Type="String" />
+      <Parameter Name="Monto" Mode="In" Type="Decimal" />
+      <Parameter Name="FechaDePago" Mode="In" Type="DateTime" />
+      <Parameter Name="Comentario" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_RetornaPagos" ReturnType="Collection(DISETOPModel.sp_RetornaPagos_Result)" />
+    <FunctionImport Name="sp_RetornaPagosPorID" ReturnType="Collection(DISETOPModel.sp_RetornaPagosPorID_Result)">
+      <Parameter Name="CodigoPago" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_EditarActivos">
+      <Parameter Name="CodigoActivo" Mode="In" Type="String" />
+      <Parameter Name="Nombre_de_activo" Mode="In" Type="String" />
+      <Parameter Name="Numero_de_serie" Mode="In" Type="String" />
+      <Parameter Name="Fecha_de_compra" Mode="In" Type="DateTime" />
+      <Parameter Name="Proveedor" Mode="In" Type="String" />
+      <Parameter Name="Valor_de_compra" Mode="In" Type="Decimal" />
+      <Parameter Name="Valor_actual" Mode="In" Type="Decimal" />
+      <Parameter Name="Comentario" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_EliminaActivos">
+      <Parameter Name="codigo_activo" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_InsertaActivos">
+      <Parameter Name="codigo_activo" Mode="In" Type="String" />
+      <Parameter Name="nombre_de_activo" Mode="In" Type="String" />
+      <Parameter Name="numero_de_serie" Mode="In" Type="String" />
+      <Parameter Name="FechaDeCompra" Mode="In" Type="DateTime" />
+      <Parameter Name="Proveedor" Mode="In" Type="String" />
+      <Parameter Name="Valor_de_compra" Mode="In" Type="Decimal" />
+      <Parameter Name="Valor_actual" Mode="In" Type="Decimal" />
+      <Parameter Name="comentario" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_RetornaActivos" ReturnType="Collection(DISETOPModel.sp_RetornaActivos_Result)" />
+    <FunctionImport Name="sp_RetornaActivosPorID" ReturnType="Collection(DISETOPModel.sp_RetornaActivosPorID_Result)">
+      <Parameter Name="codigo_activo" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_EditarCategoria_Proyectos">
+      <Parameter Name="codigo_categoria" Mode="In" Type="String" />
+      <Parameter Name="nombre_categoria" Mode="In" Type="String" />
+      <Parameter Name="comentario" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_EliminaCategoria_Proyectos">
+      <Parameter Name="codigo_categoria" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_InsertaCategoria_Proyectos">
+      <Parameter Name="codigo_categoria" Mode="In" Type="String" />
+      <Parameter Name="nombre_categoria" Mode="In" Type="String" />
+      <Parameter Name="comentario" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_RetornaCategoria_Proyectos" ReturnType="Collection(DISETOPModel.sp_RetornaCategoria_Proyectos_Result)" />
+    <FunctionImport Name="sp_RetornaCategoria_ProyectosPorID" ReturnType="Collection(DISETOPModel.sp_RetornaCategoria_ProyectosPorID_Result)">
+      <Parameter Name="codigo_categoria" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_EditarProyectos">
+      <Parameter Name="CodigoProyecto" Mode="In" Type="String" />
+      <Parameter Name="NombreProyecto" Mode="In" Type="String" />
+      <Parameter Name="FK_CodigoCategoria" Mode="In" Type="String" />
+      <Parameter Name="FechaInicio" Mode="In" Type="DateTime" />
+      <Parameter Name="Estado" Mode="In" Type="String" />
+      <Parameter Name="FechaFin" Mode="In" Type="DateTime" />
+      <Parameter Name="Precio" Mode="In" Type="Decimal" />
+      <Parameter Name="Comentario" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_EliminaProyectos">
+      <Parameter Name="CodigoProyecto" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_InsertarProyecto">
+      <Parameter Name="CodigoProyecto" Mode="In" Type="String" />
+      <Parameter Name="NombreProyecto" Mode="In" Type="String" />
+      <Parameter Name="FK_CodigoCategoria" Mode="In" Type="String" />
+      <Parameter Name="FechaInicio" Mode="In" Type="DateTime" />
+      <Parameter Name="Estado" Mode="In" Type="String" />
+      <Parameter Name="FechaFin" Mode="In" Type="DateTime" />
+      <Parameter Name="Precio" Mode="In" Type="Decimal" />
+      <Parameter Name="Comentario" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_RetornaProyectos" ReturnType="Collection(DISETOPModel.sp_RetornaProyectos_Result)" />
+    <FunctionImport Name="sp_RetornaProyectosPorID" ReturnType="Collection(DISETOPModel.sp_RetornaProyectosPorID_Result)">
+      <Parameter Name="CodigoProyecto" Mode="In" Type="String" />
+    </FunctionImport>
+  </EntityContainer>
+  <ComplexType Name="sp_RetornaEmpleados_Result">
+    <Property Type="String" Name="CODIGO_EMPLEADO" Nullable="false" MaxLength="25" />
+    <Property Type="Int32" Name="CEDULA" Nullable="false" />
+    <Property Type="String" Name="NOMBRE_EMPLEADO" Nullable="false" MaxLength="400" />
+    <Property Type="Int32" Name="TELEFONO" Nullable="true" />
+    <Property Type="String" Name="CORREO" Nullable="true" MaxLength="400" />
+    <Property Type="String" Name="DIRECCION" Nullable="true" MaxLength="400" />
+    <Property Type="String" Name="COMENTARIO" Nullable="true" MaxLength="500" />
+  </ComplexType>
+  <ComplexType Name="sp_RetornaEmpleadosPorID_Result">
+    <Property Type="String" Name="CODIGO_EMPLEADO" Nullable="false" MaxLength="25" />
+    <Property Type="Int32" Name="CEDULA" Nullable="false" />
+    <Property Type="String" Name="NOMBRE_EMPLEADO" Nullable="false" MaxLength="400" />
+    <Property Type="Int32" Name="TELEFONO" Nullable="true" />
+    <Property Type="String" Name="CORREO" Nullable="true" MaxLength="400" />
+    <Property Type="String" Name="DIRECCION" Nullable="true" MaxLength="400" />
+    <Property Type="String" Name="COMENTARIO" Nullable="true" MaxLength="500" />
+  </ComplexType>
+  <ComplexType Name="sp_RetornaPagos_Result">
+    <Property Type="String" Name="CODIGO_PAGO" Nullable="false" MaxLength="25" />
+    <Property Type="String" Name="FK_CODIGO_EMPLEADO" Nullable="false" MaxLength="25" />
+    <Property Type="String" Name="CUENTA_BANCARIA" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="DIAS_A_PAGAR" Nullable="true" MaxLength="100" />
+    <Property Type="Decimal" Name="MONTO" Nullable="true" Precision="10" Scale="2" />
+    <Property Type="DateTime" Name="FECHA_DE_PAGO" Nullable="true" />
+    <Property Type="String" Name="COMENTARIO" Nullable="true" MaxLength="500" />
+  </ComplexType>
+  <ComplexType Name="sp_RetornaPagosPorID_Result">
+    <Property Type="String" Name="CODIGO_PAGO" Nullable="false" MaxLength="25" />
+    <Property Type="String" Name="FK_CODIGO_EMPLEADO" Nullable="false" MaxLength="25" />
+    <Property Type="String" Name="CUENTA_BANCARIA" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="DIAS_A_PAGAR" Nullable="true" MaxLength="100" />
+    <Property Type="Decimal" Name="MONTO" Nullable="true" Precision="10" Scale="2" />
+    <Property Type="DateTime" Name="FECHA_DE_PAGO" Nullable="true" />
+    <Property Type="String" Name="COMENTARIO" Nullable="true" MaxLength="500" />
+  </ComplexType>
+  <ComplexType Name="sp_RetornaActivos_Result">
+    <Property Type="String" Name="CODIGO_ACTIVO" Nullable="false" MaxLength="25" />
+    <Property Type="String" Name="NOMBRE_DE_ACTIVO" Nullable="false" MaxLength="400" />
+    <Property Type="String" Name="NUMERO_DE_SERIE" Nullable="false" MaxLength="100" />
+    <Property Type="DateTime" Name="FECHA_DE_COMPRA" Nullable="true" />
+    <Property Type="String" Name="PROVEEDOR" Nullable="true" MaxLength="100" />
+    <Property Type="Decimal" Name="VALOR_DE_COMPRA" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="VALOR_ACTUAL" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="String" Name="COMENTARIO" Nullable="true" MaxLength="500" />
+  </ComplexType>
+  <ComplexType Name="sp_RetornaActivosPorID_Result">
+    <Property Type="String" Name="CODIGO_ACTIVO" Nullable="false" MaxLength="25" />
+    <Property Type="String" Name="NOMBRE_DE_ACTIVO" Nullable="false" MaxLength="400" />
+    <Property Type="String" Name="NUMERO_DE_SERIE" Nullable="false" MaxLength="100" />
+    <Property Type="DateTime" Name="FECHA_DE_COMPRA" Nullable="true" />
+    <Property Type="String" Name="PROVEEDOR" Nullable="true" MaxLength="100" />
+    <Property Type="Decimal" Name="VALOR_DE_COMPRA" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="VALOR_ACTUAL" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="String" Name="COMENTARIO" Nullable="true" MaxLength="500" />
+  </ComplexType>
+  <ComplexType Name="sp_RetornaCategoria_Proyectos_Result">
+    <Property Type="String" Name="CODIGO_CATEGORIA" Nullable="false" MaxLength="25" />
+    <Property Type="String" Name="NOMBRE_CATEGORIA" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="COMENTARIO" Nullable="true" MaxLength="500" />
+  </ComplexType>
+  <ComplexType Name="sp_RetornaCategoria_ProyectosPorID_Result">
+    <Property Type="String" Name="CODIGO_CATEGORIA" Nullable="false" MaxLength="25" />
+    <Property Type="String" Name="NOMBRE_CATEGORIA" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="COMENTARIO" Nullable="true" MaxLength="500" />
+  </ComplexType>
+  <ComplexType Name="sp_RetornaProyectos_Result">
+    <Property Type="String" Name="CODIGO_PROYECTO" Nullable="false" MaxLength="25" />
+    <Property Type="String" Name="NOMBRE_PROYECTO" Nullable="false" MaxLength="400" />
+    <Property Type="String" Name="FK_CODIGO_CATEGORIA" Nullable="false" MaxLength="25" />
+    <Property Type="DateTime" Name="FECHA_INICIO" Nullable="true" />
+    <Property Type="String" Name="ESTADO" Nullable="true" MaxLength="100" />
+    <Property Type="DateTime" Name="FECHA_FIN" Nullable="true" />
+    <Property Type="Decimal" Name="PRECIO" Nullable="true" Precision="10" Scale="2" />
+    <Property Type="String" Name="COMENTARIO" Nullable="true" MaxLength="500" />
+  </ComplexType>
+  <ComplexType Name="sp_RetornaProyectosPorID_Result">
+    <Property Type="String" Name="CODIGO_PROYECTO" Nullable="false" MaxLength="25" />
+    <Property Type="String" Name="NOMBRE_PROYECTO" Nullable="false" MaxLength="400" />
+    <Property Type="String" Name="FK_CODIGO_CATEGORIA" Nullable="false" MaxLength="25" />
+    <Property Type="DateTime" Name="FECHA_INICIO" Nullable="true" />
+    <Property Type="String" Name="ESTADO" Nullable="true" MaxLength="100" />
+    <Property Type="DateTime" Name="FECHA_FIN" Nullable="true" />
+    <Property Type="Decimal" Name="PRECIO" Nullable="true" Precision="10" Scale="2" />
+    <Property Type="String" Name="COMENTARIO" Nullable="true" MaxLength="500" />
+  </ComplexType>
+</Schema>

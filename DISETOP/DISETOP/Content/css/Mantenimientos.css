@@ -3,7 +3,7 @@
 .grid {
     display: grid;
     width: 100%;
-    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
     gap: 5em;
 }
 
@@ -17,7 +17,7 @@
     .row:hover .hover {
         opacity: 1;
         visibility: visible;
-        transform: translate(0, -110px) scale(1.1);
+        transform: translate(0, -105px) scale(1.1);
     }
 
 .row:active {
@@ -37,6 +37,7 @@
     position: absolute;
     transition: all 0.5s;
     z-index: -1;
+    font-size: 0.8em;
 }
 
 .row {
@@ -50,6 +51,7 @@
     position: relative;
     text-align: center;
     cursor: pointer;
+    min-height: 165px;
 }
 
 
@@ -71,7 +73,7 @@
 main {
     max-width: 1200px;
     margin: auto;
-    margin-top: 20em;
+    margin-top: 3em;
 }
 
 
@@ -123,8 +125,7 @@ a {
 .dealy1, .dealy2, .dealy3, .dealy4, .dealy5, .dealy6 {
     animation-name: scale-up-center;
     animation-duration: 0.4s;
-    #animation-timing-function: linear;
-    #animation-fill-mode: both;
+  
 }
 
 .dealy1 {

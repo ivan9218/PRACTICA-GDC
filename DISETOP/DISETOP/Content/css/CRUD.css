@@ -1,0 +1,22 @@
+﻿/* Estilos personalizados */
+.container {
+    margin-top: 20px;
+}
+
+/* Estilo para los botones "Eliminar" y "Editar" */
+.eliminar, .editar {
+    background-color: #e74c3c;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.text-danger {
+    color: red; /* Cambia el color a rojo o al color que desees */
+    margin-left: 5px; /* Añade un margen a la izquierda del texto */
+}
+
+.dataTables_filter {
+    justify-content: flex-end;
+    display: flex;
+}
