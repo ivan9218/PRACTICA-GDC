@@ -134,10 +134,7 @@
     <Compile Include="Controllers\EmpleadosController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PagosController.cs" />
-<<<<<<< HEAD
     <Compile Include="Controllers\ProyectosController.cs" />
-=======
->>>>>>> cc5db32696f0857021b9e5e5f9e6118a93561365
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -171,10 +168,7 @@
     <Compile Include="Models\PAGO.cs">
       <DependentUpon>disetop.tt</DependentUpon>
     </Compile>
-<<<<<<< HEAD
     <Compile Include="Models\PROYECTOPartial.cs" />
-=======
->>>>>>> cc5db32696f0857021b9e5e5f9e6118a93561365
     <Compile Include="Models\PAGOPartial.cs" />
     <Compile Include="Models\PROYECTO.cs">
       <DependentUpon>disetop.tt</DependentUpon>
@@ -203,15 +197,12 @@
     <Compile Include="Models\sp_RetornaPagos_Result.cs">
       <DependentUpon>disetop.tt</DependentUpon>
     </Compile>
-<<<<<<< HEAD
     <Compile Include="Models\sp_RetornaProyectosPorID_Result.cs">
       <DependentUpon>disetop.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\sp_RetornaProyectos_Result.cs">
       <DependentUpon>disetop.tt</DependentUpon>
     </Compile>
-=======
->>>>>>> cc5db32696f0857021b9e5e5f9e6118a93561365
     <Compile Include="Models\USUARIO.cs">
       <DependentUpon>disetop.tt</DependentUpon>
     </Compile>
@@ -280,10 +271,7 @@
     <Content Include="Scripts\CRUD-ACTIVOS.js" />
     <Content Include="Scripts\CRUD-CATEGORIA_PROYECTOS.js" />
     <Content Include="Scripts\CRUD-PAGOS.js" />
-<<<<<<< HEAD
     <Content Include="Scripts\CRUD-PROYECTOS.js" />
-=======
->>>>>>> cc5db32696f0857021b9e5e5f9e6118a93561365
     <Content Include="Scripts\CRUDjs.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -320,10 +308,7 @@
     <Content Include="Views\Pagos\VistaPagos.cshtml" />
     <Content Include="Views\Activos\VistaActivos.cshtml" />
     <Content Include="Views\Categoria_Proyectos\VistaCategoria_Proyectos.cshtml" />
-<<<<<<< HEAD
     <Content Include="Views\Proyectos\VistaProyectos.cshtml" />
-=======
->>>>>>> cc5db32696f0857021b9e5e5f9e6118a93561365
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

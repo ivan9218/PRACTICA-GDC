@@ -24,13 +24,10 @@ namespace DISETOP.Models
         public List<PAGO> Pagos { get; set; }
         public List<EMPLEADO> Empleados { get; set; }
     }
-<<<<<<< HEAD
 
     public class Proyectos_Y_CategoriasModel
     {
         public List<PROYECTO> Proyectos { get; set; }
         public List<CATEGORIA_PROYECTOS> Categorias { get; set; }
     }
-=======
->>>>>>> cc5db32696f0857021b9e5e5f9e6118a93561365
 }

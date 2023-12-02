@@ -62,11 +62,7 @@
           <Property Name="FK_CODIGO_EMPLEADO" Type="varchar" MaxLength="25" Nullable="false" />
           <Property Name="CUENTA_BANCARIA" Type="varchar" MaxLength="100" />
           <Property Name="DIAS_A_PAGAR" Type="varchar" MaxLength="100" />
-<<<<<<< HEAD
           <Property Name="MONTO" Type="decimal" Precision="18" Scale="2" />
-=======
-          <Property Name="MONTO" Type="decimal" Precision="10" Scale="2" />
->>>>>>> cc5db32696f0857021b9e5e5f9e6118a93561365
           <Property Name="FECHA_DE_PAGO" Type="date" />
           <Property Name="COMENTARIO" Type="varchar" MaxLength="500" />
         </EntityType>
@@ -80,11 +76,7 @@
           <Property Name="FECHA_INICIO" Type="date" />
           <Property Name="ESTADO" Type="varchar" MaxLength="100" />
           <Property Name="FECHA_FIN" Type="date" />
-<<<<<<< HEAD
           <Property Name="PRECIO" Type="decimal" Precision="18" Scale="2" />
-=======
-          <Property Name="PRECIO" Type="decimal" Precision="10" Scale="2" />
->>>>>>> cc5db32696f0857021b9e5e5f9e6118a93561365
           <Property Name="COMENTARIO" Type="varchar" MaxLength="500" />
         </EntityType>
         <!--Errors Found During Generation:
@@ -166,7 +158,6 @@ warning 6002: The table/view 'DISETOP.dbo.USUARIOS' does not have a primary key 
           <Parameter Name="FechaDePago" Type="date" Mode="In" />
           <Parameter Name="Comentario" Type="varchar" Mode="In" />
         </Function>
-<<<<<<< HEAD
         <Function Name="sp_EditarProyectos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="CodigoProyecto" Type="varchar" Mode="In" />
           <Parameter Name="NombreProyecto" Type="varchar" Mode="In" />
@@ -177,8 +168,6 @@ warning 6002: The table/view 'DISETOP.dbo.USUARIOS' does not have a primary key 
           <Parameter Name="Precio" Type="decimal" Mode="In" />
           <Parameter Name="Comentario" Type="varchar" Mode="In" />
         </Function>
-=======
->>>>>>> cc5db32696f0857021b9e5e5f9e6118a93561365
         <Function Name="sp_EliminaActivos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="codigo_activo" Type="varchar" Mode="In" />
         </Function>
@@ -188,12 +177,9 @@ warning 6002: The table/view 'DISETOP.dbo.USUARIOS' does not have a primary key 
         <Function Name="sp_EliminaPagos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="CodigoPago" Type="varchar" Mode="In" />
         </Function>
-<<<<<<< HEAD
         <Function Name="sp_EliminaProyectos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="CodigoProyecto" Type="varchar" Mode="In" />
         </Function>
-=======
->>>>>>> cc5db32696f0857021b9e5e5f9e6118a93561365
         <Function Name="sp_InsertaActivos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="codigo_activo" Type="varchar" Mode="In" />
           <Parameter Name="nombre_de_activo" Type="varchar" Mode="In" />
@@ -227,7 +213,6 @@ warning 6002: The table/view 'DISETOP.dbo.USUARIOS' does not have a primary key 
           <Parameter Name="FechaDePago" Type="date" Mode="In" />
           <Parameter Name="Comentario" Type="varchar" Mode="In" />
         </Function>
-<<<<<<< HEAD
         <Function Name="sp_InsertarProyecto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="CodigoProyecto" Type="varchar" Mode="In" />
           <Parameter Name="NombreProyecto" Type="varchar" Mode="In" />
@@ -238,8 +223,6 @@ warning 6002: The table/view 'DISETOP.dbo.USUARIOS' does not have a primary key 
           <Parameter Name="Precio" Type="decimal" Mode="In" />
           <Parameter Name="Comentario" Type="varchar" Mode="In" />
         </Function>
-=======
->>>>>>> cc5db32696f0857021b9e5e5f9e6118a93561365
         <Function Name="sp_RegistrarUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Usuario" Type="varchar" Mode="In" />
           <Parameter Name="Contrasena" Type="varchar" Mode="In" />
@@ -262,13 +245,10 @@ warning 6002: The table/view 'DISETOP.dbo.USUARIOS' does not have a primary key 
         <Function Name="sp_RetornaPagosPorID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="CodigoPago" Type="varchar" Mode="In" />
         </Function>
-<<<<<<< HEAD
         <Function Name="sp_RetornaProyectos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="sp_RetornaProyectosPorID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="CodigoProyecto" Type="varchar" Mode="In" />
         </Function>
-=======
->>>>>>> cc5db32696f0857021b9e5e5f9e6118a93561365
         <Function Name="sp_ValidarUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Usuario" Type="varchar" Mode="In" />
           <Parameter Name="Contrasena" Type="varchar" Mode="In" />
@@ -366,11 +346,7 @@ warning 6002: The table/view 'DISETOP.dbo.USUARIOS' does not have a primary key 
           <Property Name="FK_CODIGO_EMPLEADO" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CUENTA_BANCARIA" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="DIAS_A_PAGAR" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-<<<<<<< HEAD
           <Property Name="MONTO" Type="Decimal" Precision="18" Scale="2" />
-=======
-          <Property Name="MONTO" Type="Decimal" Precision="10" Scale="2" />
->>>>>>> cc5db32696f0857021b9e5e5f9e6118a93561365
           <Property Name="FECHA_DE_PAGO" Type="DateTime" Precision="0" />
           <Property Name="COMENTARIO" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="EMPLEADO" Relationship="Self.FK_PAGOS_EMPLEADOS" FromRole="PAGOS" ToRole="EMPLEADOS" />
@@ -385,11 +361,7 @@ warning 6002: The table/view 'DISETOP.dbo.USUARIOS' does not have a primary key 
           <Property Name="FECHA_INICIO" Type="DateTime" Precision="0" />
           <Property Name="ESTADO" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="FECHA_FIN" Type="DateTime" Precision="0" />
-<<<<<<< HEAD
           <Property Name="PRECIO" Type="Decimal" Precision="18" Scale="2" />
-=======
-          <Property Name="PRECIO" Type="Decimal" Precision="10" Scale="2" />
->>>>>>> cc5db32696f0857021b9e5e5f9e6118a93561365
           <Property Name="COMENTARIO" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="CATEGORIA_PROYECTOS" Relationship="Self.FK_PROYECTOS_CATEGORIA" FromRole="PROYECTOS" ToRole="CATEGORIA_PROYECTOS" />
           <NavigationProperty Name="COSTO_PROYECTOS" Relationship="Self.FK_COSTO_PROYECTOS_PROYECTOS" FromRole="PROYECTOS" ToRole="COSTO_PROYECTOS" />
@@ -587,7 +559,6 @@ warning 6002: The table/view 'DISETOP.dbo.USUARIOS' does not have a primary key 
           <FunctionImport Name="sp_RetornaCategoria_ProyectosPorID" ReturnType="Collection(DISETOPModel.sp_RetornaCategoria_ProyectosPorID_Result)">
           <Parameter Name="codigo_categoria" Mode="In" Type="String" />
           </FunctionImport>
-<<<<<<< HEAD
           <FunctionImport Name="sp_EditarProyectos">
             <Parameter Name="CodigoProyecto" Mode="In" Type="String" />
             <Parameter Name="NombreProyecto" Mode="In" Type="String" />
@@ -615,8 +586,6 @@ warning 6002: The table/view 'DISETOP.dbo.USUARIOS' does not have a primary key 
           <FunctionImport Name="sp_RetornaProyectosPorID" ReturnType="Collection(DISETOPModel.sp_RetornaProyectosPorID_Result)">
           <Parameter Name="CodigoProyecto" Mode="In" Type="String" />
           </FunctionImport>
-=======
->>>>>>> cc5db32696f0857021b9e5e5f9e6118a93561365
         </EntityContainer>
         <ComplexType Name="sp_RetornaEmpleados_Result">
           <Property Type="String" Name="CODIGO_EMPLEADO" Nullable="false" MaxLength="25" />
@@ -684,7 +653,6 @@ warning 6002: The table/view 'DISETOP.dbo.USUARIOS' does not have a primary key 
           <Property Type="String" Name="NOMBRE_CATEGORIA" Nullable="false" MaxLength="100" />
           <Property Type="String" Name="COMENTARIO" Nullable="true" MaxLength="500" />
         </ComplexType>
-<<<<<<< HEAD
         <ComplexType Name="sp_RetornaProyectos_Result">
           <Property Type="String" Name="CODIGO_PROYECTO" Nullable="false" MaxLength="25" />
           <Property Type="String" Name="NOMBRE_PROYECTO" Nullable="false" MaxLength="400" />
@@ -705,8 +673,6 @@ warning 6002: The table/view 'DISETOP.dbo.USUARIOS' does not have a primary key 
           <Property Type="Decimal" Name="PRECIO" Nullable="true" Precision="10" Scale="2" />
           <Property Type="String" Name="COMENTARIO" Nullable="true" MaxLength="500" />
         </ComplexType>
-=======
->>>>>>> cc5db32696f0857021b9e5e5f9e6118a93561365
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -913,7 +879,6 @@ warning 6002: The table/view 'DISETOP.dbo.USUARIOS' does not have a primary key 
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-<<<<<<< HEAD
           <FunctionImportMapping FunctionImportName="sp_EditarProyectos" FunctionName="DISETOPModel.Store.sp_EditarProyectos" />
           <FunctionImportMapping FunctionImportName="sp_EliminaProyectos" FunctionName="DISETOPModel.Store.sp_EliminaProyectos" />
           <FunctionImportMapping FunctionImportName="sp_InsertarProyecto" FunctionName="DISETOPModel.Store.sp_InsertarProyecto" />
@@ -945,8 +910,6 @@ warning 6002: The table/view 'DISETOP.dbo.USUARIOS' does not have a primary key 
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-=======
->>>>>>> cc5db32696f0857021b9e5e5f9e6118a93561365
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -17,12 +17,9 @@
     });
 
    //INICIO INSERTAR EMPLEADO 
-<<<<<<< HEAD
 
 
 
-=======
->>>>>>> cc5db32696f0857021b9e5e5f9e6118a93561365
     $("#btnGuardar").click(function () {
         // Guarda la info del emp
         const form = $('#form-empleado')
@@ -43,7 +40,6 @@
            
             success: function (result) {
                 if (result.success) {
-<<<<<<< HEAD
                     $('#exampleModalCenter').modal('hide'); // Cierra el modal
                     toastr.success("Empleado ingresado correctamente.");   
                     setTimeout(function () {
@@ -57,17 +53,6 @@
             },
             error: function (xhr, textStatus, errorThrown) {
                 toastr.error("Error al agregar el empleado: " + errorThrown);
-=======
-                    window.location.reload()
-                    alert("Empleado ingresado correctamente.");    
-                } else {
-                    // El muestra un mensaje de error
-                    alert(result.message);                    
-                }
-            },
-            error: function (xhr, textStatus, errorThrown) {
-                alert("Error al agregar el empleado: " + errorThrown);
->>>>>>> cc5db32696f0857021b9e5e5f9e6118a93561365
             }
         });
     }); 
@@ -128,19 +113,11 @@
                     // Actualización exitosa, cierra el modal
                     $('#editarModal').modal('hide');
                     // Recarga la tabla 
-<<<<<<< HEAD
                     
                     toastr.success("Cambios ingresados correctamente.");  
                 } else {
                     // Muestra un mensaje de error si la actualización falla
                     toastr.error(result.message);
-=======
-                    window.location.reload();
-                    alert("Cambios ingresados correctamente.");  
-                } else {
-                    // Muestra un mensaje de error si la actualización falla
-                    alert(result.message);
->>>>>>> cc5db32696f0857021b9e5e5f9e6118a93561365
                 }
             }
         });
@@ -166,28 +143,16 @@
                     // Elimina la fila de la tabla
                     tabla.row(row).remove().draw();
                     // Muestra un mensaje de éxito
-<<<<<<< HEAD
                     toastr.success('Empleado eliminado correctamente');
                 },
                 error: function () {
                     // Maneja los errores si es necesario
                     toastr.error('No se pudo eliminar el empleado');
-=======
-                    alert('Empleado eliminado correctamente');
-                },
-                error: function () {
-                    // Maneja los errores si es necesario
-                    alert('No se pudo eliminar el empleado');
->>>>>>> cc5db32696f0857021b9e5e5f9e6118a93561365
                 }
             });
         } else {
             // Si el usuario hace clic en "Cancelar" en el cuadro de diálogo
-<<<<<<< HEAD
             toastr.error('No se eliminó el empleado');
-=======
-            alert('No se eliminó el empleado');
->>>>>>> cc5db32696f0857021b9e5e5f9e6118a93561365
         }
     });
 

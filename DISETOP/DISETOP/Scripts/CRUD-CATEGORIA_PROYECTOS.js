@@ -37,7 +37,6 @@
 
             success: function (result) {
                 if (result.success) {
-<<<<<<< HEAD
                     $('#exampleModalCenter').modal('hide'); // Cierra el modal
                     toastr.success("Categoría de Proyectos ingresada correctamente.");
                     setTimeout(function () {
@@ -52,17 +51,6 @@
             },
             error: function (xhr, textStatus, errorThrown) {
                 toastr.error("Error al agregar la Categoría de Proyectos: " + errorThrown);
-=======
-                    window.location.reload()
-                    alert("Categoría de Proyectos ingresada correctamente.");
-                } else {
-                    // El muestra un mensaje de error
-                    alert(result.message);
-                }
-            },
-            error: function (xhr, textStatus, errorThrown) {
-                alert("Error al agregar la Categoría de Proyectos: " + errorThrown);
->>>>>>> cc5db32696f0857021b9e5e5f9e6118a93561365
             }
         });
     });
@@ -113,21 +101,13 @@
                     // Actualización exitosa, cierra el modal
                     $('#editarModal').modal('hide');
                     // Recarga la tabla 
-<<<<<<< HEAD
 
                     toastr.success("Cambios ingresados correctamente.");
                 } else {
                     // Muestra un mensaje de error si la actualización falla
                     toastr.error(result.message);
-=======
-                    window.location.reload();
-                    alert("Cambios ingresados correctamente.");
-                } else {
-                    // Muestra un mensaje de error si la actualización falla
-                    alert(result.message);
->>>>>>> cc5db32696f0857021b9e5e5f9e6118a93561365
                 }
-            }
+            } 
         });
     });
     // FIN DE EDITAR CATEGORIA DE PROYECTOS
@@ -151,28 +131,16 @@
                     // Elimina la fila de la tabla
                     tabla.row(row).remove().draw();
                     // Muestra un mensaje de éxito
-<<<<<<< HEAD
                     toastr.success('Categoria de proyecto eliminada correctamente');
                 },
                 error: function () {
                     // Maneja los errores si es necesario
                     toastr.error('No se pudo eliminar la Categoria de proyecto');
-=======
-                    alert('Categoria de proyecto eliminada correctamente');
-                },
-                error: function () {
-                    // Maneja los errores si es necesario
-                    alert('No se pudo eliminar la Categoria de proyecto');
->>>>>>> cc5db32696f0857021b9e5e5f9e6118a93561365
                 }
             });
         } else {
             // Si el usuario hace clic en "Cancelar" en el cuadro de diálogo
-<<<<<<< HEAD
             toastr.error('No se eliminó la Categoria de proyecto');
-=======
-            alert('No se eliminó la Categoria de proyecto');
->>>>>>> cc5db32696f0857021b9e5e5f9e6118a93561365
         }
     });
 

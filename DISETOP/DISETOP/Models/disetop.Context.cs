@@ -555,7 +555,6 @@ public partial class DISETOPEntities : DbContext
         return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_RetornaCategoria_ProyectosPorID_Result>("sp_RetornaCategoria_ProyectosPorID", codigo_categoriaParameter);
     }
 
-<<<<<<< HEAD
 
     public virtual int sp_EditarProyectos(string codigoProyecto, string nombreProyecto, string fK_CodigoCategoria, Nullable<System.DateTime> fechaInicio, string estado, Nullable<System.DateTime> fechaFin, Nullable<decimal> precio, string comentario)
     {
@@ -681,8 +680,6 @@ public partial class DISETOPEntities : DbContext
         return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_RetornaProyectosPorID_Result>("sp_RetornaProyectosPorID", codigoProyectoParameter);
     }
 
-=======
->>>>>>> cc5db32696f0857021b9e5e5f9e6118a93561365
 }
 
 }

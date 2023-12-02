@@ -52,16 +52,19 @@ $(document).ready(function () {
             success: function (result) {
                 if (result.success) {
                     $('#exampleModalCenter').modal('hide'); // Cierra el modal
-                    window.location.reload()
-                    alert("Proyecto ingresado correctamente.");
+                    toastr.success("Proyecto ingresado correctamente.");
+                    setTimeout(function () {
+                        // Tu código que se ejecutará después del retraso de 500 ms
+                        window.location.reload();
+                    }, 500);
               
                 } else {
                     // Muestra un mensaje de error si hay un problema
-                    alert(result.message);
+                    toastr.error(result.message);
                 }
             },
             error: function (xhr, textStatus, errorThrown) {
-                alert("Error al agregar el proyecto: " + errorThrown);
+                toastr.error("Error al agregar el proyecto: " + errorThrown);
             }
         });
     });
@@ -105,7 +108,7 @@ $(document).ready(function () {
         const codigo_empleado_edit = $('#codigo_empleado_edit').val();
         const cuenta_bancaria = $('#cuenta_bancaria_edit').val();
         const diasApagar = $('#diasApagar_edit').val();
-        const monto = $('#monto_edit').val() || 0;
+        const monto = $('#monto_edit').val();
         const fechaDePago = $('#fechaDePago_edit').val();
         const comentario = $('#comentario_edit').val();
 
@@ -130,11 +133,11 @@ $(document).ready(function () {
                     // Actualización exitosa, cierra el modal
                     $('#editarModal').modal('hide');
                     // Recarga la tabla 
-                    window.location.reload();
-                    alert("Cambios ingresados correctamente.");
+                    
+                    toastr.succes("Cambios ingresados correctamente.");
                 } else {
                     // Muestra un mensaje de error si la actualización falla
-                    alert(result.message);
+                    toastr.e(result.message);
                 }
             }
         });
@@ -161,16 +164,16 @@ $(document).ready(function () {
                     // Elimina la fila de la tabla
                     tabla.row(row).remove().draw();
                     // Muestra un mensaje de éxito
-                    alert('Pago eliminado correctamente');
+                    toastr.success('Pago eliminado correctamente');
                 },
                 error: function () {
                     // Maneja los errores si es necesario
-                    alert('No se pudo eliminar el pago');
+                    toastr.error('No se pudo eliminar el pago');
                 }
             });
         } else {
             // Si el usuario hace clic en "Cancelar" en el cuadro de diálogo
-            alert('No se eliminó el pago');
+            toastr.error('No se eliminó el pago');
         }
     });
 

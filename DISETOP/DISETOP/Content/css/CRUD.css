@@ -15,11 +15,8 @@
     color: red; /* Cambia el color a rojo o al color que desees */
     margin-left: 5px; /* Añade un margen a la izquierda del texto */
 }
-<<<<<<< HEAD
 
 .dataTables_filter {
     justify-content: flex-end;
     display: flex;
 }
-=======
->>>>>>> cc5db32696f0857021b9e5e5f9e6118a93561365
