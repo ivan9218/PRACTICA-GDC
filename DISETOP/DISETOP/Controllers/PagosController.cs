@@ -9,6 +9,7 @@ using DISETOP.Models;
 using System.Data.Entity;
 using System.Web.UI;
 using Microsoft.Ajax.Utilities;
+using Antlr.Runtime.Misc;
 
 namespace DISETOP.Controllers
 {
@@ -168,19 +169,37 @@ namespace DISETOP.Controllers
         {
             if (ModelState.IsValid)
             {
-                
-                //INICIO VALIDACIONES
-                // Asigna 0 a MONTO si es nulo o está vacío
-                if (pago.MONTO == null)
+                using (var context = new DISETOP.Models.DISETOPEntities())
                 {
-                    pago.MONTO = 0;
-                }
 
-                // Asigna cadena vacía a COMENTARIO si está nulo
-                if (string.IsNullOrWhiteSpace(pago.COMENTARIO))
-                {
-                    pago.COMENTARIO = string.Empty;
-                }
+                    //INICIO VALIDACIONES
+
+                    var pagoExistente = context.PAGOS.FirstOrDefault(p => p.CODIGO_PAGO == pago.CODIGO_PAGO);
+
+                    if (pagoExistente != null)
+                    {
+                        return Json(new { success = false, message = "El pago con el código " + pago.CODIGO_PAGO + " ya existe." });
+                    }
+
+                    // Verifica si el MONTO no es nulo y está fuera del rango permitido
+                    if (pago.MONTO != null)
+                    {
+                        if (pago.MONTO < 0 || pago.MONTO > 9999999999999999.99m)
+                        {
+                            return Json(new { success = false, message = "El campo 'Monto' está fuera del rango permitido." });
+                        }
+                    }
+                    else
+                    {
+                        // Asigna 0 a MONTO si es nulo
+                        pago.MONTO = 0;
+                    }
+
+                    // Asigna cadena vacía a COMENTARIO si está nulo
+                    if (string.IsNullOrWhiteSpace(pago.COMENTARIO))
+                 {
+                   pago.COMENTARIO = string.Empty;
+                 }
                 // Asigna cadena vacía a CUENTA BANCARIA si está nulo
                 if (string.IsNullOrWhiteSpace(pago.CUENTA_BANCARIA))
                 {
@@ -197,25 +216,12 @@ namespace DISETOP.Controllers
                 }
                 if (string.IsNullOrWhiteSpace(pago.FK_CODIGO_EMPLEADO))
                 {
-                    return Json(new { success = false, message = "El campo 'Codigo de Empleado' es obligatorio." });
+                    return Json(new { success = false, message = "El campo 'Nombre de Empleado' es obligatorio." });
                 }
                 if (pago.FECHA_DE_PAGO != null)
                 {
                     pago.FECHA_DE_PAGO = pago.FECHA_DE_PAGO.Value.Date; // Elimina la parte de la hora y los minutos
                 }
-                if (pago.FECHA_DE_PAGO == null)
-                {
-                    pago.FECHA_DE_PAGO = new DateTime(1753, 1, 1);
-                }
-
-                using (var context = new DISETOP.Models.DISETOPEntities())
-                {
-                    var pagoExistente = context.PAGOS.FirstOrDefault(p => p.CODIGO_PAGO == pago.CODIGO_PAGO);
-
-                    if (pagoExistente != null)
-                    {
-                        return Json(new { success = false, message = "El pago con el código " + pago.CODIGO_PAGO + " ya existe." });
-                    }
 
                     //var formattedFechaDePago = pago.FECHA_DE_PAGO.ToString("yyyy-MM-dd"); // Formatea la fecha a 'yyyy-MM-dd'
 
@@ -226,7 +232,7 @@ namespace DISETOP.Controllers
                         new SqlParameter("@CuentaBancaria", pago.CUENTA_BANCARIA),
                         new SqlParameter("@DiasAPagar", pago.DIAS_A_PAGAR),
                         new SqlParameter("@Monto", pago.MONTO),
-                        new SqlParameter("@FechaDePago", pago.FECHA_DE_PAGO), // Utiliza la fecha formateada
+                        new SqlParameter("@FechaDePago", pago.FECHA_DE_PAGO.HasValue ? (object)pago.FECHA_DE_PAGO.Value : DBNull.Value),
                         new SqlParameter("@Comentario", pago.COMENTARIO)
                     );
                 }
@@ -270,9 +276,17 @@ namespace DISETOP.Controllers
                     //INICIO VALIDACIONES
 
 
-                    // Asigna 0 a MONTO si es nulo o está vacío
-                    if (pago.MONTO == null)
+                       // Verifica si el MONTO no es nulo y está fuera del rango permitido
+                    if (pago.MONTO != null)
                     {
+                        if (pago.MONTO < 0 || pago.MONTO > 9999999999999999.99m)
+                        {
+                            return Json(new { success = false, message = "El campo 'Monto' está fuera del rango permitido." });
+                        }
+                    }
+                    else
+                    {
+                        // Asigna 0 a MONTO si es nulo
                         pago.MONTO = 0;
                     }
 
@@ -303,12 +317,7 @@ namespace DISETOP.Controllers
                     {
                         pago.FECHA_DE_PAGO = pago.FECHA_DE_PAGO.Value.Date; // Elimina la parte de la hora y los minutos
                     }
-                    if (pago.FECHA_DE_PAGO == null)
-                    {
-                        //pago.FECHA_DE_PAGO = new DateTime(1753, 1, 1);
-                        pago.FECHA_DE_PAGO = pago.FECHA_DE_PAGO != null ? pago.FECHA_DE_PAGO.Value.Date : new DateTime(1753, 1, 1); // Aplica el formato deseado o la fecha predeterminada
-
-                    }
+                 
                     
                     context.Database.ExecuteSqlCommand("sp_EditarPagos @CodigoPago, @FK_CodigoEmpleado, @CuentaBancaria, @DiasAPagar, @Monto, @FechaDePago, @Comentario",
                             new SqlParameter("@CodigoPago", pago.CODIGO_PAGO),
@@ -316,7 +325,7 @@ namespace DISETOP.Controllers
                             new SqlParameter("@CuentaBancaria", pago.CUENTA_BANCARIA), 
                             new SqlParameter("@DiasAPagar", pago.DIAS_A_PAGAR),
                             new SqlParameter("@Monto", pago.MONTO),
-                            new SqlParameter("@FechaDePago", pago.FECHA_DE_PAGO), // Utiliza la fecha formateada
+                            new SqlParameter("@FechaDePago", pago.FECHA_DE_PAGO.HasValue ? (object)pago.FECHA_DE_PAGO.Value : DBNull.Value),
                             new SqlParameter("@Comentario", pago.COMENTARIO)
                         );
                     

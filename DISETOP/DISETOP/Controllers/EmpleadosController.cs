@@ -85,7 +85,7 @@ namespace DISETOP.Controllers
             {
                 if (string.IsNullOrWhiteSpace(empleado.CODIGO_EMPLEADO))
                 {
-                    return Json(new { success = false, message = "El campo 'Codigo de Empleado' es obligatorio." });
+                    return Json(new { success = false, message = "El campo 'Código de Empleado' es obligatorio." });
                 }
                 if (string.IsNullOrWhiteSpace(empleado.NOMBRE_EMPLEADO))
                 {
@@ -93,7 +93,7 @@ namespace DISETOP.Controllers
                 }
                 if (empleado.CEDULA == null)
                 {
-                    return Json(new { success = false, message = "El campo 'Cedula' es obligatorio." });
+                    return Json(new { success = false, message = "El campo 'Cédula' es obligatorio." });
                     ////empleado.CEDULA = 0; // Asigna un valor predeterminado de 0
                 }
                 // Asigna 0 a telefono si es nulo o está vacío
@@ -150,7 +150,7 @@ namespace DISETOP.Controllers
                 return Json(new { success = true });
             }
 
-            return View(empleado);
+            return Json(new { success = false, message = "Error al ingresar el empleado." });
         }
 
 
@@ -202,11 +202,11 @@ namespace DISETOP.Controllers
                     }
                     if (string.IsNullOrWhiteSpace(empleado.CODIGO_EMPLEADO))
                     {
-                        return Json(new { success = false, message = "El campo 'Codigo de Empleado' es obligatorio." });
+                        return Json(new { success = false, message = "El campo 'Código de Empleado' es obligatorio." });
                     }
                     if (empleado.CEDULA == null)
                     {
-                        return Json(new { success = false, message = "El campo 'Cedula' es obligatorio." });
+                        return Json(new { success = false, message = "El campo 'Cédula' es obligatorio." });
                         ////empleado.CEDULA = 0; // Asigna un valor predeterminado de 0
                     }
 

@@ -33,13 +33,13 @@
           <Property Name="CODIGO_COSTO_PROYECTO" Type="varchar" MaxLength="25" Nullable="false" />
           <Property Name="FK_CODIGO_PROYECTO" Type="varchar" MaxLength="25" Nullable="false" />
           <Property Name="FK_CODIGO_CATEGORIA" Type="varchar" MaxLength="25" Nullable="false" />
-          <Property Name="DIA_TRABAJADOR" Type="decimal" Precision="10" Scale="2" />
-          <Property Name="COMBUSTIBLE" Type="decimal" Precision="10" Scale="2" />
-          <Property Name="VIATICOS" Type="decimal" Precision="10" Scale="2" />
-          <Property Name="HOSPEDAJE" Type="decimal" Precision="10" Scale="2" />
-          <Property Name="TIMBRES_CERTIFICACIONES" Type="decimal" Precision="10" Scale="2" />
-          <Property Name="MATERIALES" Type="decimal" Precision="10" Scale="2" />
-          <Property Name="TOTAL" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="DIA_TRABAJADOR" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="COMBUSTIBLE" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="VIATICOS" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="HOSPEDAJE" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="TIMBRES_CERTIFICACIONES" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="MATERIALES" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="TOTAL" Type="decimal" Precision="35" Scale="2" />
           <Property Name="COMENTARIO" Type="varchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="EMPLEADOS">
@@ -62,7 +62,7 @@
           <Property Name="FK_CODIGO_EMPLEADO" Type="varchar" MaxLength="25" Nullable="false" />
           <Property Name="CUENTA_BANCARIA" Type="varchar" MaxLength="100" />
           <Property Name="DIAS_A_PAGAR" Type="varchar" MaxLength="100" />
-          <Property Name="MONTO" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="MONTO" Type="decimal" Precision="18" Scale="2" />
           <Property Name="FECHA_DE_PAGO" Type="date" />
           <Property Name="COMENTARIO" Type="varchar" MaxLength="500" />
         </EntityType>
@@ -76,7 +76,7 @@
           <Property Name="FECHA_INICIO" Type="date" />
           <Property Name="ESTADO" Type="varchar" MaxLength="100" />
           <Property Name="FECHA_FIN" Type="date" />
-          <Property Name="PRECIO" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="PRECIO" Type="decimal" Precision="18" Scale="2" />
           <Property Name="COMENTARIO" Type="varchar" MaxLength="500" />
         </EntityType>
         <!--Errors Found During Generation:
@@ -110,6 +110,18 @@ warning 6002: The table/view 'DISETOP.dbo.USUARIOS' does not have a primary key 
             </Principal>
             <Dependent Role="COSTO_PROYECTOS">
               <PropertyRef Name="FK_CODIGO_PROYECTO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PAGOS_EMPLEADOS">
+          <End Role="EMPLEADOS" Type="Self.EMPLEADOS" Multiplicity="1" />
+          <End Role="PAGOS" Type="Self.PAGOS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EMPLEADOS">
+              <PropertyRef Name="CODIGO_EMPLEADO" />
+            </Principal>
+            <Dependent Role="PAGOS">
+              <PropertyRef Name="FK_CODIGO_EMPLEADO" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -149,6 +161,18 @@ warning 6002: The table/view 'DISETOP.dbo.USUARIOS' does not have a primary key 
           <Parameter Name="nombre_categoria" Type="varchar" Mode="In" />
           <Parameter Name="comentario" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="sp_EditarCostoProyecto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CodigoCostoProyecto" Type="varchar" Mode="In" />
+          <Parameter Name="FK_CodigoProyecto" Type="varchar" Mode="In" />
+          <Parameter Name="FK_CodigoCategoria" Type="varchar" Mode="In" />
+          <Parameter Name="DiaTrabajador" Type="decimal" Mode="In" />
+          <Parameter Name="Combustible" Type="decimal" Mode="In" />
+          <Parameter Name="Viaticos" Type="decimal" Mode="In" />
+          <Parameter Name="Hospedaje" Type="decimal" Mode="In" />
+          <Parameter Name="TimbresCertificaciones" Type="decimal" Mode="In" />
+          <Parameter Name="Materiales" Type="decimal" Mode="In" />
+          <Parameter Name="Comentario" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="sp_EditarPagos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="CodigoPago" Type="varchar" Mode="In" />
           <Parameter Name="FK_CodigoEmpleado" Type="varchar" Mode="In" />
@@ -158,14 +182,33 @@ warning 6002: The table/view 'DISETOP.dbo.USUARIOS' does not have a primary key 
           <Parameter Name="FechaDePago" Type="date" Mode="In" />
           <Parameter Name="Comentario" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="sp_EditarProyectos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CodigoProyecto" Type="varchar" Mode="In" />
+          <Parameter Name="NombreProyecto" Type="varchar" Mode="In" />
+          <Parameter Name="FK_CodigoCategoria" Type="varchar" Mode="In" />
+          <Parameter Name="FechaInicio" Type="date" Mode="In" />
+          <Parameter Name="Estado" Type="varchar" Mode="In" />
+          <Parameter Name="FechaFin" Type="date" Mode="In" />
+          <Parameter Name="Precio" Type="decimal" Mode="In" />
+          <Parameter Name="Comentario" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="sp_EliminaActivos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="codigo_activo" Type="varchar" Mode="In" />
         </Function>
         <Function Name="sp_EliminaCategoria_Proyectos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="codigo_categoria" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="sp_EliminaCostoProyectos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CodigoCostoProyecto" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_EliminaEmpleados" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="codigo_empleado" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="sp_EliminaPagos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="CodigoPago" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_EliminaProyectos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CodigoProyecto" Type="varchar" Mode="In" />
         </Function>
         <Function Name="sp_InsertaActivos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="codigo_activo" Type="varchar" Mode="In" />
@@ -191,6 +234,18 @@ warning 6002: The table/view 'DISETOP.dbo.USUARIOS' does not have a primary key 
           <Parameter Name="direccion" Type="varchar" Mode="In" />
           <Parameter Name="comentario" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="sp_InsertarCostoProyecto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CodigoCostoProyecto" Type="varchar" Mode="In" />
+          <Parameter Name="FK_CodigoProyecto" Type="varchar" Mode="In" />
+          <Parameter Name="FK_CodigoCategoria" Type="varchar" Mode="In" />
+          <Parameter Name="DiaTrabajador" Type="decimal" Mode="In" />
+          <Parameter Name="Combustible" Type="decimal" Mode="In" />
+          <Parameter Name="Viaticos" Type="decimal" Mode="In" />
+          <Parameter Name="Hospedaje" Type="decimal" Mode="In" />
+          <Parameter Name="TimbresCertificaciones" Type="decimal" Mode="In" />
+          <Parameter Name="Materiales" Type="decimal" Mode="In" />
+          <Parameter Name="Comentario" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="sp_InsertarPagoEmpleado" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="CodigoPago" Type="varchar" Mode="In" />
           <Parameter Name="FK_CodigoEmpleado" Type="varchar" Mode="In" />
@@ -198,6 +253,16 @@ warning 6002: The table/view 'DISETOP.dbo.USUARIOS' does not have a primary key 
           <Parameter Name="DiasAPagar" Type="varchar" Mode="In" />
           <Parameter Name="Monto" Type="decimal" Mode="In" />
           <Parameter Name="FechaDePago" Type="date" Mode="In" />
+          <Parameter Name="Comentario" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_InsertarProyecto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CodigoProyecto" Type="varchar" Mode="In" />
+          <Parameter Name="NombreProyecto" Type="varchar" Mode="In" />
+          <Parameter Name="FK_CodigoCategoria" Type="varchar" Mode="In" />
+          <Parameter Name="FechaInicio" Type="date" Mode="In" />
+          <Parameter Name="Estado" Type="varchar" Mode="In" />
+          <Parameter Name="FechaFin" Type="date" Mode="In" />
+          <Parameter Name="Precio" Type="decimal" Mode="In" />
           <Parameter Name="Comentario" Type="varchar" Mode="In" />
         </Function>
         <Function Name="sp_RegistrarUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -214,6 +279,10 @@ warning 6002: The table/view 'DISETOP.dbo.USUARIOS' does not have a primary key 
         <Function Name="sp_RetornaCategoria_ProyectosPorID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="codigo_categoria" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="sp_RetornaCostoProyectos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="sp_RetornaCostoProyectosPorID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CodigoCostoProyecto" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="sp_RetornaEmpleados" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="sp_RetornaEmpleadosPorID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="codigo_empleado" Type="varchar" Mode="In" />
@@ -221,6 +290,10 @@ warning 6002: The table/view 'DISETOP.dbo.USUARIOS' does not have a primary key 
         <Function Name="sp_RetornaPagos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="sp_RetornaPagosPorID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="CodigoPago" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_RetornaProyectos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="sp_RetornaProyectosPorID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CodigoProyecto" Type="varchar" Mode="In" />
         </Function>
         <Function Name="sp_ValidarUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Usuario" Type="varchar" Mode="In" />
@@ -247,6 +320,10 @@ warning 6002: The table/view 'DISETOP.dbo.USUARIOS' does not have a primary key 
           <AssociationSet Name="FK_COSTO_PROYECTOS_PROYECTOS" Association="Self.FK_COSTO_PROYECTOS_PROYECTOS">
             <End Role="PROYECTOS" EntitySet="PROYECTOS" />
             <End Role="COSTO_PROYECTOS" EntitySet="COSTO_PROYECTOS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PAGOS_EMPLEADOS" Association="Self.FK_PAGOS_EMPLEADOS">
+            <End Role="EMPLEADOS" EntitySet="EMPLEADOS" />
+            <End Role="PAGOS" EntitySet="PAGOS" />
           </AssociationSet>
           <AssociationSet Name="FK_PROYECTOS_CATEGORIA" Association="Self.FK_PROYECTOS_CATEGORIA">
             <End Role="CATEGORIA_PROYECTOS" EntitySet="CATEGORIA_PROYECTOS" />
@@ -287,13 +364,13 @@ warning 6002: The table/view 'DISETOP.dbo.USUARIOS' does not have a primary key 
           <Property Name="CODIGO_COSTO_PROYECTO" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="FK_CODIGO_PROYECTO" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="FK_CODIGO_CATEGORIA" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="DIA_TRABAJADOR" Type="Decimal" Precision="10" Scale="2" />
-          <Property Name="COMBUSTIBLE" Type="Decimal" Precision="10" Scale="2" />
-          <Property Name="VIATICOS" Type="Decimal" Precision="10" Scale="2" />
-          <Property Name="HOSPEDAJE" Type="Decimal" Precision="10" Scale="2" />
-          <Property Name="TIMBRES_CERTIFICACIONES" Type="Decimal" Precision="10" Scale="2" />
-          <Property Name="MATERIALES" Type="Decimal" Precision="10" Scale="2" />
-          <Property Name="TOTAL" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="DIA_TRABAJADOR" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="COMBUSTIBLE" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="VIATICOS" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="HOSPEDAJE" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="TIMBRES_CERTIFICACIONES" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="MATERIALES" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="TOTAL" Type="Decimal" Precision="35" Scale="2" />
           <Property Name="COMENTARIO" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="CATEGORIA_PROYECTOS" Relationship="Self.FK_COSTO_PROYECTOS_CATEGORIA" FromRole="COSTO_PROYECTOS" ToRole="CATEGORIA_PROYECTOS" />
           <NavigationProperty Name="PROYECTO" Relationship="Self.FK_COSTO_PROYECTOS_PROYECTOS" FromRole="COSTO_PROYECTOS" ToRole="PROYECTOS" />
@@ -319,7 +396,7 @@ warning 6002: The table/view 'DISETOP.dbo.USUARIOS' does not have a primary key 
           <Property Name="FK_CODIGO_EMPLEADO" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CUENTA_BANCARIA" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="DIAS_A_PAGAR" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="MONTO" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="MONTO" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="FECHA_DE_PAGO" Type="DateTime" Precision="0" />
           <Property Name="COMENTARIO" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="EMPLEADO" Relationship="Self.FK_PAGOS_EMPLEADOS" FromRole="PAGOS" ToRole="EMPLEADOS" />
@@ -334,7 +411,7 @@ warning 6002: The table/view 'DISETOP.dbo.USUARIOS' does not have a primary key 
           <Property Name="FECHA_INICIO" Type="DateTime" Precision="0" />
           <Property Name="ESTADO" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="FECHA_FIN" Type="DateTime" Precision="0" />
-          <Property Name="PRECIO" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="PRECIO" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="COMENTARIO" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="CATEGORIA_PROYECTOS" Relationship="Self.FK_PROYECTOS_CATEGORIA" FromRole="PROYECTOS" ToRole="CATEGORIA_PROYECTOS" />
           <NavigationProperty Name="COSTO_PROYECTOS" Relationship="Self.FK_COSTO_PROYECTOS_PROYECTOS" FromRole="PROYECTOS" ToRole="COSTO_PROYECTOS" />
@@ -532,6 +609,67 @@ warning 6002: The table/view 'DISETOP.dbo.USUARIOS' does not have a primary key 
           <FunctionImport Name="sp_RetornaCategoria_ProyectosPorID" ReturnType="Collection(DISETOPModel.sp_RetornaCategoria_ProyectosPorID_Result)">
           <Parameter Name="codigo_categoria" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="sp_EditarProyectos">
+            <Parameter Name="CodigoProyecto" Mode="In" Type="String" />
+            <Parameter Name="NombreProyecto" Mode="In" Type="String" />
+            <Parameter Name="FK_CodigoCategoria" Mode="In" Type="String" />
+            <Parameter Name="FechaInicio" Mode="In" Type="DateTime" />
+            <Parameter Name="Estado" Mode="In" Type="String" />
+            <Parameter Name="FechaFin" Mode="In" Type="DateTime" />
+            <Parameter Name="Precio" Mode="In" Type="Decimal" />
+            <Parameter Name="Comentario" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_EliminaProyectos">
+          <Parameter Name="CodigoProyecto" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_InsertarProyecto">
+            <Parameter Name="CodigoProyecto" Mode="In" Type="String" />
+            <Parameter Name="NombreProyecto" Mode="In" Type="String" />
+            <Parameter Name="FK_CodigoCategoria" Mode="In" Type="String" />
+            <Parameter Name="FechaInicio" Mode="In" Type="DateTime" />
+            <Parameter Name="Estado" Mode="In" Type="String" />
+            <Parameter Name="FechaFin" Mode="In" Type="DateTime" />
+            <Parameter Name="Precio" Mode="In" Type="Decimal" />
+            <Parameter Name="Comentario" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_RetornaProyectos" ReturnType="Collection(DISETOPModel.sp_RetornaProyectos_Result)" />
+          <FunctionImport Name="sp_RetornaProyectosPorID" ReturnType="Collection(DISETOPModel.sp_RetornaProyectosPorID_Result)">
+          <Parameter Name="CodigoProyecto" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_EditarCostoProyecto">
+            <Parameter Name="CodigoCostoProyecto" Mode="In" Type="String" />
+            <Parameter Name="FK_CodigoProyecto" Mode="In" Type="String" />
+            <Parameter Name="FK_CodigoCategoria" Mode="In" Type="String" />
+            <Parameter Name="DiaTrabajador" Mode="In" Type="Decimal" />
+            <Parameter Name="Combustible" Mode="In" Type="Decimal" />
+            <Parameter Name="Viaticos" Mode="In" Type="Decimal" />
+            <Parameter Name="Hospedaje" Mode="In" Type="Decimal" />
+            <Parameter Name="TimbresCertificaciones" Mode="In" Type="Decimal" />
+            <Parameter Name="Materiales" Mode="In" Type="Decimal" />
+            <Parameter Name="Comentario" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_EliminaCostoProyectos">
+          <Parameter Name="CodigoCostoProyecto" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_EliminaEmpleados1">
+          <Parameter Name="codigo_empleado" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_InsertarCostoProyecto">
+            <Parameter Name="CodigoCostoProyecto" Mode="In" Type="String" />
+            <Parameter Name="FK_CodigoProyecto" Mode="In" Type="String" />
+            <Parameter Name="FK_CodigoCategoria" Mode="In" Type="String" />
+            <Parameter Name="DiaTrabajador" Mode="In" Type="Decimal" />
+            <Parameter Name="Combustible" Mode="In" Type="Decimal" />
+            <Parameter Name="Viaticos" Mode="In" Type="Decimal" />
+            <Parameter Name="Hospedaje" Mode="In" Type="Decimal" />
+            <Parameter Name="TimbresCertificaciones" Mode="In" Type="Decimal" />
+            <Parameter Name="Materiales" Mode="In" Type="Decimal" />
+            <Parameter Name="Comentario" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_RetornaCostoProyectos" ReturnType="Collection(DISETOPModel.sp_RetornaCostoProyectos_Result)" />
+          <FunctionImport Name="sp_RetornaCostoProyectosPorID" ReturnType="Collection(DISETOPModel.sp_RetornaCostoProyectosPorID_Result)">
+          <Parameter Name="CodigoCostoProyecto" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="sp_RetornaEmpleados_Result">
           <Property Type="String" Name="CODIGO_EMPLEADO" Nullable="false" MaxLength="25" />
@@ -597,6 +735,52 @@ warning 6002: The table/view 'DISETOP.dbo.USUARIOS' does not have a primary key 
         <ComplexType Name="sp_RetornaCategoria_ProyectosPorID_Result">
           <Property Type="String" Name="CODIGO_CATEGORIA" Nullable="false" MaxLength="25" />
           <Property Type="String" Name="NOMBRE_CATEGORIA" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="COMENTARIO" Nullable="true" MaxLength="500" />
+        </ComplexType>
+        <ComplexType Name="sp_RetornaProyectos_Result">
+          <Property Type="String" Name="CODIGO_PROYECTO" Nullable="false" MaxLength="25" />
+          <Property Type="String" Name="NOMBRE_PROYECTO" Nullable="false" MaxLength="400" />
+          <Property Type="String" Name="FK_CODIGO_CATEGORIA" Nullable="false" MaxLength="25" />
+          <Property Type="DateTime" Name="FECHA_INICIO" Nullable="true" />
+          <Property Type="String" Name="ESTADO" Nullable="true" MaxLength="100" />
+          <Property Type="DateTime" Name="FECHA_FIN" Nullable="true" />
+          <Property Type="Decimal" Name="PRECIO" Nullable="true" Precision="10" Scale="2" />
+          <Property Type="String" Name="COMENTARIO" Nullable="true" MaxLength="500" />
+        </ComplexType>
+        <ComplexType Name="sp_RetornaProyectosPorID_Result">
+          <Property Type="String" Name="CODIGO_PROYECTO" Nullable="false" MaxLength="25" />
+          <Property Type="String" Name="NOMBRE_PROYECTO" Nullable="false" MaxLength="400" />
+          <Property Type="String" Name="FK_CODIGO_CATEGORIA" Nullable="false" MaxLength="25" />
+          <Property Type="DateTime" Name="FECHA_INICIO" Nullable="true" />
+          <Property Type="String" Name="ESTADO" Nullable="true" MaxLength="100" />
+          <Property Type="DateTime" Name="FECHA_FIN" Nullable="true" />
+          <Property Type="Decimal" Name="PRECIO" Nullable="true" Precision="10" Scale="2" />
+          <Property Type="String" Name="COMENTARIO" Nullable="true" MaxLength="500" />
+        </ComplexType>
+        <ComplexType Name="sp_RetornaCostoProyectos_Result">
+          <Property Type="String" Name="CODIGO_COSTO_PROYECTO" Nullable="false" MaxLength="25" />
+          <Property Type="String" Name="FK_CODIGO_PROYECTO" Nullable="false" MaxLength="25" />
+          <Property Type="String" Name="FK_CODIGO_CATEGORIA" Nullable="false" MaxLength="25" />
+          <Property Type="Decimal" Name="DIA_TRABAJADOR" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="COMBUSTIBLE" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="VIATICOS" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="HOSPEDAJE" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="TIMBRES_CERTIFICACIONES" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="MATERIALES" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="TOTAL" Nullable="true" Precision="35" Scale="2" />
+          <Property Type="String" Name="COMENTARIO" Nullable="true" MaxLength="500" />
+        </ComplexType>
+        <ComplexType Name="sp_RetornaCostoProyectosPorID_Result">
+          <Property Type="String" Name="CODIGO_COSTO_PROYECTO" Nullable="false" MaxLength="25" />
+          <Property Type="String" Name="FK_CODIGO_PROYECTO" Nullable="false" MaxLength="25" />
+          <Property Type="String" Name="FK_CODIGO_CATEGORIA" Nullable="false" MaxLength="25" />
+          <Property Type="Decimal" Name="DIA_TRABAJADOR" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="COMBUSTIBLE" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="VIATICOS" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="HOSPEDAJE" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="TIMBRES_CERTIFICACIONES" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="MATERIALES" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="TOTAL" Nullable="true" Precision="35" Scale="2" />
           <Property Type="String" Name="COMENTARIO" Nullable="true" MaxLength="500" />
         </ComplexType>
       </Schema>
@@ -801,6 +985,75 @@ warning 6002: The table/view 'DISETOP.dbo.USUARIOS' does not have a primary key 
               <ComplexTypeMapping TypeName="DISETOPModel.sp_RetornaCategoria_ProyectosPorID_Result">
                 <ScalarProperty Name="CODIGO_CATEGORIA" ColumnName="CODIGO_CATEGORIA" />
                 <ScalarProperty Name="NOMBRE_CATEGORIA" ColumnName="NOMBRE_CATEGORIA" />
+                <ScalarProperty Name="COMENTARIO" ColumnName="COMENTARIO" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_EditarProyectos" FunctionName="DISETOPModel.Store.sp_EditarProyectos" />
+          <FunctionImportMapping FunctionImportName="sp_EliminaProyectos" FunctionName="DISETOPModel.Store.sp_EliminaProyectos" />
+          <FunctionImportMapping FunctionImportName="sp_InsertarProyecto" FunctionName="DISETOPModel.Store.sp_InsertarProyecto" />
+          <FunctionImportMapping FunctionImportName="sp_RetornaProyectos" FunctionName="DISETOPModel.Store.sp_RetornaProyectos">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DISETOPModel.sp_RetornaProyectos_Result">
+                <ScalarProperty Name="CODIGO_PROYECTO" ColumnName="CODIGO_PROYECTO" />
+                <ScalarProperty Name="NOMBRE_PROYECTO" ColumnName="NOMBRE_PROYECTO" />
+                <ScalarProperty Name="FK_CODIGO_CATEGORIA" ColumnName="FK_CODIGO_CATEGORIA" />
+                <ScalarProperty Name="FECHA_INICIO" ColumnName="FECHA_INICIO" />
+                <ScalarProperty Name="ESTADO" ColumnName="ESTADO" />
+                <ScalarProperty Name="FECHA_FIN" ColumnName="FECHA_FIN" />
+                <ScalarProperty Name="PRECIO" ColumnName="PRECIO" />
+                <ScalarProperty Name="COMENTARIO" ColumnName="COMENTARIO" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_RetornaProyectosPorID" FunctionName="DISETOPModel.Store.sp_RetornaProyectosPorID">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DISETOPModel.sp_RetornaProyectosPorID_Result">
+                <ScalarProperty Name="CODIGO_PROYECTO" ColumnName="CODIGO_PROYECTO" />
+                <ScalarProperty Name="NOMBRE_PROYECTO" ColumnName="NOMBRE_PROYECTO" />
+                <ScalarProperty Name="FK_CODIGO_CATEGORIA" ColumnName="FK_CODIGO_CATEGORIA" />
+                <ScalarProperty Name="FECHA_INICIO" ColumnName="FECHA_INICIO" />
+                <ScalarProperty Name="ESTADO" ColumnName="ESTADO" />
+                <ScalarProperty Name="FECHA_FIN" ColumnName="FECHA_FIN" />
+                <ScalarProperty Name="PRECIO" ColumnName="PRECIO" />
+                <ScalarProperty Name="COMENTARIO" ColumnName="COMENTARIO" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_EditarCostoProyecto" FunctionName="DISETOPModel.Store.sp_EditarCostoProyecto" />
+          <FunctionImportMapping FunctionImportName="sp_EliminaCostoProyectos" FunctionName="DISETOPModel.Store.sp_EliminaCostoProyectos" />
+          <FunctionImportMapping FunctionImportName="sp_EliminaEmpleados1" FunctionName="DISETOPModel.Store.sp_EliminaEmpleados" />
+          <FunctionImportMapping FunctionImportName="sp_InsertarCostoProyecto" FunctionName="DISETOPModel.Store.sp_InsertarCostoProyecto" />
+          <FunctionImportMapping FunctionImportName="sp_RetornaCostoProyectos" FunctionName="DISETOPModel.Store.sp_RetornaCostoProyectos">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DISETOPModel.sp_RetornaCostoProyectos_Result">
+                <ScalarProperty Name="CODIGO_COSTO_PROYECTO" ColumnName="CODIGO_COSTO_PROYECTO" />
+                <ScalarProperty Name="FK_CODIGO_PROYECTO" ColumnName="FK_CODIGO_PROYECTO" />
+                <ScalarProperty Name="FK_CODIGO_CATEGORIA" ColumnName="FK_CODIGO_CATEGORIA" />
+                <ScalarProperty Name="DIA_TRABAJADOR" ColumnName="DIA_TRABAJADOR" />
+                <ScalarProperty Name="COMBUSTIBLE" ColumnName="COMBUSTIBLE" />
+                <ScalarProperty Name="VIATICOS" ColumnName="VIATICOS" />
+                <ScalarProperty Name="HOSPEDAJE" ColumnName="HOSPEDAJE" />
+                <ScalarProperty Name="TIMBRES_CERTIFICACIONES" ColumnName="TIMBRES_CERTIFICACIONES" />
+                <ScalarProperty Name="MATERIALES" ColumnName="MATERIALES" />
+                <ScalarProperty Name="TOTAL" ColumnName="TOTAL" />
+                <ScalarProperty Name="COMENTARIO" ColumnName="COMENTARIO" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_RetornaCostoProyectosPorID" FunctionName="DISETOPModel.Store.sp_RetornaCostoProyectosPorID">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DISETOPModel.sp_RetornaCostoProyectosPorID_Result">
+                <ScalarProperty Name="CODIGO_COSTO_PROYECTO" ColumnName="CODIGO_COSTO_PROYECTO" />
+                <ScalarProperty Name="FK_CODIGO_PROYECTO" ColumnName="FK_CODIGO_PROYECTO" />
+                <ScalarProperty Name="FK_CODIGO_CATEGORIA" ColumnName="FK_CODIGO_CATEGORIA" />
+                <ScalarProperty Name="DIA_TRABAJADOR" ColumnName="DIA_TRABAJADOR" />
+                <ScalarProperty Name="COMBUSTIBLE" ColumnName="COMBUSTIBLE" />
+                <ScalarProperty Name="VIATICOS" ColumnName="VIATICOS" />
+                <ScalarProperty Name="HOSPEDAJE" ColumnName="HOSPEDAJE" />
+                <ScalarProperty Name="TIMBRES_CERTIFICACIONES" ColumnName="TIMBRES_CERTIFICACIONES" />
+                <ScalarProperty Name="MATERIALES" ColumnName="MATERIALES" />
+                <ScalarProperty Name="TOTAL" ColumnName="TOTAL" />
                 <ScalarProperty Name="COMENTARIO" ColumnName="COMENTARIO" />
               </ComplexTypeMapping>
             </ResultMapping>

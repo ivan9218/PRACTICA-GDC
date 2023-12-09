@@ -28,13 +28,13 @@
     <Property Name="CODIGO_COSTO_PROYECTO" Type="varchar" MaxLength="25" Nullable="false" />
     <Property Name="FK_CODIGO_PROYECTO" Type="varchar" MaxLength="25" Nullable="false" />
     <Property Name="FK_CODIGO_CATEGORIA" Type="varchar" MaxLength="25" Nullable="false" />
-    <Property Name="DIA_TRABAJADOR" Type="decimal" Precision="10" Scale="2" />
-    <Property Name="COMBUSTIBLE" Type="decimal" Precision="10" Scale="2" />
-    <Property Name="VIATICOS" Type="decimal" Precision="10" Scale="2" />
-    <Property Name="HOSPEDAJE" Type="decimal" Precision="10" Scale="2" />
-    <Property Name="TIMBRES_CERTIFICACIONES" Type="decimal" Precision="10" Scale="2" />
-    <Property Name="MATERIALES" Type="decimal" Precision="10" Scale="2" />
-    <Property Name="TOTAL" Type="decimal" Precision="10" Scale="2" />
+    <Property Name="DIA_TRABAJADOR" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="COMBUSTIBLE" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="VIATICOS" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="HOSPEDAJE" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="TIMBRES_CERTIFICACIONES" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="MATERIALES" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="TOTAL" Type="decimal" Precision="35" Scale="2" />
     <Property Name="COMENTARIO" Type="varchar" MaxLength="500" />
   </EntityType>
   <EntityType Name="EMPLEADOS">
@@ -57,7 +57,7 @@
     <Property Name="FK_CODIGO_EMPLEADO" Type="varchar" MaxLength="25" Nullable="false" />
     <Property Name="CUENTA_BANCARIA" Type="varchar" MaxLength="100" />
     <Property Name="DIAS_A_PAGAR" Type="varchar" MaxLength="100" />
-    <Property Name="MONTO" Type="decimal" Precision="10" Scale="2" />
+    <Property Name="MONTO" Type="decimal" Precision="18" Scale="2" />
     <Property Name="FECHA_DE_PAGO" Type="date" />
     <Property Name="COMENTARIO" Type="varchar" MaxLength="500" />
   </EntityType>
@@ -71,7 +71,7 @@
     <Property Name="FECHA_INICIO" Type="date" />
     <Property Name="ESTADO" Type="varchar" MaxLength="100" />
     <Property Name="FECHA_FIN" Type="date" />
-    <Property Name="PRECIO" Type="decimal" Precision="10" Scale="2" />
+    <Property Name="PRECIO" Type="decimal" Precision="18" Scale="2" />
     <Property Name="COMENTARIO" Type="varchar" MaxLength="500" />
   </EntityType>
   <!--Errors Found During Generation:
@@ -105,6 +105,18 @@ warning 6002: The table/view 'DISETOP.dbo.USUARIOS' does not have a primary key 
       </Principal>
       <Dependent Role="COSTO_PROYECTOS">
         <PropertyRef Name="FK_CODIGO_PROYECTO" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PAGOS_EMPLEADOS">
+    <End Role="EMPLEADOS" Type="Self.EMPLEADOS" Multiplicity="1" />
+    <End Role="PAGOS" Type="Self.PAGOS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EMPLEADOS">
+        <PropertyRef Name="CODIGO_EMPLEADO" />
+      </Principal>
+      <Dependent Role="PAGOS">
+        <PropertyRef Name="FK_CODIGO_EMPLEADO" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -144,6 +156,18 @@ warning 6002: The table/view 'DISETOP.dbo.USUARIOS' does not have a primary key 
     <Parameter Name="nombre_categoria" Type="varchar" Mode="In" />
     <Parameter Name="comentario" Type="varchar" Mode="In" />
   </Function>
+  <Function Name="sp_EditarCostoProyecto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="CodigoCostoProyecto" Type="varchar" Mode="In" />
+    <Parameter Name="FK_CodigoProyecto" Type="varchar" Mode="In" />
+    <Parameter Name="FK_CodigoCategoria" Type="varchar" Mode="In" />
+    <Parameter Name="DiaTrabajador" Type="decimal" Mode="In" />
+    <Parameter Name="Combustible" Type="decimal" Mode="In" />
+    <Parameter Name="Viaticos" Type="decimal" Mode="In" />
+    <Parameter Name="Hospedaje" Type="decimal" Mode="In" />
+    <Parameter Name="TimbresCertificaciones" Type="decimal" Mode="In" />
+    <Parameter Name="Materiales" Type="decimal" Mode="In" />
+    <Parameter Name="Comentario" Type="varchar" Mode="In" />
+  </Function>
   <Function Name="sp_EditarPagos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="CodigoPago" Type="varchar" Mode="In" />
     <Parameter Name="FK_CodigoEmpleado" Type="varchar" Mode="In" />
@@ -153,14 +177,33 @@ warning 6002: The table/view 'DISETOP.dbo.USUARIOS' does not have a primary key 
     <Parameter Name="FechaDePago" Type="date" Mode="In" />
     <Parameter Name="Comentario" Type="varchar" Mode="In" />
   </Function>
+  <Function Name="sp_EditarProyectos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="CodigoProyecto" Type="varchar" Mode="In" />
+    <Parameter Name="NombreProyecto" Type="varchar" Mode="In" />
+    <Parameter Name="FK_CodigoCategoria" Type="varchar" Mode="In" />
+    <Parameter Name="FechaInicio" Type="date" Mode="In" />
+    <Parameter Name="Estado" Type="varchar" Mode="In" />
+    <Parameter Name="FechaFin" Type="date" Mode="In" />
+    <Parameter Name="Precio" Type="decimal" Mode="In" />
+    <Parameter Name="Comentario" Type="varchar" Mode="In" />
+  </Function>
   <Function Name="sp_EliminaActivos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="codigo_activo" Type="varchar" Mode="In" />
   </Function>
   <Function Name="sp_EliminaCategoria_Proyectos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="codigo_categoria" Type="varchar" Mode="In" />
   </Function>
+  <Function Name="sp_EliminaCostoProyectos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="CodigoCostoProyecto" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="sp_EliminaEmpleados" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="codigo_empleado" Type="varchar" Mode="In" />
+  </Function>
   <Function Name="sp_EliminaPagos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="CodigoPago" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="sp_EliminaProyectos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="CodigoProyecto" Type="varchar" Mode="In" />
   </Function>
   <Function Name="sp_InsertaActivos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="codigo_activo" Type="varchar" Mode="In" />
@@ -186,6 +229,18 @@ warning 6002: The table/view 'DISETOP.dbo.USUARIOS' does not have a primary key 
     <Parameter Name="direccion" Type="varchar" Mode="In" />
     <Parameter Name="comentario" Type="varchar" Mode="In" />
   </Function>
+  <Function Name="sp_InsertarCostoProyecto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="CodigoCostoProyecto" Type="varchar" Mode="In" />
+    <Parameter Name="FK_CodigoProyecto" Type="varchar" Mode="In" />
+    <Parameter Name="FK_CodigoCategoria" Type="varchar" Mode="In" />
+    <Parameter Name="DiaTrabajador" Type="decimal" Mode="In" />
+    <Parameter Name="Combustible" Type="decimal" Mode="In" />
+    <Parameter Name="Viaticos" Type="decimal" Mode="In" />
+    <Parameter Name="Hospedaje" Type="decimal" Mode="In" />
+    <Parameter Name="TimbresCertificaciones" Type="decimal" Mode="In" />
+    <Parameter Name="Materiales" Type="decimal" Mode="In" />
+    <Parameter Name="Comentario" Type="varchar" Mode="In" />
+  </Function>
   <Function Name="sp_InsertarPagoEmpleado" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="CodigoPago" Type="varchar" Mode="In" />
     <Parameter Name="FK_CodigoEmpleado" Type="varchar" Mode="In" />
@@ -193,6 +248,16 @@ warning 6002: The table/view 'DISETOP.dbo.USUARIOS' does not have a primary key 
     <Parameter Name="DiasAPagar" Type="varchar" Mode="In" />
     <Parameter Name="Monto" Type="decimal" Mode="In" />
     <Parameter Name="FechaDePago" Type="date" Mode="In" />
+    <Parameter Name="Comentario" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="sp_InsertarProyecto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="CodigoProyecto" Type="varchar" Mode="In" />
+    <Parameter Name="NombreProyecto" Type="varchar" Mode="In" />
+    <Parameter Name="FK_CodigoCategoria" Type="varchar" Mode="In" />
+    <Parameter Name="FechaInicio" Type="date" Mode="In" />
+    <Parameter Name="Estado" Type="varchar" Mode="In" />
+    <Parameter Name="FechaFin" Type="date" Mode="In" />
+    <Parameter Name="Precio" Type="decimal" Mode="In" />
     <Parameter Name="Comentario" Type="varchar" Mode="In" />
   </Function>
   <Function Name="sp_RegistrarUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -209,6 +274,10 @@ warning 6002: The table/view 'DISETOP.dbo.USUARIOS' does not have a primary key 
   <Function Name="sp_RetornaCategoria_ProyectosPorID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="codigo_categoria" Type="varchar" Mode="In" />
   </Function>
+  <Function Name="sp_RetornaCostoProyectos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="sp_RetornaCostoProyectosPorID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="CodigoCostoProyecto" Type="varchar" Mode="In" />
+  </Function>
   <Function Name="sp_RetornaEmpleados" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <Function Name="sp_RetornaEmpleadosPorID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="codigo_empleado" Type="varchar" Mode="In" />
@@ -216,6 +285,10 @@ warning 6002: The table/view 'DISETOP.dbo.USUARIOS' does not have a primary key 
   <Function Name="sp_RetornaPagos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <Function Name="sp_RetornaPagosPorID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="CodigoPago" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="sp_RetornaProyectos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="sp_RetornaProyectosPorID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="CodigoProyecto" Type="varchar" Mode="In" />
   </Function>
   <Function Name="sp_ValidarUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="Usuario" Type="varchar" Mode="In" />
@@ -242,6 +315,10 @@ warning 6002: The table/view 'DISETOP.dbo.USUARIOS' does not have a primary key 
     <AssociationSet Name="FK_COSTO_PROYECTOS_PROYECTOS" Association="Self.FK_COSTO_PROYECTOS_PROYECTOS">
       <End Role="PROYECTOS" EntitySet="PROYECTOS" />
       <End Role="COSTO_PROYECTOS" EntitySet="COSTO_PROYECTOS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PAGOS_EMPLEADOS" Association="Self.FK_PAGOS_EMPLEADOS">
+      <End Role="EMPLEADOS" EntitySet="EMPLEADOS" />
+      <End Role="PAGOS" EntitySet="PAGOS" />
     </AssociationSet>
     <AssociationSet Name="FK_PROYECTOS_CATEGORIA" Association="Self.FK_PROYECTOS_CATEGORIA">
       <End Role="CATEGORIA_PROYECTOS" EntitySet="CATEGORIA_PROYECTOS" />

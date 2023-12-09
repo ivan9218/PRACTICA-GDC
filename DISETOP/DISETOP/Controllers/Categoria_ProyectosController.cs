@@ -81,11 +81,11 @@ namespace DISETOP.Controllers
             {
                 if (string.IsNullOrWhiteSpace(categoria_proyectos.CODIGO_CATEGORIA))
                 {
-                    return Json(new { success = false, message = "El campo 'Codigo de Categoria' es obligatorio." });
+                    return Json(new { success = false, message = "El campo 'Código de Categoría' es obligatorio." });
                 }
                 if (string.IsNullOrWhiteSpace(categoria_proyectos.NOMBRE_CATEGORIA))
                 {
-                    return Json(new { success = false, message = "El campo 'Nombre de Categoria' es obligatorio." });
+                    return Json(new { success = false, message = "El campo 'Nombre de Categoría' es obligatorio." });
                 }
                 // Asigna cadena vacía a comentario si está nulo
                 if (string.IsNullOrWhiteSpace(categoria_proyectos.COMENTARIO))
@@ -100,7 +100,7 @@ namespace DISETOP.Controllers
 
                     if (categoriaExistente != null)
                     {
-                        return Json(new { success = false, message = "La categoria de proyectos con el código " + categoria_proyectos.CODIGO_CATEGORIA + " ya existe." });
+                        return Json(new { success = false, message = "La categoría de proyectos con el código " + categoria_proyectos.CODIGO_CATEGORIA + " ya existe." });
                     }
 
                     var categoriaExistentePorNombre = context.CATEGORIA_PROYECTOS.FirstOrDefault(e => e.NOMBRE_CATEGORIA == categoria_proyectos.NOMBRE_CATEGORIA);
@@ -165,16 +165,16 @@ namespace DISETOP.Controllers
 
                     if (categoria_proyectosExistente != null)
                     {
-                        return Json(new { success = false, message = "Ya existe otra categoria de proyectos con el mismo nombre." });
+                        return Json(new { success = false, message = "Ya existe otra categoría de proyectos con el mismo nombre." });
                     }
 
                     if (string.IsNullOrWhiteSpace(categoria_proyectos.CODIGO_CATEGORIA))
                     {
-                        return Json(new { success = false, message = "El campo 'Codigo de Categoria' es obligatorio." });
+                        return Json(new { success = false, message = "El campo 'Código de Categoría' es obligatorio." });
                     }
                     if (string.IsNullOrWhiteSpace(categoria_proyectos.NOMBRE_CATEGORIA))
                     {
-                        return Json(new { success = false, message = "El campo 'Nombre de Categoria' es obligatorio." });
+                        return Json(new { success = false, message = "El campo 'Nombre de Categoría' es obligatorio." });
                     }
                
                     // Asigna cadena vacía a comentario si está nulo
@@ -194,7 +194,7 @@ namespace DISETOP.Controllers
                 }
             }
 
-            return Json(new { success = false, message = "Error al actualizar la categoria del proyecto." });
+            return Json(new { success = false, message = "Error al actualizar la categoría del proyecto." });
         }
 
 

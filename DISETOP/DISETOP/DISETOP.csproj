@@ -131,9 +131,11 @@
     <Compile Include="Controllers\AccesoController.cs" />
     <Compile Include="Controllers\ActivosController.cs" />
     <Compile Include="Controllers\Categoria_ProyectosController.cs" />
+    <Compile Include="Controllers\Costo_ProyectosController.cs" />
     <Compile Include="Controllers\EmpleadosController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PagosController.cs" />
+    <Compile Include="Controllers\ProyectosController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -167,6 +169,8 @@
     <Compile Include="Models\PAGO.cs">
       <DependentUpon>disetop.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\COSTO_PROYECTOPartial.cs" />
+    <Compile Include="Models\PROYECTOPartial.cs" />
     <Compile Include="Models\PAGOPartial.cs" />
     <Compile Include="Models\PROYECTO.cs">
       <DependentUpon>disetop.tt</DependentUpon>
@@ -183,6 +187,12 @@
     <Compile Include="Models\sp_RetornaCategoria_Proyectos_Result.cs">
       <DependentUpon>disetop.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\sp_RetornaCostoProyectosPorID_Result.cs">
+      <DependentUpon>disetop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sp_RetornaCostoProyectos_Result.cs">
+      <DependentUpon>disetop.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\sp_RetornaEmpleadosPorID_Result.cs">
       <DependentUpon>disetop.tt</DependentUpon>
     </Compile>
@@ -193,6 +203,12 @@
       <DependentUpon>disetop.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\sp_RetornaPagos_Result.cs">
+      <DependentUpon>disetop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sp_RetornaProyectosPorID_Result.cs">
+      <DependentUpon>disetop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sp_RetornaProyectos_Result.cs">
       <DependentUpon>disetop.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\USUARIO.cs">
@@ -262,7 +278,9 @@
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\CRUD-ACTIVOS.js" />
     <Content Include="Scripts\CRUD-CATEGORIA_PROYECTOS.js" />
+    <Content Include="Scripts\CRUD-COSTO_PROYECTOS.js" />
     <Content Include="Scripts\CRUD-PAGOS.js" />
+    <Content Include="Scripts\CRUD-PROYECTOS.js" />
     <Content Include="Scripts\CRUDjs.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -295,10 +313,11 @@
     <Content Include="Views\Acceso\Login.cshtml" />
     <Content Include="Views\Acceso\Registrar.cshtml" />
     <Content Include="Views\Empleados\VistaEmpleados.cshtml" />
-    <Content Include="Views\Empleados\InsertarEmpleado.cshtml" />
     <Content Include="Views\Pagos\VistaPagos.cshtml" />
     <Content Include="Views\Activos\VistaActivos.cshtml" />
     <Content Include="Views\Categoria_Proyectos\VistaCategoria_Proyectos.cshtml" />
+    <Content Include="Views\Proyectos\VistaProyectos.cshtml" />
+    <Content Include="Views\Costo_Proyectos\VistaCostoProyectos.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

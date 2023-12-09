@@ -20,6 +20,7 @@ $(document).ready(function () {
 
     
     // Botón "Guardar Pago" en tu modal
+
     $("#btnGuardar").click(function () {
         var codigoPago = $("#codigo_pago").val();
         // obtiene el valor seleccionado del select y el primary key 
@@ -43,27 +44,32 @@ $(document).ready(function () {
             COMENTARIO: comentario
             // Agrega otros campos del pago aquí, si es necesario.
         };
-        debugger
+       
         // Realiza una solicitud AJAX al controlador para insertar el pago
-        $.ajax({
-            url: '/Pagos/InsertarPago', // Asegúrate de que esta ruta sea la correcta
-            method: "POST",
-            data: pago,
-            success: function (result) {
-                if (result.success) {
-                    $('#exampleModalCenter').modal('hide'); // Cierra el modal
-                    window.location.reload()
-                    alert("Pago ingresado correctamente.");
-                    // Puedes agregar aquí código para actualizar la tabla de pagos si es necesario.
-                } else {
-                    // Muestra un mensaje de error si hay un problema
-                    alert(result.message);
+      /*  if (validate(pago)) {*/
+            $.ajax({
+                url: '/Pagos/InsertarPago', // Asegúrate de que esta ruta sea la correcta
+                method: "POST",
+                data: pago,
+                success: function (result) {
+                    if (result.success) {
+                        $('#exampleModalCenter').modal('hide'); // Cierra el modal
+                        toastr.success("Pago ingresado correctamente.")
+                        setTimeout(function () {
+                            // Tu código que se ejecutará después del retraso de 500 ms
+                            window.location.reload();
+                        }, 500);
+                        // Puedes agregar aquí código para actualizar la tabla de pagos si es necesario.
+                    } else {
+                        // Muestra un mensaje de error si hay un problema
+                        toastr.error(result.message)
+                    }
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    toastr.error("Error al agregar el pago: " + errorThrown)
                 }
-            },
-            error: function (xhr, textStatus, errorThrown) {
-                alert("Error al agregar el pago: " + errorThrown);
-            }
-        });
+            });
+       /* }*/
     });
 
    
@@ -79,7 +85,7 @@ $(document).ready(function () {
     $('#miTabla').on('click', 'button.editar', function () {
         const row = $(this).closest('tr');
         const data = tabla.row(row).data();
-        /*      debugger*/
+    
         // Cargar datos en el modal de edición
         $('#codigo_pago_edit').val(data[0]);
         $('#codigo_empleado_edit').val(data[1]); //traerse el codigo para que lo muestre
@@ -98,14 +104,17 @@ $(document).ready(function () {
         console.log('Editar fila con datos: ', data);
     });
 
+    
+    
 
     $("#btnEditar").click(function () {
+       
         // Obtén los valores actualizados del formulario de edición
         const codigo_pago = $('#codigo_pago_edit').val();
         const codigo_empleado_edit = $('#codigo_empleado_edit').val();
         const cuenta_bancaria = $('#cuenta_bancaria_edit').val();
         const diasApagar = $('#diasApagar_edit').val();
-        const monto = $('#monto_edit').val() || 0;
+        const monto = $('#monto_edit').val();
         const fechaDePago = $('#fechaDePago_edit').val();
         const comentario = $('#comentario_edit').val();
 
@@ -120,24 +129,30 @@ $(document).ready(function () {
             COMENTARIO: comentario
         };
 
-        // Realiza una solicitud AJAX para actualizar el empleado
-        $.ajax({
-            url: url_actualizar_pago,
-            method: "POST",
-            data: pagoData,
-            success: function (result) {
-                if (result.success) {
-                    // Actualización exitosa, cierra el modal
-                    $('#editarModal').modal('hide');
-                    // Recarga la tabla 
-                    window.location.reload();
-                    alert("Cambios ingresados correctamente.");
-                } else {
-                    // Muestra un mensaje de error si la actualización falla
-                    alert(result.message);
+        /*if(validate(pagoData)) {*/
+            // Realiza una solicitud AJAX para actualizar el empleado
+            $.ajax({
+                url: url_actualizar_pago,
+                method: "POST",
+                data: pagoData,
+                success: function (result) {
+                    if (result.success) {
+                        // Actualización exitosa, cierra el modal
+                        $('#editarModal').modal('hide');
+                        // Recarga la tabla 
+                        toastr.success("Cambios ingresados correctamente.");
+                        setTimeout(function () {
+                            // Tu código que se ejecutará después del retraso de 500 ms
+                            window.location.reload();
+                        }, 500);                        
+                        
+                    } else {
+                        // Muestra un mensaje de error si la actualización falla
+                        toastr.error(result.message)                        
+                    }
                 }
-            }
-        });
+            });
+       /* }*/
     });
     // FIN DE EDITAR PAGO
 
@@ -161,16 +176,17 @@ $(document).ready(function () {
                     // Elimina la fila de la tabla
                     tabla.row(row).remove().draw();
                     // Muestra un mensaje de éxito
-                    alert('Pago eliminado correctamente');
+                    toastr.success("Pago eliminado correctamente")    
                 },
                 error: function () {
-                    // Maneja los errores si es necesario
-                    alert('No se pudo eliminar el pago');
+                    
+                    toastr.error("No se pudo eliminar el pago")                        
                 }
             });
         } else {
             // Si el usuario hace clic en "Cancelar" en el cuadro de diálogo
-            alert('No se eliminó el pago');
+            toastr.error("No se eliminó el pago")                        
+            
         }
     });
 

@@ -555,6 +555,288 @@ public partial class DISETOPEntities : DbContext
         return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_RetornaCategoria_ProyectosPorID_Result>("sp_RetornaCategoria_ProyectosPorID", codigo_categoriaParameter);
     }
 
+
+    public virtual int sp_EditarProyectos(string codigoProyecto, string nombreProyecto, string fK_CodigoCategoria, Nullable<System.DateTime> fechaInicio, string estado, Nullable<System.DateTime> fechaFin, Nullable<decimal> precio, string comentario)
+    {
+
+        var codigoProyectoParameter = codigoProyecto != null ?
+            new ObjectParameter("CodigoProyecto", codigoProyecto) :
+            new ObjectParameter("CodigoProyecto", typeof(string));
+
+
+        var nombreProyectoParameter = nombreProyecto != null ?
+            new ObjectParameter("NombreProyecto", nombreProyecto) :
+            new ObjectParameter("NombreProyecto", typeof(string));
+
+
+        var fK_CodigoCategoriaParameter = fK_CodigoCategoria != null ?
+            new ObjectParameter("FK_CodigoCategoria", fK_CodigoCategoria) :
+            new ObjectParameter("FK_CodigoCategoria", typeof(string));
+
+
+        var fechaInicioParameter = fechaInicio.HasValue ?
+            new ObjectParameter("FechaInicio", fechaInicio) :
+            new ObjectParameter("FechaInicio", typeof(System.DateTime));
+
+
+        var estadoParameter = estado != null ?
+            new ObjectParameter("Estado", estado) :
+            new ObjectParameter("Estado", typeof(string));
+
+
+        var fechaFinParameter = fechaFin.HasValue ?
+            new ObjectParameter("FechaFin", fechaFin) :
+            new ObjectParameter("FechaFin", typeof(System.DateTime));
+
+
+        var precioParameter = precio.HasValue ?
+            new ObjectParameter("Precio", precio) :
+            new ObjectParameter("Precio", typeof(decimal));
+
+
+        var comentarioParameter = comentario != null ?
+            new ObjectParameter("Comentario", comentario) :
+            new ObjectParameter("Comentario", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_EditarProyectos", codigoProyectoParameter, nombreProyectoParameter, fK_CodigoCategoriaParameter, fechaInicioParameter, estadoParameter, fechaFinParameter, precioParameter, comentarioParameter);
+    }
+
+
+    public virtual int sp_EliminaProyectos(string codigoProyecto)
+    {
+
+        var codigoProyectoParameter = codigoProyecto != null ?
+            new ObjectParameter("CodigoProyecto", codigoProyecto) :
+            new ObjectParameter("CodigoProyecto", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_EliminaProyectos", codigoProyectoParameter);
+    }
+
+
+    public virtual int sp_InsertarProyecto(string codigoProyecto, string nombreProyecto, string fK_CodigoCategoria, Nullable<System.DateTime> fechaInicio, string estado, Nullable<System.DateTime> fechaFin, Nullable<decimal> precio, string comentario)
+    {
+
+        var codigoProyectoParameter = codigoProyecto != null ?
+            new ObjectParameter("CodigoProyecto", codigoProyecto) :
+            new ObjectParameter("CodigoProyecto", typeof(string));
+
+
+        var nombreProyectoParameter = nombreProyecto != null ?
+            new ObjectParameter("NombreProyecto", nombreProyecto) :
+            new ObjectParameter("NombreProyecto", typeof(string));
+
+
+        var fK_CodigoCategoriaParameter = fK_CodigoCategoria != null ?
+            new ObjectParameter("FK_CodigoCategoria", fK_CodigoCategoria) :
+            new ObjectParameter("FK_CodigoCategoria", typeof(string));
+
+
+        var fechaInicioParameter = fechaInicio.HasValue ?
+            new ObjectParameter("FechaInicio", fechaInicio) :
+            new ObjectParameter("FechaInicio", typeof(System.DateTime));
+
+
+        var estadoParameter = estado != null ?
+            new ObjectParameter("Estado", estado) :
+            new ObjectParameter("Estado", typeof(string));
+
+
+        var fechaFinParameter = fechaFin.HasValue ?
+            new ObjectParameter("FechaFin", fechaFin) :
+            new ObjectParameter("FechaFin", typeof(System.DateTime));
+
+
+        var precioParameter = precio.HasValue ?
+            new ObjectParameter("Precio", precio) :
+            new ObjectParameter("Precio", typeof(decimal));
+
+
+        var comentarioParameter = comentario != null ?
+            new ObjectParameter("Comentario", comentario) :
+            new ObjectParameter("Comentario", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_InsertarProyecto", codigoProyectoParameter, nombreProyectoParameter, fK_CodigoCategoriaParameter, fechaInicioParameter, estadoParameter, fechaFinParameter, precioParameter, comentarioParameter);
+    }
+
+
+    public virtual ObjectResult<sp_RetornaProyectos_Result> sp_RetornaProyectos()
+    {
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_RetornaProyectos_Result>("sp_RetornaProyectos");
+    }
+
+
+    public virtual ObjectResult<sp_RetornaProyectosPorID_Result> sp_RetornaProyectosPorID(string codigoProyecto)
+    {
+
+        var codigoProyectoParameter = codigoProyecto != null ?
+            new ObjectParameter("CodigoProyecto", codigoProyecto) :
+            new ObjectParameter("CodigoProyecto", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_RetornaProyectosPorID_Result>("sp_RetornaProyectosPorID", codigoProyectoParameter);
+    }
+
+
+    public virtual int sp_EditarCostoProyecto(string codigoCostoProyecto, string fK_CodigoProyecto, string fK_CodigoCategoria, Nullable<decimal> diaTrabajador, Nullable<decimal> combustible, Nullable<decimal> viaticos, Nullable<decimal> hospedaje, Nullable<decimal> timbresCertificaciones, Nullable<decimal> materiales, string comentario)
+    {
+
+        var codigoCostoProyectoParameter = codigoCostoProyecto != null ?
+            new ObjectParameter("CodigoCostoProyecto", codigoCostoProyecto) :
+            new ObjectParameter("CodigoCostoProyecto", typeof(string));
+
+
+        var fK_CodigoProyectoParameter = fK_CodigoProyecto != null ?
+            new ObjectParameter("FK_CodigoProyecto", fK_CodigoProyecto) :
+            new ObjectParameter("FK_CodigoProyecto", typeof(string));
+
+
+        var fK_CodigoCategoriaParameter = fK_CodigoCategoria != null ?
+            new ObjectParameter("FK_CodigoCategoria", fK_CodigoCategoria) :
+            new ObjectParameter("FK_CodigoCategoria", typeof(string));
+
+
+        var diaTrabajadorParameter = diaTrabajador.HasValue ?
+            new ObjectParameter("DiaTrabajador", diaTrabajador) :
+            new ObjectParameter("DiaTrabajador", typeof(decimal));
+
+
+        var combustibleParameter = combustible.HasValue ?
+            new ObjectParameter("Combustible", combustible) :
+            new ObjectParameter("Combustible", typeof(decimal));
+
+
+        var viaticosParameter = viaticos.HasValue ?
+            new ObjectParameter("Viaticos", viaticos) :
+            new ObjectParameter("Viaticos", typeof(decimal));
+
+
+        var hospedajeParameter = hospedaje.HasValue ?
+            new ObjectParameter("Hospedaje", hospedaje) :
+            new ObjectParameter("Hospedaje", typeof(decimal));
+
+
+        var timbresCertificacionesParameter = timbresCertificaciones.HasValue ?
+            new ObjectParameter("TimbresCertificaciones", timbresCertificaciones) :
+            new ObjectParameter("TimbresCertificaciones", typeof(decimal));
+
+
+        var materialesParameter = materiales.HasValue ?
+            new ObjectParameter("Materiales", materiales) :
+            new ObjectParameter("Materiales", typeof(decimal));
+
+
+        var comentarioParameter = comentario != null ?
+            new ObjectParameter("Comentario", comentario) :
+            new ObjectParameter("Comentario", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_EditarCostoProyecto", codigoCostoProyectoParameter, fK_CodigoProyectoParameter, fK_CodigoCategoriaParameter, diaTrabajadorParameter, combustibleParameter, viaticosParameter, hospedajeParameter, timbresCertificacionesParameter, materialesParameter, comentarioParameter);
+    }
+
+
+    public virtual int sp_EliminaCostoProyectos(string codigoCostoProyecto)
+    {
+
+        var codigoCostoProyectoParameter = codigoCostoProyecto != null ?
+            new ObjectParameter("CodigoCostoProyecto", codigoCostoProyecto) :
+            new ObjectParameter("CodigoCostoProyecto", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_EliminaCostoProyectos", codigoCostoProyectoParameter);
+    }
+
+
+    public virtual int sp_EliminaEmpleados1(string codigo_empleado)
+    {
+
+        var codigo_empleadoParameter = codigo_empleado != null ?
+            new ObjectParameter("codigo_empleado", codigo_empleado) :
+            new ObjectParameter("codigo_empleado", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_EliminaEmpleados1", codigo_empleadoParameter);
+    }
+
+
+    public virtual int sp_InsertarCostoProyecto(string codigoCostoProyecto, string fK_CodigoProyecto, string fK_CodigoCategoria, Nullable<decimal> diaTrabajador, Nullable<decimal> combustible, Nullable<decimal> viaticos, Nullable<decimal> hospedaje, Nullable<decimal> timbresCertificaciones, Nullable<decimal> materiales, string comentario)
+    {
+
+        var codigoCostoProyectoParameter = codigoCostoProyecto != null ?
+            new ObjectParameter("CodigoCostoProyecto", codigoCostoProyecto) :
+            new ObjectParameter("CodigoCostoProyecto", typeof(string));
+
+
+        var fK_CodigoProyectoParameter = fK_CodigoProyecto != null ?
+            new ObjectParameter("FK_CodigoProyecto", fK_CodigoProyecto) :
+            new ObjectParameter("FK_CodigoProyecto", typeof(string));
+
+
+        var fK_CodigoCategoriaParameter = fK_CodigoCategoria != null ?
+            new ObjectParameter("FK_CodigoCategoria", fK_CodigoCategoria) :
+            new ObjectParameter("FK_CodigoCategoria", typeof(string));
+
+
+        var diaTrabajadorParameter = diaTrabajador.HasValue ?
+            new ObjectParameter("DiaTrabajador", diaTrabajador) :
+            new ObjectParameter("DiaTrabajador", typeof(decimal));
+
+
+        var combustibleParameter = combustible.HasValue ?
+            new ObjectParameter("Combustible", combustible) :
+            new ObjectParameter("Combustible", typeof(decimal));
+
+
+        var viaticosParameter = viaticos.HasValue ?
+            new ObjectParameter("Viaticos", viaticos) :
+            new ObjectParameter("Viaticos", typeof(decimal));
+
+
+        var hospedajeParameter = hospedaje.HasValue ?
+            new ObjectParameter("Hospedaje", hospedaje) :
+            new ObjectParameter("Hospedaje", typeof(decimal));
+
+
+        var timbresCertificacionesParameter = timbresCertificaciones.HasValue ?
+            new ObjectParameter("TimbresCertificaciones", timbresCertificaciones) :
+            new ObjectParameter("TimbresCertificaciones", typeof(decimal));
+
+
+        var materialesParameter = materiales.HasValue ?
+            new ObjectParameter("Materiales", materiales) :
+            new ObjectParameter("Materiales", typeof(decimal));
+
+
+        var comentarioParameter = comentario != null ?
+            new ObjectParameter("Comentario", comentario) :
+            new ObjectParameter("Comentario", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_InsertarCostoProyecto", codigoCostoProyectoParameter, fK_CodigoProyectoParameter, fK_CodigoCategoriaParameter, diaTrabajadorParameter, combustibleParameter, viaticosParameter, hospedajeParameter, timbresCertificacionesParameter, materialesParameter, comentarioParameter);
+    }
+
+
+    public virtual ObjectResult<sp_RetornaCostoProyectos_Result> sp_RetornaCostoProyectos()
+    {
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_RetornaCostoProyectos_Result>("sp_RetornaCostoProyectos");
+    }
+
+
+    public virtual ObjectResult<sp_RetornaCostoProyectosPorID_Result> sp_RetornaCostoProyectosPorID(string codigoCostoProyecto)
+    {
+
+        var codigoCostoProyectoParameter = codigoCostoProyecto != null ?
+            new ObjectParameter("CodigoCostoProyecto", codigoCostoProyecto) :
+            new ObjectParameter("CodigoCostoProyecto", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_RetornaCostoProyectosPorID_Result>("sp_RetornaCostoProyectosPorID", codigoCostoProyectoParameter);
+    }
+
 }
 
 }

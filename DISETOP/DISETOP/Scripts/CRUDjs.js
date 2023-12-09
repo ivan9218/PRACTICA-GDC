@@ -17,6 +17,9 @@
     });
 
    //INICIO INSERTAR EMPLEADO 
+
+
+
     $("#btnGuardar").click(function () {
         // Guarda la info del emp
         const form = $('#form-empleado')
@@ -37,15 +40,19 @@
            
             success: function (result) {
                 if (result.success) {
-                    window.location.reload()
-                    alert("Empleado ingresado correctamente.");    
+                    $('#exampleModalCenter').modal('hide'); // Cierra el modal
+                    toastr.success("Empleado ingresado correctamente.");   
+                    setTimeout(function () {
+                        // Tu código que se ejecutará después del retraso de 500 ms
+                        window.location.reload();
+                    }, 500);
                 } else {
                     // El muestra un mensaje de error
-                    alert(result.message);                    
+                    toastr.error(result.message);                    
                 }
             },
             error: function (xhr, textStatus, errorThrown) {
-                alert("Error al agregar el empleado: " + errorThrown);
+                toastr.error("Error al agregar el empleado: " + errorThrown);
             }
         });
     }); 
@@ -106,11 +113,15 @@
                     // Actualización exitosa, cierra el modal
                     $('#editarModal').modal('hide');
                     // Recarga la tabla 
-                    window.location.reload();
-                    alert("Cambios ingresados correctamente.");  
+                    
+                    toastr.success("Cambios ingresados correctamente.");
+                    setTimeout(function () {
+                        // Tu código que se ejecutará después del retraso de 500 ms
+                        window.location.reload();
+                    }, 500);
                 } else {
                     // Muestra un mensaje de error si la actualización falla
-                    alert(result.message);
+                    toastr.error(result.message);
                 }
             }
         });
@@ -136,16 +147,16 @@
                     // Elimina la fila de la tabla
                     tabla.row(row).remove().draw();
                     // Muestra un mensaje de éxito
-                    alert('Empleado eliminado correctamente');
+                    toastr.success('Empleado eliminado correctamente');
                 },
                 error: function () {
                     // Maneja los errores si es necesario
-                    alert('No se pudo eliminar el empleado');
+                    toastr.error('No se pudo eliminar el empleado');
                 }
             });
         } else {
             // Si el usuario hace clic en "Cancelar" en el cuadro de diálogo
-            alert('No se eliminó el empleado');
+            toastr.error('No se eliminó el empleado');
         }
     });
 

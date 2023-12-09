@@ -201,5 +201,74 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_EditarProyectos" FunctionName="DISETOPModel.Store.sp_EditarProyectos" />
+    <FunctionImportMapping FunctionImportName="sp_EliminaProyectos" FunctionName="DISETOPModel.Store.sp_EliminaProyectos" />
+    <FunctionImportMapping FunctionImportName="sp_InsertarProyecto" FunctionName="DISETOPModel.Store.sp_InsertarProyecto" />
+    <FunctionImportMapping FunctionImportName="sp_RetornaProyectos" FunctionName="DISETOPModel.Store.sp_RetornaProyectos">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DISETOPModel.sp_RetornaProyectos_Result">
+          <ScalarProperty Name="CODIGO_PROYECTO" ColumnName="CODIGO_PROYECTO" />
+          <ScalarProperty Name="NOMBRE_PROYECTO" ColumnName="NOMBRE_PROYECTO" />
+          <ScalarProperty Name="FK_CODIGO_CATEGORIA" ColumnName="FK_CODIGO_CATEGORIA" />
+          <ScalarProperty Name="FECHA_INICIO" ColumnName="FECHA_INICIO" />
+          <ScalarProperty Name="ESTADO" ColumnName="ESTADO" />
+          <ScalarProperty Name="FECHA_FIN" ColumnName="FECHA_FIN" />
+          <ScalarProperty Name="PRECIO" ColumnName="PRECIO" />
+          <ScalarProperty Name="COMENTARIO" ColumnName="COMENTARIO" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_RetornaProyectosPorID" FunctionName="DISETOPModel.Store.sp_RetornaProyectosPorID">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DISETOPModel.sp_RetornaProyectosPorID_Result">
+          <ScalarProperty Name="CODIGO_PROYECTO" ColumnName="CODIGO_PROYECTO" />
+          <ScalarProperty Name="NOMBRE_PROYECTO" ColumnName="NOMBRE_PROYECTO" />
+          <ScalarProperty Name="FK_CODIGO_CATEGORIA" ColumnName="FK_CODIGO_CATEGORIA" />
+          <ScalarProperty Name="FECHA_INICIO" ColumnName="FECHA_INICIO" />
+          <ScalarProperty Name="ESTADO" ColumnName="ESTADO" />
+          <ScalarProperty Name="FECHA_FIN" ColumnName="FECHA_FIN" />
+          <ScalarProperty Name="PRECIO" ColumnName="PRECIO" />
+          <ScalarProperty Name="COMENTARIO" ColumnName="COMENTARIO" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_EditarCostoProyecto" FunctionName="DISETOPModel.Store.sp_EditarCostoProyecto" />
+    <FunctionImportMapping FunctionImportName="sp_EliminaCostoProyectos" FunctionName="DISETOPModel.Store.sp_EliminaCostoProyectos" />
+    <FunctionImportMapping FunctionImportName="sp_EliminaEmpleados1" FunctionName="DISETOPModel.Store.sp_EliminaEmpleados" />
+    <FunctionImportMapping FunctionImportName="sp_InsertarCostoProyecto" FunctionName="DISETOPModel.Store.sp_InsertarCostoProyecto" />
+    <FunctionImportMapping FunctionImportName="sp_RetornaCostoProyectos" FunctionName="DISETOPModel.Store.sp_RetornaCostoProyectos">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DISETOPModel.sp_RetornaCostoProyectos_Result">
+          <ScalarProperty Name="CODIGO_COSTO_PROYECTO" ColumnName="CODIGO_COSTO_PROYECTO" />
+          <ScalarProperty Name="FK_CODIGO_PROYECTO" ColumnName="FK_CODIGO_PROYECTO" />
+          <ScalarProperty Name="FK_CODIGO_CATEGORIA" ColumnName="FK_CODIGO_CATEGORIA" />
+          <ScalarProperty Name="DIA_TRABAJADOR" ColumnName="DIA_TRABAJADOR" />
+          <ScalarProperty Name="COMBUSTIBLE" ColumnName="COMBUSTIBLE" />
+          <ScalarProperty Name="VIATICOS" ColumnName="VIATICOS" />
+          <ScalarProperty Name="HOSPEDAJE" ColumnName="HOSPEDAJE" />
+          <ScalarProperty Name="TIMBRES_CERTIFICACIONES" ColumnName="TIMBRES_CERTIFICACIONES" />
+          <ScalarProperty Name="MATERIALES" ColumnName="MATERIALES" />
+          <ScalarProperty Name="TOTAL" ColumnName="TOTAL" />
+          <ScalarProperty Name="COMENTARIO" ColumnName="COMENTARIO" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_RetornaCostoProyectosPorID" FunctionName="DISETOPModel.Store.sp_RetornaCostoProyectosPorID">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DISETOPModel.sp_RetornaCostoProyectosPorID_Result">
+          <ScalarProperty Name="CODIGO_COSTO_PROYECTO" ColumnName="CODIGO_COSTO_PROYECTO" />
+          <ScalarProperty Name="FK_CODIGO_PROYECTO" ColumnName="FK_CODIGO_PROYECTO" />
+          <ScalarProperty Name="FK_CODIGO_CATEGORIA" ColumnName="FK_CODIGO_CATEGORIA" />
+          <ScalarProperty Name="DIA_TRABAJADOR" ColumnName="DIA_TRABAJADOR" />
+          <ScalarProperty Name="COMBUSTIBLE" ColumnName="COMBUSTIBLE" />
+          <ScalarProperty Name="VIATICOS" ColumnName="VIATICOS" />
+          <ScalarProperty Name="HOSPEDAJE" ColumnName="HOSPEDAJE" />
+          <ScalarProperty Name="TIMBRES_CERTIFICACIONES" ColumnName="TIMBRES_CERTIFICACIONES" />
+          <ScalarProperty Name="MATERIALES" ColumnName="MATERIALES" />
+          <ScalarProperty Name="TOTAL" ColumnName="TOTAL" />
+          <ScalarProperty Name="COMENTARIO" ColumnName="COMENTARIO" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
   </EntityContainerMapping>
 </Mapping>

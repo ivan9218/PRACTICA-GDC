@@ -30,24 +30,31 @@
 
         // Imprime el objeto con los valores en la consola
         console.log(formDataObject);
-        $.ajax({
-            url: url_activo,
-            method: "POST",
-            data: formDataObject,
 
-            success: function (result) {
-                if (result.success) {
-                    window.location.reload()
-                    alert("Activo ingresado correctamente.");
-                } else {
-                    // El muestra un mensaje de error
-                    alert(result.message);
+        
+            $.ajax({
+                url: url_activo,
+                method: "POST",
+                data: formDataObject,
+
+                success: function (result) {
+                    if (result.success) {
+                        $('#exampleModalCenter').modal('hide'); // Cierra el modal
+                        toastr.success("Activo ingresado correctamente.")
+                        setTimeout(function () {
+                            // Tu código que se ejecutará después del retraso de 500 ms
+                            window.location.reload();
+                        }, 500);
+                    } else {
+                        // El muestra un mensaje de error
+                        toastr.error(result.message);
+                    }
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    toastr.error("Error al agregar el activo: " + errorThrown)
                 }
-            },
-            error: function (xhr, textStatus, errorThrown) {
-                alert("Error al agregar el Activo: " + errorThrown);
-            }
-        });
+            });
+        
     });
 
     //INICIO DE EDITAR ACTIVO
@@ -78,14 +85,33 @@
         $('#editarModal').modal('show');
         console.log('Editar fila con datos: ', data);
     });
-     //INICIO CARGAR LOS DATOS ACTUALES EN EL MODAL FORM
-     //INICIO GUARDAR LOS CAMBIOS REALIZADOS
+    //INICIO CARGAR LOS DATOS ACTUALES EN EL MODAL FORM
+    //INICIO GUARDAR LOS CAMBIOS REALIZADOS
+
+
+
+    //function validate(data) {
+    //    if (data.VALOR_DE_COMPRA.length >= 22) {
+    //        toastr.error("El campo 'Valor de compra' está fuera del rango permitido.")
+    //        return false
+    //    }
+
+    //    if (data.VALOR_ACTUAL.trim().length == 0) {
+    //        toastr.error("El campo 'Valor actual' está fuera del rango permitido. ")
+    //        return false
+    //    }
+
+
+
+    //    return true;
+    //}
+
     $("#btnEditar").click(function () {
         // Obtén los valores actualizados del formulario de edición
         const codigo_activo = $('#codigo_activo_edit').val();
         const nombre_de_activo = $('#nombre_de_activo_edit').val();
         const numero_de_serie = $('#numero_de_serie_edit').val();
-        const fechaDeCompra = $('#fechaDeCompra_edit').val() || 0;
+        const fechaDeCompra = $('#fechaDeCompra_edit').val() 
         const proveedor = $('#Proveedor_edit').val();
         const valor_de_compra = $('#Valor_de_compra_edit').val();
         const valor_actual = $('#Valor_actual_edit').val();
@@ -104,23 +130,28 @@
         };
 
         // Realiza una solicitud AJAX para actualizar el activo
-        $.ajax({
-            url: url_actualizar_activo,
-            method: "POST",
-            data: activoData,
-            success: function (result) {
-                if (result.success) {
-                    // Actualización exitosa, cierra el modal
-                    $('#editarModal').modal('hide');
-                    // Recarga la tabla 
-                    window.location.reload();
-                    alert("Cambios ingresados correctamente.");
-                } else {
-                    // Muestra un mensaje de error si la actualización falla
-                    alert(result.message);
+   /*     if (validate(activoData)) {*/
+            $.ajax({
+                url: url_actualizar_activo,
+                method: "POST",
+                data: activoData,
+                success: function (result) {
+                    if (result.success) {
+                        // Actualización exitosa, cierra el modal
+                        $('#editarModal').modal('hide');
+                        // Recarga la tabla 
+                        toastr.success("Cambios ingresados correctamente.");
+                        setTimeout(function () {
+                            // Tu código que se ejecutará después del retraso de 500 ms
+                            window.location.reload();
+                        }, 500);
+                    } else {
+                        // Muestra un mensaje de error si la actualización falla
+                        toastr.error(result.message)
+                    }
                 }
-            }
-        });
+            });
+        /*}*/
     });
 
     //FIN GUARDAR LOS CAMBIOS REALIZADOS
@@ -147,16 +178,16 @@
                     // Elimina la fila de la tabla
                     tabla.row(row).remove().draw();
                     // Muestra un mensaje de éxito
-                    alert('Activo eliminado correctamente');
+                    toastr.success("Activo eliminado correctamente")    
                 },
                 error: function () {
-                    // Maneja los errores si es necesario
-                    alert('No se pudo eliminar el activo');
+                    
+                    toastr.error("No se pudo eliminar el activo")      
                 }
             });
         } else {
             // Si el usuario hace clic en "Cancelar" en el cuadro de diálogo
-            alert('No se eliminó el activo');
+            toastr.error('No se eliminó el activo');
         }
     });
 
@@ -167,7 +198,4 @@
 
 
 });
-
-
-
 

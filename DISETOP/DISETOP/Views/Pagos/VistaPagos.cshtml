@@ -6,7 +6,7 @@
 }
 <!DOCTYPE html>
 <html>
-<head> 
+<head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
@@ -18,7 +18,12 @@
     <link href="~/Content/css/CRUD.css" rel="stylesheet" />
     <script src="https://unpkg.com/jspdf@latest/dist/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.20/jspdf.plugin.autotable.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
     <script src="~/Scripts/CRUD-PAGOS.js"></script>
+
+
 </head>
 <body>
     <div class="container">
@@ -39,8 +44,8 @@
             <table id="miTabla" class="table table-striped table-bordered" style="width:100%">
                 <thead>
                     <tr>
-                        <th>Codigo Pago</th>
-                        <th>Codigo del Empleado</th>
+                        <th>Código de Pago</th>
+                        <th>Código del Empleado</th>
                         <th>Nombre del Empleado</th>
                         <th>Cuenta Bancaria</th>
                         <th>Días a Pagar</th>
@@ -110,12 +115,12 @@
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label for="diasApagar">Dias a Pagar:</label>
-                                        <input type="text" class="form-control" id="diasApagar" name="DIAS_A_PAGAR" placeholder="Dias a Pagar">
+                                        <label for="diasApagar">Días a Pagar:</label>
+                                        <input type="text" class="form-control" id="diasApagar" name="DIAS_A_PAGAR" placeholder="Días a Pagar">
                                     </div>
                                     <div class="form-group">
                                         <label for="monto">Monto:</label>
-                                        <input type="text" class="form-control" id="monto" name="MONTO" maxlength="400" placeholder="Monto">
+                                        <input type="text" class="form-control" id="monto" name="MONTO"  placeholder="Solo valores numéricos">
                                     </div>
                                     <div class="form-group">
                                         <label for="fechaDePago">Fecha de Pago:</label>
@@ -140,7 +145,7 @@
         </div>
     </div>
     <!-- Modal EDITAR -->
-    <div class="modal fade" id="editarModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+ <div class="modal fade" id="editarModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -151,7 +156,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="container">
-                        <h2>Actualizacion de Pago</h2>
+                        <h2>Actualización de Pago</h2>
                         <form method="POST" id="form-pago">
                             <div class="row">
                                 <div class="col-6">
@@ -175,12 +180,12 @@
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label for="diasApagar">Dias a Pagar:</label>
-                                        <input type="text" class="form-control" id="diasApagar_edit" name="DIAS_A_PAGAR" placeholder="Dias a Pagar">
+                                        <label for="diasApagar">Días a Pagar:</label>
+                                        <input type="text" class="form-control" id="diasApagar_edit" name="DIAS_A_PAGAR" placeholder="Días a Pagar">
                                     </div>
                                     <div class="form-group">
                                         <label for="monto">Monto:</label>
-                                        <input type="text" class="form-control" id="monto_edit" name="MONTO" maxlength="400" placeholder="Monto">
+                                        <input type="text" class="form-control" id="monto_edit" name="MONTO" placeholder="Solo valores numéricos">
                                     </div>
                                     <div class="form-group">
                                         <label for="fechaDePago">Fecha de Pago:</label>

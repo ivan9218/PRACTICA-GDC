@@ -30,13 +30,13 @@
     <Property Name="CODIGO_COSTO_PROYECTO" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="FK_CODIGO_PROYECTO" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="FK_CODIGO_CATEGORIA" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="DIA_TRABAJADOR" Type="Decimal" Precision="10" Scale="2" />
-    <Property Name="COMBUSTIBLE" Type="Decimal" Precision="10" Scale="2" />
-    <Property Name="VIATICOS" Type="Decimal" Precision="10" Scale="2" />
-    <Property Name="HOSPEDAJE" Type="Decimal" Precision="10" Scale="2" />
-    <Property Name="TIMBRES_CERTIFICACIONES" Type="Decimal" Precision="10" Scale="2" />
-    <Property Name="MATERIALES" Type="Decimal" Precision="10" Scale="2" />
-    <Property Name="TOTAL" Type="Decimal" Precision="10" Scale="2" />
+    <Property Name="DIA_TRABAJADOR" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="COMBUSTIBLE" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="VIATICOS" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="HOSPEDAJE" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="TIMBRES_CERTIFICACIONES" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="MATERIALES" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="TOTAL" Type="Decimal" Precision="35" Scale="2" />
     <Property Name="COMENTARIO" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="CATEGORIA_PROYECTOS" Relationship="Self.FK_COSTO_PROYECTOS_CATEGORIA" FromRole="COSTO_PROYECTOS" ToRole="CATEGORIA_PROYECTOS" />
     <NavigationProperty Name="PROYECTO" Relationship="Self.FK_COSTO_PROYECTOS_PROYECTOS" FromRole="COSTO_PROYECTOS" ToRole="PROYECTOS" />
@@ -62,7 +62,7 @@
     <Property Name="FK_CODIGO_EMPLEADO" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="CUENTA_BANCARIA" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
     <Property Name="DIAS_A_PAGAR" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-    <Property Name="MONTO" Type="Decimal" Precision="10" Scale="2" />
+    <Property Name="MONTO" Type="Decimal" Precision="18" Scale="2" />
     <Property Name="FECHA_DE_PAGO" Type="DateTime" Precision="0" />
     <Property Name="COMENTARIO" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="EMPLEADO" Relationship="Self.FK_PAGOS_EMPLEADOS" FromRole="PAGOS" ToRole="EMPLEADOS" />
@@ -77,7 +77,7 @@
     <Property Name="FECHA_INICIO" Type="DateTime" Precision="0" />
     <Property Name="ESTADO" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
     <Property Name="FECHA_FIN" Type="DateTime" Precision="0" />
-    <Property Name="PRECIO" Type="Decimal" Precision="10" Scale="2" />
+    <Property Name="PRECIO" Type="Decimal" Precision="18" Scale="2" />
     <Property Name="COMENTARIO" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="CATEGORIA_PROYECTOS" Relationship="Self.FK_PROYECTOS_CATEGORIA" FromRole="PROYECTOS" ToRole="CATEGORIA_PROYECTOS" />
     <NavigationProperty Name="COSTO_PROYECTOS" Relationship="Self.FK_COSTO_PROYECTOS_PROYECTOS" FromRole="PROYECTOS" ToRole="COSTO_PROYECTOS" />
@@ -275,6 +275,67 @@
     <FunctionImport Name="sp_RetornaCategoria_ProyectosPorID" ReturnType="Collection(DISETOPModel.sp_RetornaCategoria_ProyectosPorID_Result)">
       <Parameter Name="codigo_categoria" Mode="In" Type="String" />
     </FunctionImport>
+    <FunctionImport Name="sp_EditarProyectos">
+      <Parameter Name="CodigoProyecto" Mode="In" Type="String" />
+      <Parameter Name="NombreProyecto" Mode="In" Type="String" />
+      <Parameter Name="FK_CodigoCategoria" Mode="In" Type="String" />
+      <Parameter Name="FechaInicio" Mode="In" Type="DateTime" />
+      <Parameter Name="Estado" Mode="In" Type="String" />
+      <Parameter Name="FechaFin" Mode="In" Type="DateTime" />
+      <Parameter Name="Precio" Mode="In" Type="Decimal" />
+      <Parameter Name="Comentario" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_EliminaProyectos">
+      <Parameter Name="CodigoProyecto" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_InsertarProyecto">
+      <Parameter Name="CodigoProyecto" Mode="In" Type="String" />
+      <Parameter Name="NombreProyecto" Mode="In" Type="String" />
+      <Parameter Name="FK_CodigoCategoria" Mode="In" Type="String" />
+      <Parameter Name="FechaInicio" Mode="In" Type="DateTime" />
+      <Parameter Name="Estado" Mode="In" Type="String" />
+      <Parameter Name="FechaFin" Mode="In" Type="DateTime" />
+      <Parameter Name="Precio" Mode="In" Type="Decimal" />
+      <Parameter Name="Comentario" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_RetornaProyectos" ReturnType="Collection(DISETOPModel.sp_RetornaProyectos_Result)" />
+    <FunctionImport Name="sp_RetornaProyectosPorID" ReturnType="Collection(DISETOPModel.sp_RetornaProyectosPorID_Result)">
+      <Parameter Name="CodigoProyecto" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_EditarCostoProyecto">
+      <Parameter Name="CodigoCostoProyecto" Mode="In" Type="String" />
+      <Parameter Name="FK_CodigoProyecto" Mode="In" Type="String" />
+      <Parameter Name="FK_CodigoCategoria" Mode="In" Type="String" />
+      <Parameter Name="DiaTrabajador" Mode="In" Type="Decimal" />
+      <Parameter Name="Combustible" Mode="In" Type="Decimal" />
+      <Parameter Name="Viaticos" Mode="In" Type="Decimal" />
+      <Parameter Name="Hospedaje" Mode="In" Type="Decimal" />
+      <Parameter Name="TimbresCertificaciones" Mode="In" Type="Decimal" />
+      <Parameter Name="Materiales" Mode="In" Type="Decimal" />
+      <Parameter Name="Comentario" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_EliminaCostoProyectos">
+      <Parameter Name="CodigoCostoProyecto" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_EliminaEmpleados1">
+      <Parameter Name="codigo_empleado" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_InsertarCostoProyecto">
+      <Parameter Name="CodigoCostoProyecto" Mode="In" Type="String" />
+      <Parameter Name="FK_CodigoProyecto" Mode="In" Type="String" />
+      <Parameter Name="FK_CodigoCategoria" Mode="In" Type="String" />
+      <Parameter Name="DiaTrabajador" Mode="In" Type="Decimal" />
+      <Parameter Name="Combustible" Mode="In" Type="Decimal" />
+      <Parameter Name="Viaticos" Mode="In" Type="Decimal" />
+      <Parameter Name="Hospedaje" Mode="In" Type="Decimal" />
+      <Parameter Name="TimbresCertificaciones" Mode="In" Type="Decimal" />
+      <Parameter Name="Materiales" Mode="In" Type="Decimal" />
+      <Parameter Name="Comentario" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_RetornaCostoProyectos" ReturnType="Collection(DISETOPModel.sp_RetornaCostoProyectos_Result)" />
+    <FunctionImport Name="sp_RetornaCostoProyectosPorID" ReturnType="Collection(DISETOPModel.sp_RetornaCostoProyectosPorID_Result)">
+      <Parameter Name="CodigoCostoProyecto" Mode="In" Type="String" />
+    </FunctionImport>
   </EntityContainer>
   <ComplexType Name="sp_RetornaEmpleados_Result">
     <Property Type="String" Name="CODIGO_EMPLEADO" Nullable="false" MaxLength="25" />
@@ -340,6 +401,52 @@
   <ComplexType Name="sp_RetornaCategoria_ProyectosPorID_Result">
     <Property Type="String" Name="CODIGO_CATEGORIA" Nullable="false" MaxLength="25" />
     <Property Type="String" Name="NOMBRE_CATEGORIA" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="COMENTARIO" Nullable="true" MaxLength="500" />
+  </ComplexType>
+  <ComplexType Name="sp_RetornaProyectos_Result">
+    <Property Type="String" Name="CODIGO_PROYECTO" Nullable="false" MaxLength="25" />
+    <Property Type="String" Name="NOMBRE_PROYECTO" Nullable="false" MaxLength="400" />
+    <Property Type="String" Name="FK_CODIGO_CATEGORIA" Nullable="false" MaxLength="25" />
+    <Property Type="DateTime" Name="FECHA_INICIO" Nullable="true" />
+    <Property Type="String" Name="ESTADO" Nullable="true" MaxLength="100" />
+    <Property Type="DateTime" Name="FECHA_FIN" Nullable="true" />
+    <Property Type="Decimal" Name="PRECIO" Nullable="true" Precision="10" Scale="2" />
+    <Property Type="String" Name="COMENTARIO" Nullable="true" MaxLength="500" />
+  </ComplexType>
+  <ComplexType Name="sp_RetornaProyectosPorID_Result">
+    <Property Type="String" Name="CODIGO_PROYECTO" Nullable="false" MaxLength="25" />
+    <Property Type="String" Name="NOMBRE_PROYECTO" Nullable="false" MaxLength="400" />
+    <Property Type="String" Name="FK_CODIGO_CATEGORIA" Nullable="false" MaxLength="25" />
+    <Property Type="DateTime" Name="FECHA_INICIO" Nullable="true" />
+    <Property Type="String" Name="ESTADO" Nullable="true" MaxLength="100" />
+    <Property Type="DateTime" Name="FECHA_FIN" Nullable="true" />
+    <Property Type="Decimal" Name="PRECIO" Nullable="true" Precision="10" Scale="2" />
+    <Property Type="String" Name="COMENTARIO" Nullable="true" MaxLength="500" />
+  </ComplexType>
+  <ComplexType Name="sp_RetornaCostoProyectos_Result">
+    <Property Type="String" Name="CODIGO_COSTO_PROYECTO" Nullable="false" MaxLength="25" />
+    <Property Type="String" Name="FK_CODIGO_PROYECTO" Nullable="false" MaxLength="25" />
+    <Property Type="String" Name="FK_CODIGO_CATEGORIA" Nullable="false" MaxLength="25" />
+    <Property Type="Decimal" Name="DIA_TRABAJADOR" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="COMBUSTIBLE" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="VIATICOS" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="HOSPEDAJE" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="TIMBRES_CERTIFICACIONES" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="MATERIALES" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="TOTAL" Nullable="true" Precision="35" Scale="2" />
+    <Property Type="String" Name="COMENTARIO" Nullable="true" MaxLength="500" />
+  </ComplexType>
+  <ComplexType Name="sp_RetornaCostoProyectosPorID_Result">
+    <Property Type="String" Name="CODIGO_COSTO_PROYECTO" Nullable="false" MaxLength="25" />
+    <Property Type="String" Name="FK_CODIGO_PROYECTO" Nullable="false" MaxLength="25" />
+    <Property Type="String" Name="FK_CODIGO_CATEGORIA" Nullable="false" MaxLength="25" />
+    <Property Type="Decimal" Name="DIA_TRABAJADOR" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="COMBUSTIBLE" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="VIATICOS" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="HOSPEDAJE" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="TIMBRES_CERTIFICACIONES" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="MATERIALES" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="TOTAL" Nullable="true" Precision="35" Scale="2" />
     <Property Type="String" Name="COMENTARIO" Nullable="true" MaxLength="500" />
   </ComplexType>
 </Schema>

@@ -1,0 +1,274 @@
+﻿@model DISETOP.Models.Proyectos_Categorias_CostoProyectos_Model
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    //Layout = null;
+}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap4.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <link href="~/Content/css/CRUD.css" rel="stylesheet" />
+    <script src="https://unpkg.com/jspdf@latest/dist/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.20/jspdf.plugin.autotable.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+    <script src="~/Scripts/CRUD-COSTO_PROYECTOS.js"></script>
+    <style>
+        .container2, .table-responsive, .icopico {
+            min-width: 1480px !important
+        }
+        
+    </style>
+</head>
+<body>
+     <div class="container icopico">
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary" id="handler-project-crud">
+            Agregar Costo de Proyecto
+        </button>
+        <!-- Agrega botones de exportación con el mismo formato -->
+        <div class="container">
+            <div class="action">
+                <span>Exportar a Excel:</span>
+                <button class="btn btn-primary">Xlsx</button>
+                <button class="btn btn-primary">Xls</button>
+                <button class="btn btn-primary">CSV</button>
+            </div>
+        </div>
+        <div class="table-responsive" id="proyectoCosto">
+        <table id="miTabla" class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>Código de Costo Proyecto</th>
+                    <th>Código de Proyecto</th>
+                    <th>Nombre de Proyecto</th>
+                    <th>Código de Categoría</th>
+                    <th>Nombre de Categoría</th>
+                    <th>Día de Trabajador</th>
+                    <th>Combustible</th>
+                    <th>Viáticos</th>
+                    <th>Hospedaje</th>
+                    <th>Timbres Certificaciones</th>
+                    <th>Materiales</th>
+                    <th>Total</th>
+                    <th>Comentario</th>
+                    <th>Acciones</th>
+                </tr>
+           </thead>
+           <tbody>
+                @foreach (var costo_proyecto in Model.Costo_Proyectos)
+                {
+                    <tr>
+                        <td>@costo_proyecto.CODIGO_COSTO_PROYECTO</td>
+                        <td>@costo_proyecto.FK_CODIGO_PROYECTO</td>
+                        <td>@costo_proyecto.NOMBRE_PROYECTO</td>
+                        <td>@costo_proyecto.FK_CODIGO_CATEGORIA</td>
+                        <td>@costo_proyecto.NOMBRE_CATEGORIA</td>
+                        <td>@costo_proyecto.DIA_TRABAJADOR</td>
+                        <td>@costo_proyecto.COMBUSTIBLE</td>
+                        <td>@costo_proyecto.VIATICOS</td>
+                        <td>@costo_proyecto.HOSPEDAJE</td>
+                        <td>@costo_proyecto.TIMBRES_CERTIFICACIONES</td>
+                        <td>@costo_proyecto.MATERIALES</td>
+                        <td>@costo_proyecto.TOTAL</td>
+                        <td>@costo_proyecto.COMENTARIO</td>
+                        <td>
+                            <div class="d-flex flex-column justify-content-center">
+                                <button class="btn btn-info editar mb-2" id="buttonEditar" data-codigo-pago="@costo_proyecto.CODIGO_COSTO_PROYECTO">Editar</button>
+                                <button class="btn btn-danger eliminar " id="buttonEliminar">Eliminar</button>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+   </div>
+        </div>
+    <!-- Modal INSERTAR -->
+   <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Grupo Disetop Consultores S.A</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+               <div class="modal-body">
+                    <div class="container">
+                        <h2>Insertar Costo Proyecto</h2>
+                        <form method="POST" id="form-costo-proyecto">
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="codigoCostoProyecto">Código costo de proyecto <span class="text-danger">*</span>:</label>
+                                        <input type="text" class="form-control" id="codigoCostoProyecto" name="CODIGO_COSTO_PROYECTO" maxlength="25" placeholder="Código de Costo Proyecto" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="codigo_proyecto">Nombre de Proyecto <span class="text-danger">*</span>:</label>
+                                        <select class="form-select" id="codigo_proyecto" name="FK_CODIGO_PROYECTO" required>
+                                            @foreach (var costo in Model.Proyectos)
+                                            {
+                                                <option value="@costo.CODIGO_PROYECTO">@costo.NOMBRE_PROYECTO</option>
+                                            }
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="codigo_categoria">Nombre de Categoría <span class="text-danger">*</span>:</label>
+                                        <select class="form-select" id="codigo_categoria" name="FK_CODIGO_CATEGORIA" required>
+                                            @foreach (var costo in Model.Categorias)
+                                            {
+                                                <option value="@costo.CODIGO_CATEGORIA">@costo.NOMBRE_CATEGORIA</option>
+                                            }
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="DiaTrabajador">Día Trabajador:</label>
+                                        <input type="text" class="form-control" id="DiaTrabajador" name="DIA_TRABAJADOR" placeholder="Solo valores numéricos">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="Combustible">Combustible:</label>
+                                        <input type="text" class="form-control" id="Combustible" name="COMBUSTIBLE" placeholder="Solo valores numéricos">
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                   
+                                    <div class="form-group">
+                                        <label for="Viaticos">Viáticos:</label>
+                                        <input type="text" class="form-control" id="Viaticos" name="VIATICOS" placeholder="Solo valores numéricos">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="Hospedaje">Hospedaje:</label>
+                                        <input type="text" class="form-control" id="Hospedaje" name="HOSPEDAJE" placeholder="Solo valores numéricos">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="TimbresCertificaciones">Timbres Certificaciones:</label>
+                                        <input type="text" class="form-control" id="TimbresCertificaciones" name="TIMBRES_CERTIFICACIONES" placeholder="Solo valores numéricos">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="Materiales">Materiales:</label>
+                                        <input type="text" class="form-control" id="Materiales" name="MATERIALES" placeholder="Solo valores numéricos">
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="comentario">Comentario:</label>
+                                        <textarea class="form-control" id="comentario" name="COMENTARIO" maxlength="500" placeholder="Comentario" rows="4"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-primary" id="btnGuardar">Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal EDITAR -->
+   <div class="modal fade" id="editarModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Grupo Disetop Consultores S.A</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+               <div class="modal-body">
+                    <div class="container">
+                        <h2>Actualización de Costo Proyecto</h2>
+                        <form method="POST" id="form-proyecto">
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="codigoCostoProyecto">Código Costo de Proyecto:</label>
+                                        <input type="text" class="form-control" id="codigoCostoProyecto_edit" name="CODIGO_COSTO_PROYECTO" maxlength="25" placeholder="Código de Costo Proyecto" readonly>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="codigo_proyecto">Nombre de Proyecto <span class="text-danger">*</span>:</label>
+                                        <select class="form-select" id="codigo_proyecto_edit" name="FK_CODIGO_PROYECTO" required>
+                                            @foreach (var costo in Model.Proyectos)
+                                            {
+                                                <option value="@costo.CODIGO_PROYECTO">@costo.NOMBRE_PROYECTO</option>
+                                            }
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="codigo_categoria">Nombre de Categoría <span class="text-danger">*</span>:</label>
+                                        <select class="form-select" id="codigo_categoria_edit" name="FK_CODIGO_CATEGORIA" required>
+                                            @foreach (var costo in Model.Categorias)
+                                            {
+                                                <option value="@costo.CODIGO_CATEGORIA">@costo.NOMBRE_CATEGORIA</option>
+                                            }
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="DiaTrabajador">Día Trabajador:</label>
+                                        <input type="text" class="form-control" id="DiaTrabajador_edit" name="DIA_TRABAJADOR" placeholder="Solo valores numéricos">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="Combustible">Combustible:</label>
+                                        <input type="text" class="form-control" id="Combustible_edit" name="COMBUSTIBLE" placeholder="Solo valores numéricos">
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                   
+                                    <div class="form-group">
+                                        <label for="Viaticos">Viáticos:</label>
+                                        <input type="text" class="form-control" id="Viaticos_edit" name="VIATICOS" placeholder="Solo valores numéricos">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="Hospedaje">Hospedaje:</label>
+                                        <input type="text" class="form-control" id="Hospedaje_edit" name="HOSPEDAJE" placeholder="Solo valores numéricos">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="TimbresCertificaciones">Timbres Certificaciones:</label>
+                                        <input type="text" class="form-control" id="TimbresCertificaciones_edit" name="TIMBRES_CERTIFICACIONES" placeholder="Solo valores numéricos">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="Materiales">Materiales:</label>
+                                        <input type="text" class="form-control" id="Materiales_edit" name="MATERIALES" placeholder="Solo valores numéricos">
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="comentario">Comentario:</label>
+                                        <textarea class="form-control" id="comentario_edit" name="COMENTARIO" maxlength="500" placeholder="Comentario" rows="4"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-primary" id="btnEditar">Guardar cambios</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/Scripts/scriptEXCEL.js"></script>
+    <script src="~/Scripts/sheetEXCEL.js"></script>
+    @if (TempData["MensajeFechaPorDefecto"] != null)
+    {
+        <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            alert('@TempData["MensajeFechaPorDefecto"]');
+        });
+        </script>
+    }
+</body>
+</html>

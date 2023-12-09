@@ -24,4 +24,18 @@ namespace DISETOP.Models
         public List<PAGO> Pagos { get; set; }
         public List<EMPLEADO> Empleados { get; set; }
     }
+
+    public class Proyectos_Y_CategoriasModel
+    {
+        public List<PROYECTO> Proyectos { get; set; }
+        public List<CATEGORIA_PROYECTOS> Categorias { get; set; }
+    }
+
+    public class Proyectos_Categorias_CostoProyectos_Model
+    {
+        public List<COSTO_PROYECTOS> Costo_Proyectos { get; set; }
+        public List<PROYECTO> Proyectos { get; set; }
+        public List<CATEGORIA_PROYECTOS> Categorias { get; set; }
+    }
+
 }

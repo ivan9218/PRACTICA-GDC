@@ -37,15 +37,20 @@
 
             success: function (result) {
                 if (result.success) {
-                    window.location.reload()
-                    alert("Categoría de Proyectos ingresada correctamente.");
+                    $('#exampleModalCenter').modal('hide'); // Cierra el modal
+                    toastr.success("Categoría de Proyectos ingresada correctamente.");
+                    setTimeout(function () {
+                        // Tu código que se ejecutará después del retraso de 500 ms
+                        window.location.reload();
+                    }, 500);
+
                 } else {
                     // El muestra un mensaje de error
-                    alert(result.message);
+                    toastr.error(result.message);
                 }
             },
             error: function (xhr, textStatus, errorThrown) {
-                alert("Error al agregar la Categoría de Proyectos: " + errorThrown);
+                toastr.error("Error al agregar la Categoría de Proyectos: " + errorThrown);
             }
         });
     });
@@ -96,11 +101,15 @@
                     // Actualización exitosa, cierra el modal
                     $('#editarModal').modal('hide');
                     // Recarga la tabla 
-                    window.location.reload();
-                    alert("Cambios ingresados correctamente.");
+
+                    toastr.success("Cambios ingresados correctamente.");
+                    setTimeout(function () {
+                        // Tu código que se ejecutará después del retraso de 500 ms
+                        window.location.reload();
+                    }, 500);
                 } else {
                     // Muestra un mensaje de error si la actualización falla
-                    alert(result.message);
+                    toastr.error(result.message);
                 }
             }
         });
@@ -115,7 +124,7 @@
         const codigoCategoria = row.find('td:first').text(); // Obtiene el código de la categoria de proyectos
 
         // Muestra un cuadro de diálogo de confirmación
-        if (confirm('¿Está seguro de que desea eliminar la categoria de proyecto? Esto también eliminará los registros de Proyecto y Costo de Proyectos de esta Categoria.')) {
+        if (confirm('¿Está seguro de que desea eliminar la categoría de proyecto? Esto también eliminará los registros de Proyecto y Costo de Proyectos de esta Categoría.')) {
             // Si el usuario hace clic en "Aceptar" en el cuadro de diálogo
             // Realiza una solicitud AJAX para eliminar el registro en la base de datos
             $.ajax({
@@ -126,16 +135,16 @@
                     // Elimina la fila de la tabla
                     tabla.row(row).remove().draw();
                     // Muestra un mensaje de éxito
-                    alert('Categoria de proyecto eliminada correctamente');
+                    toastr.success('Categoría de proyecto eliminada correctamente');
                 },
                 error: function () {
-                    // Maneja los errores si es necesario
-                    alert('No se pudo eliminar la Categoria de proyecto');
+                    
+                    toastr.error('No se pudo eliminar la Categoría de proyecto');
                 }
             });
         } else {
             // Si el usuario hace clic en "Cancelar" en el cuadro de diálogo
-            alert('No se eliminó la Categoria de proyecto');
+            toastr.error('No se eliminó la Categoría de proyecto');
         }
     });
 

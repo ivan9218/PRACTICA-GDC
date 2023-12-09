@@ -47,14 +47,20 @@ namespace DISETOP.Controllers
                             // Añadir manejo de excepciones para CEDULA y TELEFONO
                             try
                             {
-                                activo.FECHA_DE_COMPRA = Convert.ToDateTime(reader["FECHA_DE_COMPRA"]);
+                                //VALIDA SI LA FECHA NO ES NULA ENTONCES LA CONVIERTE Y LA CARGA
+                                // Y SI ES NULA ENTONCES SE QUEDA ASI NULA Y SE ESCRIBE EL MENSAJE QUE ESTA EN LA VALIDACION DLE HTMMT OSEA EN LA VISTA. 
+                                if (reader["FECHA_DE_COMPRA"] != DBNull.Value)
+                                {
+                                    activo.FECHA_DE_COMPRA = Convert.ToDateTime(reader["FECHA_DE_COMPRA"]);
+                                }
+
                                 activo.VALOR_DE_COMPRA = Convert.ToDecimal(reader["VALOR_DE_COMPRA"]);
                                 activo.VALOR_ACTUAL = Convert.ToDecimal(reader["VALOR_ACTUAL"]);
 
                             }
                             catch (Exception)
                             {
-
+                                return Json(new { success = false, message = "Error al cargar datos de la tabla" });
                             }
 
                             activos.Add(activo);
@@ -83,9 +89,36 @@ namespace DISETOP.Controllers
             // INICIO VALIDACIONES
             if (ModelState.IsValid)
             {
+                // Verifica si el MONTO no es nulo y está fuera del rango permitido
+                if (activo.VALOR_DE_COMPRA != null)
+                {
+                    if (activo.VALOR_DE_COMPRA < 0 || activo.VALOR_DE_COMPRA > 9999999999999999.99m)
+                    {
+                        return Json(new { success = false, message = "El campo 'Valor de compra' está fuera del rango permitido." });
+                    }
+                }
+                else
+                {
+                    // Asigna 0 a MONTO si es nulo
+                    activo.VALOR_DE_COMPRA = 0;
+                }
+                // Verifica si el MONTO no es nulo y está fuera del rango permitido
+                if (activo.VALOR_ACTUAL != null)
+                {
+                    if (activo.VALOR_ACTUAL < 0 || activo.VALOR_ACTUAL > 9999999999999999.99m)
+                    {
+                        return Json(new { success = false, message = "El campo 'Valor actual' está fuera del rango permitido." });
+                    }
+                }
+                else
+                {
+                    // Asigna 0 a MONTO si es nulo
+                    activo.VALOR_ACTUAL = 0;
+                }
+
                 if (string.IsNullOrWhiteSpace(activo.CODIGO_ACTIVO))
                 {
-                    return Json(new { success = false, message = "El campo 'Codigo de Activo' es obligatorio." });
+                    return Json(new { success = false, message = "El campo 'Código de Activo' es obligatorio." });
                 }
                 if (string.IsNullOrWhiteSpace(activo.NOMBRE_DE_ACTIVO))
                 {
@@ -99,28 +132,15 @@ namespace DISETOP.Controllers
                 {
                     activo.FECHA_DE_COMPRA = activo.FECHA_DE_COMPRA.Value.Date; // Elimina la parte de la hora y los minutos
                 }
-                if (activo.FECHA_DE_COMPRA == null)
-                {
-                    activo.FECHA_DE_COMPRA = new DateTime(1753, 1, 1);
 
-                }
- 
+
                 // Asigna cadena vacía a proveedor si está nulo
                 if (string.IsNullOrWhiteSpace(activo.PROVEEDOR))
                 {
                     activo.PROVEEDOR = string.Empty;
                 }
 
-                // Asigna 0 a MONTO si es nulo o está vacío
-                if (activo.VALOR_DE_COMPRA == null)
-                {
-                    activo.VALOR_DE_COMPRA = 0;
-                }
-                // Asigna 0 a MONTO si es nulo o está vacío
-                if (activo.VALOR_ACTUAL == null)
-                {
-                    activo.VALOR_ACTUAL = 0;
-                }
+
                 // Asigna cadena vacía a proveedor si está nulo
                 if (string.IsNullOrWhiteSpace(activo.COMENTARIO))
                 {
@@ -149,7 +169,8 @@ namespace DISETOP.Controllers
                         new SqlParameter("@codigo_activo", activo.CODIGO_ACTIVO),
                         new SqlParameter("@nombre_de_activo", activo.NOMBRE_DE_ACTIVO),
                         new SqlParameter("@numero_de_serie", activo.NUMERO_DE_SERIE),
-                        new SqlParameter("@FechaDeCompra", activo.FECHA_DE_COMPRA),
+                        new SqlParameter("@FechaDeCompra", activo.FECHA_DE_COMPRA.HasValue ? (object)activo.FECHA_DE_COMPRA.Value : DBNull.Value),
+                        //new SqlParameter("@FechaDeCompra", activo.FECHA_DE_COMPRA),
                         new SqlParameter("@Proveedor", activo.PROVEEDOR),
                         new SqlParameter("@Valor_de_compra", activo.VALOR_DE_COMPRA),
                         new SqlParameter("@Valor_actual", activo.VALOR_ACTUAL),
@@ -190,104 +211,115 @@ namespace DISETOP.Controllers
         [HttpPost]
         public ActionResult EditarActivo(ACTIVO activo)
         {
-            // INICIO VALIDACIONES
             if (ModelState.IsValid)
-            {
-                if (string.IsNullOrWhiteSpace(activo.CODIGO_ACTIVO))
-                {
-                    return Json(new { success = false, message = "El campo 'Codigo de Activo' es obligatorio." });
-                }
-                if (string.IsNullOrWhiteSpace(activo.NOMBRE_DE_ACTIVO))
-                {
-                    return Json(new { success = false, message = "El campo 'Nombre de Activo' es obligatorio." });
-                }
-                if (string.IsNullOrWhiteSpace(activo.NUMERO_DE_SERIE))
-                {
-                    return Json(new { success = false, message = "El campo 'Número de Serie' es obligatorio." });
-                }
-                if (activo.FECHA_DE_COMPRA != null)
-                {
-                    activo.FECHA_DE_COMPRA = activo.FECHA_DE_COMPRA.Value.Date; // Elimina la parte de la hora y los minutos
-                }
-                if (activo.FECHA_DE_COMPRA == null)
-                {
-                    activo.FECHA_DE_COMPRA = new DateTime(1753, 1, 1);
+            { //{try
 
-                }
-
-                // Asigna cadena vacía a proveedor si está nulo
-                if (string.IsNullOrWhiteSpace(activo.PROVEEDOR))
-                {
-                    activo.PROVEEDOR = string.Empty;
-                }
-
-                // Asigna 0 a MONTO si es nulo o está vacío
-                if (activo.VALOR_DE_COMPRA == null)
-                {
-                    activo.VALOR_DE_COMPRA = 0;
-                }
-                // Asigna 0 a MONTO si es nulo o está vacío
-                if (activo.VALOR_ACTUAL == null)
-                {
-                    activo.VALOR_ACTUAL = 0;
-                }
-                // Asigna cadena vacía a proveedor si está nulo
-                if (string.IsNullOrWhiteSpace(activo.COMENTARIO))
-                {
-                    activo.COMENTARIO = string.Empty;
-                }
-
+                //try
+                //{
                 // Inserta el nuevo activo en la base de datos utilizando el procedimiento almacenado
                 using (var context = new DISETOP.Models.DISETOPEntities())
                 {
-                    //var activoExistente = context.ACTIVOS.FirstOrDefault(e => e.CODIGO_ACTIVO == activo.CODIGO_ACTIVO);
 
-                    //if (activoExistente != null)
+                    // INICIO VALIDACIONES
+
+
+                    // Verifica si el MONTO no es nulo y está fuera del rango permitido
+                    if (activo.VALOR_DE_COMPRA != null)
+                    {
+                        if (activo.VALOR_DE_COMPRA < 0 || activo.VALOR_DE_COMPRA > 9999999999999999.99m)
+                        {
+                            return Json(new { success = false, message = "El campo 'Valor de compra' está fuera del rango permitido." });
+                        }
+                    }
+                    else
+                    {
+                        // Asigna 0 a MONTO si es nulo
+                        activo.VALOR_DE_COMPRA = 0;
+                    }
+                    // Verifica si el MONTO no es nulo y está fuera del rango permitido
+                    if (activo.VALOR_ACTUAL != null)
+                    {
+                        if (activo.VALOR_ACTUAL < 0 || activo.VALOR_ACTUAL > 9999999999999999.99m)
+                        {
+                            return Json(new { success = false, message = "El campo 'Valor actual' está fuera del rango permitido." });
+                        }
+                    }
+                    else
+                    {
+                        // Asigna 0 a MONTO si es nulo
+                        activo.VALOR_ACTUAL = 0;
+                    }
+
+
+                    if (string.IsNullOrWhiteSpace(activo.CODIGO_ACTIVO))
+                    {
+                        return Json(new { success = false, message = "El campo 'Código de Activo' es obligatorio." });
+                    }
+                    if (string.IsNullOrWhiteSpace(activo.NOMBRE_DE_ACTIVO))
+                    {
+                        return Json(new { success = false, message = "El campo 'Nombre de Activo' es obligatorio." });
+                    }
+                    if (string.IsNullOrWhiteSpace(activo.NUMERO_DE_SERIE))
+                    {
+                        return Json(new { success = false, message = "El campo 'Número de Serie' es obligatorio." });
+                    }
+                    //if (activo.FECHA_DE_COMPRA != null)
                     //{
-                    //    return Json(new { success = false, message = "El Activo con el código " + activo.CODIGO_ACTIVO + " ya existe." });
+                    //    activo.FECHA_DE_COMPRA = activo.FECHA_DE_COMPRA.Value.Date; // Elimina la parte de la hora y los minutos
                     //}
 
+                    // Asigna cadena vacía a proveedor si está nulo
+                    if (string.IsNullOrWhiteSpace(activo.PROVEEDOR))
+                    {
+                        activo.PROVEEDOR = string.Empty;
+                    }
+
+                    if (string.IsNullOrWhiteSpace(activo.COMENTARIO))
+                    {
+                        activo.COMENTARIO = string.Empty;
+                    }
+
                     // Inserta el nuevo activo en la base de datos utilizando el procedimiento almacenado
-                        // Verifica si existe otro activo con el mismo número de serie (ignorando el actual que se está editando)
-                        var activoExistentePorSerie = context.ACTIVOS.FirstOrDefault(e => e.NUMERO_DE_SERIE == activo.NUMERO_DE_SERIE && e.CODIGO_ACTIVO != activo.CODIGO_ACTIVO);
+                    // Verifica si existe otro activo con el mismo número de serie (ignorando el actual que se está editando)
+                    var activoExistentePorSerie = context.ACTIVOS.FirstOrDefault(e => e.NUMERO_DE_SERIE == activo.NUMERO_DE_SERIE && e.CODIGO_ACTIVO != activo.CODIGO_ACTIVO);
 
-                        if (activoExistentePorSerie != null)
-                        {
-                            return Json(new { success = false, message = "El activo con el número de serie " + activo.NUMERO_DE_SERIE + " ya existe." });
-                        }
-                        // FIN VALIDACIONES
+                    if (activoExistentePorSerie != null)
+                    {
+                        return Json(new { success = false, message = "El activo con el número de serie " + activo.NUMERO_DE_SERIE + " ya existe." });
+                    }
+                    // FIN VALIDACIONES
 
-                        context.Database.ExecuteSqlCommand("sp_EditarActivos @CodigoActivo, @Nombre_de_activo, @Numero_de_serie, @Fecha_de_compra, @Proveedor, @Valor_de_compra, @Valor_actual, @Comentario",
-                        new SqlParameter("@CodigoActivo", activo.CODIGO_ACTIVO),
-                        new SqlParameter("@Nombre_de_activo", activo.NOMBRE_DE_ACTIVO),
-                        new SqlParameter("@Numero_de_serie", activo.NUMERO_DE_SERIE),
-                        new SqlParameter("@Fecha_de_compra", activo.FECHA_DE_COMPRA),
-                        new SqlParameter("@Proveedor", activo.PROVEEDOR),
-                        new SqlParameter("@Valor_de_compra", activo.VALOR_DE_COMPRA),
-                        new SqlParameter("@Valor_actual", activo.VALOR_ACTUAL),
-                        new SqlParameter("@Comentario", activo.COMENTARIO)
-                    );
+                    context.Database.ExecuteSqlCommand("sp_EditarActivos @CodigoActivo, @Nombre_de_activo, @Numero_de_serie, @Fecha_de_compra, @Proveedor, @Valor_de_compra, @Valor_actual, @Comentario",
+                    new SqlParameter("@CodigoActivo", activo.CODIGO_ACTIVO),
+                    new SqlParameter("@Nombre_de_activo", activo.NOMBRE_DE_ACTIVO),
+                    new SqlParameter("@Numero_de_serie", activo.NUMERO_DE_SERIE),
+                    new SqlParameter("@Fecha_de_compra", activo.FECHA_DE_COMPRA.HasValue ? (object)activo.FECHA_DE_COMPRA.Value : DBNull.Value),
+                    new SqlParameter("@Proveedor", activo.PROVEEDOR),
+                    new SqlParameter("@Valor_de_compra", activo.VALOR_DE_COMPRA),
+                    new SqlParameter("@Valor_actual", activo.VALOR_ACTUAL),
+                    new SqlParameter("@Comentario", activo.COMENTARIO)
+                );
                 }
 
-                return Json(new { success = true });
-            }
+            return Json(new { success = true });
+        }
 
-            return View(activo);
+            return Json(new { success = false, message = "Error al actualizar el activo." });
         }
 
 
-        //FIN DE EDITAR EN GRID
+    //FIN DE EDITAR EN GRID
 
-        //INICIO ELIMINAR EN GRID
-        public ActionResult EliminarActivo(string codigoActivo)
+    //INICIO ELIMINAR EN GRID
+    public ActionResult EliminarActivo(string codigoActivo)
         {
             // Llama al procedimiento almacenado para eliminar el activo
-            using (var context = new DISETOP.Models.DISETOPEntities()) 
+            using (var context = new DISETOP.Models.DISETOPEntities())
             {
                 context.Database.ExecuteSqlCommand("exec sp_EliminaActivos @codigo_activo", new SqlParameter("@codigo_activo", codigoActivo));
             }
 
-      
+
             return RedirectToAction("VistaActivos");
         }
 
